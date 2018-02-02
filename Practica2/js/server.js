@@ -30,8 +30,7 @@ class SyncClient
 		this.server.on_user_connected = function(id){
 		};
 
-		this.server.on_user_disconnected = function( user_id ){
-		};
+		this.server.on_user_disconnected = this.checkIfHost.bind(this);
 
 	}
 
@@ -39,10 +38,10 @@ class SyncClient
 
 SyncClient.prototype.checkIfHost = function()
 {
-	if(Object.keys(this.server.clients).length > 1)
-		return false;
+	if(Object.keys(this.server.clients)[0] == this.server.user_id )
+		this.bubbles.isHost = true;
 	else
-		return true;
+		this.bubbles.isHost = false;
 }
 
 SyncClient.prototype.getBubblesPosition = function()

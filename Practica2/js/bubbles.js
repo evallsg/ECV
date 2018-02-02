@@ -117,7 +117,7 @@ Bubbles.prototype.onSyncClientReady = function(){
 
 Bubbles.prototype.init = function(parent_node) {
 
-	this.isHost = this.syncClient.checkIfHost(); 
+	this.syncClient.checkIfHost(); 
 
     this.container = document.createElement('div');
     document.querySelector(parent_node).appendChild(this.container);
