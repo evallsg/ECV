@@ -1,4 +1,4 @@
-var room_name = "Bubbles__";
+var room_name = "Bubbles";
 var timer = null;
 var host = "84.89.136.194";
 //connect to the server
