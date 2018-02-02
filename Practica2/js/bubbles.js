@@ -69,7 +69,7 @@ Bubbles.prototype.onBubblesLoaded = function() {
         mesh.position.y = this.positions[i][1];
         mesh.position.z = this.positions[i][2];
 
-        mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
+        mesh.scale.x = mesh.scale.y = mesh.scale.z = this.scaling[i];
 
         this.scene.add(mesh);
         this.spheres.push(mesh);
@@ -99,13 +99,14 @@ Bubbles.prototype.onBubblesLoaded = function() {
 
 Bubbles.prototype.onBubblesPositionRequest = function(){
 	if(this.isHost)
-		this.syncClient.sendBubblesPosition(this.positions);
+		this.syncClient.sendBubblesPosition(this.positions, this.scaling);
 }
 
-Bubbles.prototype.onBubblesPositionReceived = function(positions){
+Bubbles.prototype.onBubblesPositionReceived = function(bubbles_attributes){
 	if(!this.bubblesInitialized)
 	{
-		this.positions = positions;
+		this.positions = bubbles_attributes["positions"];
+		this.scaling = bubbles_attributes["scaling"];
 		this.onBubblesLoaded();
 	}
 }
@@ -116,7 +117,7 @@ Bubbles.prototype.onSyncClientReady = function(){
 
 Bubbles.prototype.init = function(parent_node) {
 
-	this.isHost = this.syncClient.checkIfHost(); 
+	this.syncClient.checkIfHost(); 
 
     this.container = document.createElement('div');
     document.querySelector(parent_node).appendChild(this.container);
@@ -126,11 +127,14 @@ Bubbles.prototype.init = function(parent_node) {
 
     //if we are the host, we compute the positions of the bubbles
     this.positions = []
+    this.scaling = []
     if(this.isHost)
     {	
     	for (var i = 0; i < 20; i++)
+    	{
     		this.positions.push([Math.random() * 10000 - 5000, Math.random() * 10000 - 5000, Math.random() * 10000 - 5000])
-
+    		this.scaling.push(Math.random() * 3 + 1);
+    	}
     	this.bubblesInitialized = true;
     	this.onBubblesLoaded();
     }
