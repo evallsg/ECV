@@ -9,22 +9,16 @@ class Bubbles {
         this.windowHalfX = window.innerWidth / 2;
         this.windowHalfY = window.innerHeight / 2;
 
+        this.syncClient = new SyncClient(this)
+        this.isHost = this.syncClient.checkIfHost(); 
+
         this.init(parent_node);
-        this.animate();
 
     }
 
 }
 
-Bubbles.prototype.init = function(parent_node) {
-
-    this.container = document.createElement('div');
-    document.querySelector(parent_node).appendChild(this.container);
-
-    this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 100000);
-    this.camera.position.z = 3200;
-
-
+Bubbles.prototype.onBubblesLoaded = function() {
     var path = "imgs/";
     var format = '.png';
 
@@ -60,14 +54,15 @@ Bubbles.prototype.init = function(parent_node) {
         fragmentShader: shader.fragmentShader
     });
 
+
     this.spheres = []
     for (var i = 0; i < 20; i++) {
 
         var mesh = new THREE.Mesh(geometry, material);
 
-        mesh.position.x = Math.random() * 10000 - 5000;
-        mesh.position.y = Math.random() * 10000 - 5000;
-        mesh.position.z = Math.random() * 10000 - 5000;
+        mesh.position.x = this.positions[i][0];
+        mesh.position.y = this.positions[i][1];
+        mesh.position.z = this.positions[i][2];
 
         mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
 
@@ -93,6 +88,36 @@ Bubbles.prototype.init = function(parent_node) {
     document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
     document.addEventListener('mousedown', this.onMouseDown.bind(this), false);
     document.addEventListener( 'mousewheel', this.onDocumentMouseWheel.bind(this), false );
+
+    this.animate();
+}
+
+
+Bubbles.prototype.init = function(parent_node) {
+
+    this.container = document.createElement('div');
+    document.querySelector(parent_node).appendChild(this.container);
+
+    this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 100000);
+    this.camera.position.z = 3200;
+
+    //if we are the host, we compute the positions of the bubbles
+    this.positions = []
+    if(this.isHost)
+    {	
+    	for (var i = 0; i < 20; i++)
+    		this.positions.push([Math.random() * 10000 - 5000, Math.random() * 10000 - 5000, Math.random() * 10000 - 5000])
+
+    	this.onBubblesLoaded();
+    }
+    else
+    {
+    	var a = 0;
+    	//TODO
+    }    
+
+
+    
 
 }
 
