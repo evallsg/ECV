@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<title>three.js webgl - materials - shaders [Fresnel]</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				background:#000;
+				padding:0;
+				margin:0;
+				font-weight: bold;
+				overflow:hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				color: #ffffff;
+				padding: 5px;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+				z-index:1000;
+			}
+
+			a {	color: #ffffff;	}
+
+			#oldie a { color:#0b0 }
+		</style>
+	</head>
+
+	<body>
+
+
+		<script src="three.js"></script>
+
+		<script src="FresnelShader.js"></script>
+
+		<!--<script src="js/Detector.js"></script>-->
+
+		<script>
+
+			//if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+			var container;
+
+			var camera, scene, renderer;
+
+			var mesh, zmesh, lightMesh, geometry;
+			var spheres = [];
+			var material;
+			var directionalLight, pointLight;
+			var miniSpheres= [];
+
+			var mouseX = 0, mouseY = 0;
+
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
+
+			document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+			document.addEventListener( 'mousedown', onMouseDown, false );
+
+			init();
+			animate();
+
+			function init() {
+
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 100000 );
+				camera.position.z = 3200;
+
+				//
+
+				var path = "imgs/";
+				var format = '.png';
+
+				var urls = [
+						path + 'TropicalSunnyDayBack' + format, path + 'TropicalSunnyDayFront' + format,
+						path + 'TropicalSunnyDayUp' + format, path + 'TropicalSunnyDayDown' + format,
+						path + 'TropicalSunnyDayLeft' + format, path + 'TropicalSunnyDayRight' + format
+					];
+				var textureCube = new THREE.CubeTextureLoader().load( urls );
+				textureCube.format = THREE.RGBFormat;
+
+				scene = new THREE.Scene();
+				scene.background = textureCube;
+
+				//
+
+				var geometry = new THREE.SphereGeometry( 100, 32, 16 );
+
+				var shader = THREE.FresnelShader;
+				//var uniforms = THREE.UniformsUtils.clone( shader.uniforms );
+
+				//uniforms[ "tCube" ].value = textureCube;
+
+				var material = new THREE.ShaderMaterial( {
+					uniforms:  {
+
+						"mRefractionRatio": { value: 1.02 },
+						"mFresnelBias": { value: 0.1 },
+						"mFresnelPower": { value: 2.0 },
+						"mFresnelScale": { value: 1.0 },
+						"tCube": { value: textureCube }
+
+					},
+					vertexShader: shader.vertexShader,
+					fragmentShader: shader.fragmentShader
+				} );
+
+				for ( var i = 0; i < 20; i ++ ) {
+
+					var mesh = new THREE.Mesh( geometry, material );
+
+					mesh.position.x = Math.random() * 10000 - 5000;
+					mesh.position.y = Math.random() * 10000 - 5000;
+					mesh.position.z = Math.random() * 10000 - 5000;
+
+					mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
+
+					scene.add( mesh );
+					spheres.push( mesh );
+
+				}
+				//bombolles per col·lisio
+				miniSpheres.push(mesh)
+				miniSpheres.push(mesh)
+				scene.matrixAutoUpdate = false;
+
+				//
+
+				renderer = new THREE.WebGLRenderer( { antialias: false } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				container.appendChild( renderer.domElement );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function onWindowResize() {
+
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			function onDocumentMouseMove( event ) {
+				//clientX i clientY son respecte la pantalla, no respecte el Canvas!!!!!
+				mouseX = -( event.clientX - windowHalfX ) * 10;
+				mouseY = -( event.clientY - windowHalfY ) * 10;
+
+			}
+			function onMouseDown(event){
+				var text = "Bubble";
+				var timer = 0.0001 * Date.now();
+				var mouse = new THREE.Vector2();
+				mouse.x =  ( event.clientX / window.innerWidth ) * 2 - 1;
+				mouse.y =  - ( event.clientY / window.innerHeight ) * 2 + 1;
+				console.log(mouse)
+				var raycaster = new THREE.Raycaster();
+
+				raycaster.setFromCamera( mouse, camera );
+
+				// calculate objects intersecting the picking ray
+				var intersects = raycaster.intersectObjects( spheres );
+
+				for ( var i = 0; i < intersects.length; i++ ) {
+					for(var j = 0; j <miniSpheres.length; j++){
+						//miniSpheres.geometry.parameters.radius = intersects[i].object.geometry.parameters.radius/3
+					}
+					//intersects[ i ].object.visible=false;
+
+				}
+				console.log(intersects)
+				/*for ( var i = 0, il = spheres.length; i < il; i ++ ) {
+					var sphere = spheres[ i ];
+					
+					var radius = sphere.geometry.boundingSphere.radius;
+					if((sphere.position.x-radius <=event.clientX || event.clientX>=sphere.position.x+100) && (sphere.position.y-radius <=event.clientY || event.clientY>=sphere.position.y+100)){
+						sphere.visible = false
+					}
+					
+
+				}*/
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				render();
+
+			}
+
+			function render() {
+
+				var timer = 0.0001 * Date.now();
+
+				camera.position.x += ( mouseX - camera.position.x ) * .05;
+				camera.position.y += ( - mouseY - camera.position.y ) * .05;
+
+				camera.lookAt( scene.position );
+				
+
+				/*for ( var i = 0, il = spheres.length; i < il; i ++ ) {
+
+					var sphere = spheres[ i ];
+
+					sphere.position.x = 5000 * Math.cos( timer + i );
+					sphere.position.y = 5000 * Math.sin( timer + i * 1.1 );
+
+				}*/
+
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+
+	</body>
+</html>
