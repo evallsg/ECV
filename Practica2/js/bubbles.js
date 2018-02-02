@@ -61,7 +61,6 @@ Bubbles.prototype.init = function(parent_node) {
     });
 
     this.spheres = []
-
     for (var i = 0; i < 20; i++) {
 
         var mesh = new THREE.Mesh(geometry, material);
@@ -76,10 +75,7 @@ Bubbles.prototype.init = function(parent_node) {
         this.spheres.push(mesh);
 
     }
-    //bombolles per col·lisio
-    /*var mesh2 = new THREE.Mesh( geometry2, material );
-    miniSpheres.push(mesh2)
-    miniSpheres.push(mesh2)*/
+
     this.scene.matrixAutoUpdate = false;
 
     //
@@ -96,6 +92,7 @@ Bubbles.prototype.init = function(parent_node) {
     document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
     document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
     document.addEventListener('mousedown', this.onMouseDown.bind(this), false);
+    document.addEventListener( 'mousewheel', this.onDocumentMouseWheel.bind(this), false );
 
 }
 
@@ -124,27 +121,62 @@ Bubbles.prototype.onMouseDown = function(event) {
     var intersects = raycaster.intersectObjects(this.spheres);
 
     for (var i = 0; i < intersects.length; i++) {
-        //miniSpheres[0].position = intersects[i].object.position;
+        
+        var group = new THREE.Group();
+        var basicMaterial = new THREE.MeshBasicMaterial( { color: 0xfff000, opacity: 0, wireframe: true } );
 
-        //miniSpheres[0].geometry.parameters.radius = intersects[i].object.geometry.parameters.radius/3;
-        //miniSpheres[1].position = intersects[i].object.position;
-
-        //miniSpheres[1].geometry.parameters.radius = intersects[i].object.geometry.parameters.radius/3;
-        //intersects[ i ].object.visible=false;
         var object = intersects[i].object;
-        object.scale.x = object.scale.x / 2;
-        object.scale.y = object.scale.y / 2;
-        object.scale.z = object.scale.z / 2;
+
+        var mini = object.clone();
+        var radius = object.geometry.parameters.radius;
+        mini.scale.x = mini.scale.x/4;
+        mini.scale.y = mini.scale.y/4;
+        mini.scale.z = mini.scale.z/4;
+        while(object.scale.x>0){
+            object.scale.x = object.scale.x / 2;
+            object.scale.y = object.scale.y / 2;
+            object.scale.z = object.scale.z / 2;
+        }
+
+        var miniSpheres = [];
+        for(var j=0; j<6 ; j++){
+            miniSpheres.push(mini.clone());
+        }
+        miniSpheres[0].position.x = miniSpheres[0].position.x +radius*2;
+        miniSpheres[1].position.x = miniSpheres[1].position.x -radius*2;
+        miniSpheres[2].position.y = miniSpheres[2].position.y +radius*2;
+        miniSpheres[3].position.y = miniSpheres[3].position.y -radius*2;
+        miniSpheres[4].position.z = miniSpheres[4].position.z +radius*2;
+        miniSpheres[5].position.z = miniSpheres[5].position.z -radius*2;
+        
+        for(var j=0; j<6 ; j++){
+            group.add(miniSpheres[j]);
+        }
+        var group2 = group.clone();
+        //miniGroup.scale= miniGroup.scale/2;
+        group2.rotation.x+=0.01
+        group2.rotation.y+=0.01
+        this.scene.add(group)
+        this.scene.add(group2)
+        setTimeout(function(){
+            group.visible=false;
+            group2.visible=false
+        }, 25)
+
+        
 
     }
-    /*for ( var j = 0; j < miniSpheres.length; j++ ) {
-    	scene.add(miniSpheres[j])
-    }*/
-
-    console.log(this.scene)
 
 }
-
+Bubbles.prototype.onDocumentMouseWheel = function(event) {
+    event.preventDefault()
+    var fovMAX = 160;
+    var fovMIN = 1;
+console.log(entra)
+    this.camera.fov -= event.wheelDeltaY * 0.05;
+    this.camera.fov = Math.max( Math.min( this.camera.fov, fovMAX ), fovMIN );
+    this.camera.projectionMatrix = new THREE.Matrix4().makePerspective(this.camera.fov, window.innerWidth / window.innerHeight, this.camera.near, this.camera.far);
+}
 Bubbles.prototype.onDocumentMouseMove = function(event) {
 
     //clientX i clientY son respecte la pantalla, no respecte el Canvas!!!!!
