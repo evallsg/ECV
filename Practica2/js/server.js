@@ -1,4 +1,4 @@
-var room_name = "Bubbles";
+var room_name = "Bubbles__";
 var timer = null;
 var host = "84.89.136.194";
 //connect to the server
@@ -51,9 +51,10 @@ SyncClient.prototype.getBubblesPosition = function()
 	this.server.sendMessage(JSON.stringify(message))
 }
 
-SyncClient.prototype.sendBubblesPosition = function(positions)
+SyncClient.prototype.sendBubblesPosition = function(positions, scaling)
 {	
-	var message = new Message(positions, "_pos_response_");
+	var bubbles_attributes = {"positions": positions, "scaling": scaling}
+	var message = new Message(bubbles_attributes, "_pos_response_");
 
 	this.server.sendMessage(JSON.stringify(message));
 }
