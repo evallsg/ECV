@@ -12,10 +12,20 @@ class SyncClient
 		this.server = new SillyClient();
 		this.server.connect(host+":9000", room_name);
 
-		this.server.on_ready = function( id ){
-		};
+		var onBubblesPositionRequest = this.bubbles.onBubblesPositionRequest.bind(this.bubbles);
 
-		this.server.on_message = function(author_id, data ){
+		var onBubblesPositionReceived = this.bubbles.onBubblesPositionReceived.bind(this.bubbles);
+
+		this.server.on_message = function(author_id, data){
+			var message = JSON.parse(data);
+			if(message.type == "_pos_request_")
+			{
+				onBubblesPositionRequest();
+			}
+			else if(message.type == "_pos_response_")
+			{
+				onBubblesPositionReceived(message.content);
+			}
 		};
 		this.server.on_user_connected = function(id){
 		};
@@ -29,9 +39,28 @@ class SyncClient
 
 SyncClient.prototype.checkIfHost = function()
 {
-	if(this.server.clients.length > 1)
+	if(Object.keys(this.server.clients).length > 1)
 		return false;
 	else
 		return true;
 }
 
+SyncClient.prototype.getBubblesPosition = function()
+{	
+	var message = new Message("", "_pos_request_");
+	this.server.sendMessage(JSON.stringify(message))
+}
+
+SyncClient.prototype.sendBubblesPosition = function(positions)
+{	
+	var message = new Message(positions, "_pos_response_");
+
+	this.server.sendMessage(JSON.stringify(message));
+}
+
+class Message {
+    constructor(content, type) {
+        this.content = content;
+        this.type = type;
+    }
+}

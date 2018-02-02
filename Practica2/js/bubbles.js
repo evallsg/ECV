@@ -9,16 +9,21 @@ class Bubbles {
         this.windowHalfX = window.innerWidth / 2;
         this.windowHalfY = window.innerHeight / 2;
 
-        this.syncClient = new SyncClient(this)
-        this.isHost = this.syncClient.checkIfHost(); 
+        this.parent_node = parent_node;
 
-        this.init(parent_node);
+        this.bubblesInitialized = false;
+
+        this.syncClient = new SyncClient(this);
+
+		this.syncClient.server.on_room_info = this.onSyncClientReady.bind(this);
 
     }
 
 }
 
 Bubbles.prototype.onBubblesLoaded = function() {
+	this.onBubblesLoaded = true;
+
     var path = "imgs/";
     var format = '.png';
 
@@ -92,8 +97,26 @@ Bubbles.prototype.onBubblesLoaded = function() {
     this.animate();
 }
 
+Bubbles.prototype.onBubblesPositionRequest = function(){
+	if(this.isHost)
+		this.syncClient.sendBubblesPosition(this.positions);
+}
+
+Bubbles.prototype.onBubblesPositionReceived = function(positions){
+	if(!this.bubblesInitialized)
+	{
+		this.positions = positions;
+		this.onBubblesLoaded();
+	}
+}
+
+Bubbles.prototype.onSyncClientReady = function(){
+	this.init(this.parent_node);
+}
 
 Bubbles.prototype.init = function(parent_node) {
+
+	this.isHost = this.syncClient.checkIfHost(); 
 
     this.container = document.createElement('div');
     document.querySelector(parent_node).appendChild(this.container);
@@ -108,16 +131,13 @@ Bubbles.prototype.init = function(parent_node) {
     	for (var i = 0; i < 20; i++)
     		this.positions.push([Math.random() * 10000 - 5000, Math.random() * 10000 - 5000, Math.random() * 10000 - 5000])
 
+    	this.bubblesInitialized = true;
     	this.onBubblesLoaded();
     }
     else
     {
-    	var a = 0;
-    	//TODO
-    }    
-
-
-    
+    	this.syncClient.getBubblesPosition();
+    }       
 
 }
 
