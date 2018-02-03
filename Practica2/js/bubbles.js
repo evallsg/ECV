@@ -17,7 +17,9 @@ class Bubbles {
 
         this.syncClient.server.on_room_info = this.onSyncClientReady.bind(this);
         this.spheres=[];
+
         this.scene = new THREE.Scene();
+        this.setText.bind(this)
        /* this.url = "https://cdn.pixabay.com/photo/2016/11/01/21/11/avatar-1789663_960_720.png";
         this.userTexture = new THREE.TextureLoader().load( this.url );
         /*userTexture.wrapS = THREE.RepeatWrapping;
@@ -29,6 +31,10 @@ class Bubbles {
 
 Bubbles.prototype.onBubblesLoaded = function() {
     this.onBubblesLoaded = true;
+    var loader = new THREE.FontLoader();
+    loader.load( 'helvetiker_regular.typeface.json',function ( font ) {
+         this.setText('hola',[Math.random() * 10000 - 5000, Math.random() * 10000 - 5000, Math.random() * 10000 - 5000], font).bind(this)
+    })
 
     var path = "imgs/";
     var format = '.png';
@@ -65,9 +71,9 @@ Bubbles.prototype.onBubblesLoaded = function() {
         fragmentShader: shader.fragmentShader
     });
 
-
    //this.spheres = []
-    for (var i = 0; i < 20; i++) {
+    var nBubbles = this.positions[0]== undefined ? 20 : this.positions.length
+    for (var i = 0; i < nBubbles; i++) {
 
         var mesh = new THREE.Mesh(geometry, material);
 
@@ -97,7 +103,7 @@ Bubbles.prototype.onBubblesLoaded = function() {
     document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
     document.addEventListener('mousedown', this.onMouseDown.bind(this), false);
     document.addEventListener( 'mousewheel', this.onDocumentMouseWheel.bind(this), false );
-
+  
     this.animate();
 }
 
@@ -120,15 +126,14 @@ Bubbles.prototype.onSyncClientReady = function(){
 }
 
 Bubbles.prototype.init = function(parent_node) {
-
+    
     this.syncClient.checkIfHost(); 
-
+    
     this.container = document.createElement('div');
     document.querySelector(parent_node).appendChild(this.container);
 
     this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 100000);
     this.camera.position.z = 3200;
-
     //if we are the host, we compute the positions of the bubbles
     this.positions = []
     this.scaling = []
@@ -178,6 +183,7 @@ Bubbles.prototype.onMouseDown = function(event) {
         //var basicMaterial = new THREE.MeshBasicMaterial( { color: 0xfff000, opacity: 0, wireframe: true } );
 
         var object = intersects[i].object;
+
         this.syncClient.sendExplodePosition(object.position);
         this.explode(object)
        // this.addUserBubble(object.position)
@@ -233,7 +239,7 @@ Bubbles.prototype.onDocumentMouseMove = function(event) {
 
 }
 
-//
+
 
 Bubbles.prototype.animate = function() {
     requestAnimationFrame(this.animate.bind(this));
@@ -266,14 +272,19 @@ Bubbles.prototype.onBubbleExplode = function(position){
     for(var i=0; i<objects.length;i++){
 
         if( JSON.stringify(objects[i].position)==JSON.stringify(position)){
-            console.log(objects[i])
             this.bubbles.explode(objects[i]);
+            /*console.log(i)
+            console.log('id '+ objects[i].id)
+         /*   this.positions.splice(i,1);
+            this.scaling.splice(i,1);*/
         }
     }
 }
 
 Bubbles.prototype.explode = function(bubble){
-
+    this.positions.splice(bubble.id -5,1);
+    this.scaling.splice(bubble.id-5,1);
+    console.log(this.positions)
     var mini = bubble.clone();
     var radius = bubble.geometry.parameters.radius;
     mini.scale.x = mini.scale.x/4;
@@ -314,3 +325,25 @@ Bubbles.prototype.explode = function(bubble){
     }, 25)
 }
 
+Bubbles.prototype.setText = function(text ,position, font){
+            
+        var geometry = new THREE.TextGeometry( text, {
+        font: font,
+        size: 80,
+        height: 20,
+        curveSegments: 2
+        })
+
+        geometry.computeBoundingBox();
+        var centerOffset = -0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
+        var materials = [
+            new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff, overdraw: 0.5 } ),
+            new THREE.MeshBasicMaterial( { color: 0x000000, overdraw: 0.5 } )
+        ];
+        mesh = new THREE.Mesh( geometry, materials );
+        mesh.position.x = centerOffset;
+        mesh.position.y = 100;
+        mesh.position.z = 0;
+        this.secene.add(mesh)
+   
+}
