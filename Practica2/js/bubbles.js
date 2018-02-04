@@ -77,9 +77,9 @@ Bubbles.prototype.onBubblesLoaded = function() {
 
         var mesh = new THREE.Mesh(geometry, material);
 
-        mesh.position.x = this.positions[i][0];
-        mesh.position.y = this.positions[i][1];
-        mesh.position.z = this.positions[i][2];
+        mesh.position.x = this.positions[i]["x"];
+        mesh.position.y = this.positions[i]["y"];
+        mesh.position.z = this.positions[i]["z"];
 
         mesh.scale.x = mesh.scale.y = mesh.scale.z = this.scaling[i];
 
@@ -109,7 +109,17 @@ Bubbles.prototype.onBubblesLoaded = function() {
 
 Bubbles.prototype.onBubblesPositionRequest = function(){
     if(this.isHost)
-        this.syncClient.sendBubblesPosition(this.positions, this.scaling);
+    {
+    	var positions = [];
+    	var scaling = [];
+    	for(var idx = 0; idx < this.spheres.length; idx++)
+    	{
+    		positions.push(this.spheres[idx].position);
+    		scaling.push(this.spheres[idx].scale["x"]);
+    	}
+
+        this.syncClient.sendBubblesPosition(positions, scaling);
+    }
 }
 
 Bubbles.prototype.onBubblesPositionReceived = function(bubbles_attributes){
@@ -141,7 +151,7 @@ Bubbles.prototype.init = function(parent_node) {
     {   
         for (var i = 0; i < 20; i++)
         {
-            this.positions.push([Math.random() * 10000 - 5000, Math.random() * 10000 - 5000, Math.random() * 10000 - 5000])
+            this.positions.push({"x": Math.random() * 10000 - 5000, "y": Math.random() * 10000 - 5000, "z": Math.random() * 10000 - 5000})
             this.scaling.push(Math.random() * 3 + 1);
         }
         this.bubblesInitialized = true;
@@ -323,6 +333,15 @@ Bubbles.prototype.explode = function(bubble){
         group.visible=false;
         group2.visible=false
     }, 25)
+
+    // find which bubble to delete from list of spheres
+    var bubble_to_delete = -1;
+    for(var i = 0; i < this.spheres.length; ++i)
+    	if(this.spheres[i].id == bubble.id)
+    		bubble_to_delete = i;
+
+    this.spheres.splice(bubble_to_delete, 1);
+
 }
 
 Bubbles.prototype.setText = function(text ,position, font){
