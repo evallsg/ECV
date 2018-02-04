@@ -14,7 +14,7 @@ class SyncClient
 
 		var onBubblesPositionRequest = this.bubbles.onBubblesPositionRequest.bind(this.bubbles);
 		var onBubblesPositionReceived = this.bubbles.onBubblesPositionReceived.bind(this.bubbles);
-		var onBubbleExplode = this.bubbles.onBubbleExplode.bind();
+		var onBubbleExplode = this.bubbles.onBubbleExplode.bind(this.bubbles);
 
 		this.server.on_message = function(author_id, data){
 			var message = JSON.parse(data);
