@@ -267,12 +267,12 @@ Bubbles.prototype.render = function() {
 }
 
 Bubbles.prototype.onBubbleExplode = function(position){
-    var objects = this.bubbles.spheres;
+    var objects = this.spheres;
  
     for(var i=0; i<objects.length;i++){
 
         if( JSON.stringify(objects[i].position)==JSON.stringify(position)){
-            this.bubbles.explode(objects[i]);
+            this.explode(objects[i]);
             /*console.log(i)
             console.log('id '+ objects[i].id)
          /*   this.positions.splice(i,1);
@@ -282,8 +282,8 @@ Bubbles.prototype.onBubbleExplode = function(position){
 }
 
 Bubbles.prototype.explode = function(bubble){
-    this.positions.splice(bubble.id -5,1);
-    this.scaling.splice(bubble.id-5,1);
+    this.positions.splice(bubble.id - 5,1);
+    this.scaling.splice(bubble.id - 5,1);
     console.log(this.positions)
     var mini = bubble.clone();
     var radius = bubble.geometry.parameters.radius;
