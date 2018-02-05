@@ -21,3 +21,11 @@ body {
 a {	color: #ffffff;	}
 
 #oldie a { color:#0b0 }
+
+#new-bubble{
+	position: absolute;
+    display: block;
+    z-index: 99;
+    left: 0;
+    bottom: 0px;
+}
