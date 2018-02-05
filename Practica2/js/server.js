@@ -15,6 +15,7 @@ class SyncClient
 		var onBubblesPositionRequest = this.bubbles.onBubblesPositionRequest.bind(this.bubbles);
 		var onBubblesPositionReceived = this.bubbles.onBubblesPositionReceived.bind(this.bubbles);
 		var onBubbleExplode = this.bubbles.onBubbleExplode.bind(this.bubbles);
+		var onNewBubble = this.bubbles.onNewBubble.bind(this.bubbles);
 
 		this.server.on_message = function(author_id, data){
 			var message = JSON.parse(data);
@@ -29,6 +30,9 @@ class SyncClient
 			else if(message.type == "_explode_response_")
 			{
 				onBubbleExplode(message.content);
+			}
+			else if(message.type == "_newBubble_response_"){
+				onNewBubble(message.content);
 			}
 		};
 		this.server.on_user_connected = function(id){
@@ -63,6 +67,10 @@ SyncClient.prototype.sendBubblesPosition = function(positions, scaling)
 }
 SyncClient.prototype.sendExplodePosition = function(position){
 	var message = new Message(position, "_explode_response_");
+	this.server.sendMessage(JSON.stringify(message));
+}
+SyncClient.prototype.sendNewBubblePosition = function(position, scaling){
+	var message = new Message({"position": position, "scaling": scaling}, "_newBubble_response_");
 	this.server.sendMessage(JSON.stringify(message));
 }
 class Message {
