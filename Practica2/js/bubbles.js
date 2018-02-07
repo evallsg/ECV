@@ -217,18 +217,20 @@ Bubbles.prototype.onMouseDown = function(event) {
     // calculate objects intersecting the picking ray
     var intersects = raycaster.intersectObjects(this.spheres);
 
-    for (var i = 0; i < intersects.length; i++) {
+    //for (var i = 0; i < intersects.length; i++) {
         
         //var basicMaterial = new THREE.MeshBasicMaterial( { color: 0xfff000, opacity: 0, wireframe: true } );
-
-        var object = intersects[i].object;
+    if(intersects[0]!=undefined){
+        var object = intersects[0].object;
 
         this.syncClient.sendExplodePosition(object.position);
         this.explode(object)
+    }
+        
        // this.addUserBubble(object.position)
         
 
-    }
+   // }
 
 }
 /*Bubbles.prototype.addUserBubble = function(position) {
@@ -329,7 +331,7 @@ Bubbles.prototype.explode = function(bubble){
     mini.scale.y /= 4;
     mini.scale.z /= 4;
 
-    while(bubble.scale.x>0){
+    while(bubble.scale.x>0.01){
         bubble.scale.x *= 0.5;
         bubble.scale.y *= 0.5;
         bubble.scale.z *= 0.5;
@@ -363,13 +365,18 @@ Bubbles.prototype.explode = function(bubble){
     setTimeout(function(){
         group.visible=false;
         group2.visible=false
+        /*scene.remove(group);
+        scene.remove(group2);*/
     }, 35)
 
     // find which bubble to delete from list of spheres
     var bubble_to_delete = -1;
-    for(var i = 0; i < this.spheres.length; ++i)
-    	if(this.spheres[i].id == bubble.id)
+    for(var i = 0; i < this.spheres.length; ++i){
+    	if(this.spheres[i].id == bubble.id){
     		bubble_to_delete = i;
+            this.scene.remove(bubble)
+        }
+    }
 
     this.spheres.splice(bubble_to_delete, 1);
 
