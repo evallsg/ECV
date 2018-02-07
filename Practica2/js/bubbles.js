@@ -60,8 +60,9 @@ Bubbles.prototype.onBubblesLoaded = function() {
     this.loadMaterial("bubble");  
 
    //this.spheres = []
-    var nBubbles = this.positions[0]== undefined ? 20 : this.positions.length
-    for (var i = 0; i < nBubbles; i++) {
+    //var nBubbles = this.positions[0]== undefined ? 20 : this.positions.length
+    
+    for (var i = 0; i < this.positions.length; i++) {
 
             
         var mesh = new THREE.Mesh(bubbleGeometry, this.materials['bubble']);
