@@ -29,3 +29,13 @@ a {	color: #ffffff;	}
     left: 0;
     bottom: 0px;
 }
+
+#bubbles-count{
+	z-index: 99;
+	position: absolute;
+	display: block;
+	right: 10px;
+	bottom: 0;
+	color: #ffffff;
+	font-size: 34px;
+}

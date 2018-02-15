@@ -47,7 +47,10 @@ class SyncClient
 SyncClient.prototype.checkIfHost = function()
 {
 	if(Object.keys(this.server.clients)[0] == this.server.user_id )
+	{
 		this.bubbles.isHost = true;
+		console.log("I'm host now.");
+	}
 	else
 		this.bubbles.isHost = false;
 }

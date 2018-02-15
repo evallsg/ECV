@@ -92,10 +92,12 @@ Bubbles.prototype.onBubblesLoaded = function() {
     document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
     document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
     document.addEventListener('mousedown', this.onMouseDown.bind(this), false);
-    document.addEventListener( 'mousewheel', this.onDocumentMouseWheel.bind(this), false );
+    //document.addEventListener( 'mousewheel', this.onDocumentMouseWheel.bind(this), false );
     document.querySelector("#new-bubble").addEventListener("click", this.addBubble.bind(this), false);
   
     this.animate();
+
+    this.onBubbleCountChanged();
 }
 Bubbles.prototype.loadMaterial= function (url){
     if(this.materials[url]){
@@ -263,21 +265,27 @@ Bubbles.prototype.onMouseDown = function(event) {
         console.log(mesh)
         this.scene.add(mesh)
 }*/
-Bubbles.prototype.onDocumentMouseWheel = function(event) {
-    //event.preventDefault()
-    var fovMAX = 160;
-    var fovMIN = 1;
-console.log("entra")
-    this.camera.fov -= event.wheelDeltaY * 0.05;
-    this.camera.fov = Math.max( Math.min( this.camera.fov, fovMAX ), fovMIN );
-   // this.camera.projectionMatrix = new THREE.Matrix4().makePerspective(this.camera.fov, window.innerWidth / window.innerHeight, this.camera.near, this.camera.far);
-}
+// Bubbles.prototype.onDocumentMouseWheel = function(event) {
+//     //event.preventDefault()
+//     var fovMAX = 160;
+//     var fovMIN = 1;
+// console.log("entra")
+//     this.camera.fov -= event.wheelDeltaY * 0.05;
+//     this.camera.fov = Math.max( Math.min( this.camera.fov, fovMAX ), fovMIN );
+//    // this.camera.projectionMatrix = new THREE.Matrix4().makePerspective(this.camera.fov, window.innerWidth / window.innerHeight, this.camera.near, this.camera.far);
+// }
 Bubbles.prototype.onDocumentMouseMove = function(event) {
 
     //clientX i clientY son respecte la pantalla, no respecte el Canvas!!!!!
     this.mouseX = -(event.clientX - this.windowHalfX) * 10;
     this.mouseY = -(event.clientY - this.windowHalfY) * 10;
 
+}
+
+Bubbles.prototype.onBubbleCountChanged = function(event) {
+
+    //clientX i clientY son respecte la pantalla, no respecte el Canvas!!!!!
+    document.querySelector("#bubbles-count").innerText = this.spheres.length;
 }
 
 
@@ -380,6 +388,8 @@ Bubbles.prototype.explode = function(bubble){
 
     this.spheres.splice(bubble_to_delete, 1);
 
+    this.onBubbleCountChanged();
+
 }
 
 Bubbles.prototype.setText = function(text ,position, font){
@@ -423,6 +433,8 @@ Bubbles.prototype.addBubble = function (){
     this.scene.add(mesh);
     this.spheres.push(mesh);
     this.syncClient.sendNewBubblePosition(mesh.position, mesh.scale)
+
+    this.onBubbleCountChanged();
 }
 Bubbles.prototype.onNewBubble = function(content){
     var bubbleGeometry = new THREE.SphereGeometry(100, 32, 16);
@@ -434,5 +446,7 @@ Bubbles.prototype.onNewBubble = function(content){
     this.positions.push(mesh.position)
     this.scaling.push(mesh.scaling)
     this.spheres.push(mesh);
+
+    this.onBubbleCountChanged();
    
 }
