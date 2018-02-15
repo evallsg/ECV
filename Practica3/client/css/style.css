@@ -1,0 +1,24 @@
+.node.book-tree { 
+	padding: 0 2px;
+	min-width: 60px;
+	text-align: center;
+	height: 30px;
+	border: 2px solid #E8E8E3; 
+	border-radius: 2px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.5);
+	background: #fff; 
+}
+
+
+
+.book-node
+{
+	background: #fff; 
+	border: 0px solid #E8E8E3; 
+}
+
+.book-node:active
+{
+	background: #fff; 
+	border: 0px solid #E8E8E3; 
+}

@@ -20,6 +20,8 @@ class Bubbles {
 
         this.scene = new THREE.Scene();
         this.setText.bind(this)
+        this.materials = [];
+        this.textures = [];
        /* this.url = "https://cdn.pixabay.com/photo/2016/11/01/21/11/avatar-1789663_960_720.png";
         this.userTexture = new THREE.TextureLoader().load( this.url );
         /*userTexture.wrapS = THREE.RepeatWrapping;
@@ -31,10 +33,10 @@ class Bubbles {
 
 Bubbles.prototype.onBubblesLoaded = function() {
     this.onBubblesLoaded = true;
-    var loader = new THREE.FontLoader();
+   /* var loader = new THREE.FontLoader();
     loader.load( 'helvetiker_regular.typeface.json',function ( font ) {
          this.setText('hola',[Math.random() * 10000 - 5000, Math.random() * 10000 - 5000, Math.random() * 10000 - 5000], font).bind(this)
-    })
+    })*/
 
     var path = "imgs/";
     var format = '.png';
@@ -44,38 +46,26 @@ Bubbles.prototype.onBubblesLoaded = function() {
         path + 'TropicalSunnyDayUp' + format, path + 'TropicalSunnyDayDown' + format,
         path + 'TropicalSunnyDayLeft' + format, path + 'TropicalSunnyDayRight' + format
     ];
-    var textureCube = new THREE.CubeTextureLoader().load(urls);
-    textureCube.format = THREE.RGBFormat;
-
+    
+    var textureCube=this.loadTexture(urls);
 //    this.scene = new THREE.Scene();
     this.scene.background = textureCube;
 
-    var geometry = new THREE.SphereGeometry(100, 32, 16);
-    //var geometry2 = new THREE.SphereGeometry(50,32,16);
-    var shader = THREE.FresnelShader;
+    var bubbleGeometry = new THREE.SphereGeometry(100, 32, 16);
+    
     //var uniforms = THREE.UniformsUtils.clone( shader.uniforms );
 
     //uniforms[ "tCube" ].value = textureCube;
 
-    var material = new THREE.ShaderMaterial({
-        uniforms: {
-
-            "mRefractionRatio": { value: 1.02 },
-            "mFresnelBias": { value: 0.1 },
-            "mFresnelPower": { value: 2.0 },
-            "mFresnelScale": { value: 1.0 },
-            "tCube": { value: textureCube }
-
-        },
-        vertexShader: shader.vertexShader,
-        fragmentShader: shader.fragmentShader
-    });
+    this.loadMaterial("bubble");  
 
    //this.spheres = []
-    var nBubbles = this.positions[0]== undefined ? 20 : this.positions.length
-    for (var i = 0; i < nBubbles; i++) {
+    //var nBubbles = this.positions[0]== undefined ? 20 : this.positions.length
+    
+    for (var i = 0; i < this.positions.length; i++) {
 
-        var mesh = new THREE.Mesh(geometry, material);
+            
+        var mesh = new THREE.Mesh(bubbleGeometry, this.materials['bubble']);
 
         mesh.position.x = this.positions[i]["x"];
         mesh.position.y = this.positions[i]["y"];
@@ -102,11 +92,52 @@ Bubbles.prototype.onBubblesLoaded = function() {
     document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
     document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
     document.addEventListener('mousedown', this.onMouseDown.bind(this), false);
-    document.addEventListener( 'mousewheel', this.onDocumentMouseWheel.bind(this), false );
+    //document.addEventListener( 'mousewheel', this.onDocumentMouseWheel.bind(this), false );
+    document.querySelector("#new-bubble").addEventListener("click", this.addBubble.bind(this), false);
   
     this.animate();
-}
 
+    this.onBubbleCountChanged();
+}
+Bubbles.prototype.loadMaterial= function (url){
+    if(this.materials[url]){
+        return this.materials[url];
+    }
+    var path = "imgs/";
+    var format = '.png';
+
+    var urls = [
+        path + 'TropicalSunnyDayBack' + format, path + 'TropicalSunnyDayFront' + format,
+        path + 'TropicalSunnyDayUp' + format, path + 'TropicalSunnyDayDown' + format,
+        path + 'TropicalSunnyDayLeft' + format, path + 'TropicalSunnyDayRight' + format
+    ];
+    var textureCube =   this.loadTexture(urls);
+   
+    var bubbleShader = THREE.FresnelShader;
+    var material = new THREE.ShaderMaterial({
+        uniforms: {
+
+            "mRefractionRatio": { value: 1.02 },
+            "mFresnelBias": { value: 0.1 },
+            "mFresnelPower": { value: 2.0 },
+            "mFresnelScale": { value: 1.0 },
+            "tCube": { value: textureCube }
+
+        },
+        vertexShader: bubbleShader.vertexShader,
+        fragmentShader: bubbleShader.fragmentShader
+    });
+    this.materials['bubble']= material;
+}
+Bubbles.prototype.loadTexture = function (urls){
+    if(this.textures[urls]){
+        return this.textures[urls];
+    }
+    var textureCube = new THREE.CubeTextureLoader().load(urls);
+    textureCube.format = THREE.RGBFormat;
+    this.textures[urls] = textureCube;
+    return textureCube
+}
 Bubbles.prototype.onBubblesPositionRequest = function(){
     if(this.isHost)
     {
@@ -188,18 +219,20 @@ Bubbles.prototype.onMouseDown = function(event) {
     // calculate objects intersecting the picking ray
     var intersects = raycaster.intersectObjects(this.spheres);
 
-    for (var i = 0; i < intersects.length; i++) {
+    //for (var i = 0; i < intersects.length; i++) {
         
         //var basicMaterial = new THREE.MeshBasicMaterial( { color: 0xfff000, opacity: 0, wireframe: true } );
-
-        var object = intersects[i].object;
+    if(intersects[0]!=undefined){
+        var object = intersects[0].object;
 
         this.syncClient.sendExplodePosition(object.position);
         this.explode(object)
+    }
+        
        // this.addUserBubble(object.position)
         
 
-    }
+   // }
 
 }
 /*Bubbles.prototype.addUserBubble = function(position) {
@@ -232,21 +265,27 @@ Bubbles.prototype.onMouseDown = function(event) {
         console.log(mesh)
         this.scene.add(mesh)
 }*/
-Bubbles.prototype.onDocumentMouseWheel = function(event) {
-    event.preventDefault()
-    var fovMAX = 160;
-    var fovMIN = 1;
-console.log(entra)
-    this.camera.fov -= event.wheelDeltaY * 0.05;
-    this.camera.fov = Math.max( Math.min( this.camera.fov, fovMAX ), fovMIN );
-    this.camera.projectionMatrix = new THREE.Matrix4().makePerspective(this.camera.fov, window.innerWidth / window.innerHeight, this.camera.near, this.camera.far);
-}
+// Bubbles.prototype.onDocumentMouseWheel = function(event) {
+//     //event.preventDefault()
+//     var fovMAX = 160;
+//     var fovMIN = 1;
+// console.log("entra")
+//     this.camera.fov -= event.wheelDeltaY * 0.05;
+//     this.camera.fov = Math.max( Math.min( this.camera.fov, fovMAX ), fovMIN );
+//    // this.camera.projectionMatrix = new THREE.Matrix4().makePerspective(this.camera.fov, window.innerWidth / window.innerHeight, this.camera.near, this.camera.far);
+// }
 Bubbles.prototype.onDocumentMouseMove = function(event) {
 
     //clientX i clientY son respecte la pantalla, no respecte el Canvas!!!!!
     this.mouseX = -(event.clientX - this.windowHalfX) * 10;
     this.mouseY = -(event.clientY - this.windowHalfY) * 10;
 
+}
+
+Bubbles.prototype.onBubbleCountChanged = function(event) {
+
+    //clientX i clientY son respecte la pantalla, no respecte el Canvas!!!!!
+    document.querySelector("#bubbles-count").innerText = this.spheres.length;
 }
 
 
@@ -294,29 +333,28 @@ Bubbles.prototype.onBubbleExplode = function(position){
 Bubbles.prototype.explode = function(bubble){
     this.positions.splice(bubble.id - 5,1);
     this.scaling.splice(bubble.id - 5,1);
-    console.log(this.positions)
     var mini = bubble.clone();
     var radius = bubble.geometry.parameters.radius;
-    mini.scale.x = mini.scale.x/4;
-    mini.scale.y = mini.scale.y/4;
-    mini.scale.z = mini.scale.z/4;
+    mini.scale.x /= 4;
+    mini.scale.y /= 4;
+    mini.scale.z /= 4;
 
-    while(bubble.scale.x>0){
-        bubble.scale.x = bubble.scale.x *0.5;
-        bubble.scale.y = bubble.scale.y *0.5;
-        bubble.scale.z = bubble.scale.z *0.5;
+    while(bubble.scale.x>0.01){
+        bubble.scale.x *= 0.5;
+        bubble.scale.y *= 0.5;
+        bubble.scale.z *= 0.5;
     }
 
     var miniSpheres = [];
     for(var j=0; j<6 ; j++){
         miniSpheres.push(mini.clone());
     }
-    miniSpheres[0].position.x = miniSpheres[0].position.x +radius*2;
-    miniSpheres[1].position.x = miniSpheres[1].position.x -radius*2;
-    miniSpheres[2].position.y = miniSpheres[2].position.y +radius*2;
-    miniSpheres[3].position.y = miniSpheres[3].position.y -radius*2;
-    miniSpheres[4].position.z = miniSpheres[4].position.z +radius*2;
-    miniSpheres[5].position.z = miniSpheres[5].position.z -radius*2;
+    miniSpheres[0].position.x += radius*2;
+    miniSpheres[1].position.x -= radius*2;
+    miniSpheres[2].position.y += radius*2;
+    miniSpheres[3].position.y -= radius*2;
+    miniSpheres[4].position.z += radius*2;
+    miniSpheres[5].position.z -= radius*2;
 
     var group = new THREE.Group();
 
@@ -327,20 +365,30 @@ Bubbles.prototype.explode = function(bubble){
     //miniGroup.scale= miniGroup.scale/2;
     group2.rotation.x+=0.01
     group2.rotation.y+=0.01
-    this.scene.add(group)
-    this.scene.add(group2)
+    setTimeout(
+        this.addMeshToScene(group),
+        this.addMeshToScene(group2)
+    , 20)
+    
     setTimeout(function(){
         group.visible=false;
         group2.visible=false
-    }, 25)
+        /*scene.remove(group);
+        scene.remove(group2);*/
+    }, 35)
 
     // find which bubble to delete from list of spheres
     var bubble_to_delete = -1;
-    for(var i = 0; i < this.spheres.length; ++i)
-    	if(this.spheres[i].id == bubble.id)
+    for(var i = 0; i < this.spheres.length; ++i){
+    	if(this.spheres[i].id == bubble.id){
     		bubble_to_delete = i;
+            this.scene.remove(bubble)
+        }
+    }
 
     this.spheres.splice(bubble_to_delete, 1);
+
+    this.onBubbleCountChanged();
 
 }
 
@@ -364,5 +412,41 @@ Bubbles.prototype.setText = function(text ,position, font){
         mesh.position.y = 100;
         mesh.position.z = 0;
         this.secene.add(mesh)
+   
+}
+
+Bubbles.prototype.addMeshToScene = function(mesh){
+    this.scene.add(mesh)
+}
+
+Bubbles.prototype.addBubble = function (){
+    
+    var bubbleGeometry = new THREE.SphereGeometry(100, 32, 16);
+    var mesh = new THREE.Mesh(bubbleGeometry, this.materials['bubble']);
+
+    mesh.position.x =  Math.random() * 10000 - 5000;
+    mesh.position.y =  Math.random() * 10000 - 5000;
+    mesh.position.z =  Math.random() * 10000 - 5000;
+
+    mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
+
+    this.scene.add(mesh);
+    this.spheres.push(mesh);
+    this.syncClient.sendNewBubblePosition(mesh.position, mesh.scale)
+
+    this.onBubbleCountChanged();
+}
+Bubbles.prototype.onNewBubble = function(content){
+    var bubbleGeometry = new THREE.SphereGeometry(100, 32, 16);
+    var mesh = new THREE.Mesh(bubbleGeometry, this.materials['bubble']);
+    mesh.position.set(content.position.x, content.position.y, content.position.z);
+
+    mesh.scale.set(content.scaling.x, content.scaling.y, content.scaling.z);
+    this.scene.add(mesh);
+    this.positions.push(mesh.position)
+    this.scaling.push(mesh.scaling)
+    this.spheres.push(mesh);
+
+    this.onBubbleCountChanged();
    
 }
