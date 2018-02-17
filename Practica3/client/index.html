@@ -14,27 +14,54 @@
     <script src="js/Treant/Treant.js"></script>
     <script src="js/book_tree.js"></script>
     <script>
+    var xhr = new XMLHttpRequest();
+    var url = "http://localhost:13456/setbookchapter/";
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var json = JSON.parse(xhr.responseText);
+            console.log(json.email + ", " + json.password);
+        }
+    };
 
-    node_html_template = "<div class=node-container> <span>  </span></div>"
-
-
-    book_tree = new BookTree("body");
-    nodeStructure = {
-        text: { name: "Primer capítol" },
-        innerHTML : "<button class=book-node id=1_1>Primer Capítol</button>",
-        children: [{
-                text: { name: "S'escapa" }
+    var new_chapter = {
+        "parent": 1,
+        "title": "Un altre capítol d'aquests",
+        "text": "Més text",
+        "chapter_author": "Un altre autor",
+        "state": "on_progress",
+        "is_terminal": "false",
+        "children": [{
+                "text": "Opció 1 un altre cop"
             },
             {
-                text: { name: "S'escapa 2" },
-                children: [{
-                    text: { name: "L'acaba trobant" }
-                }]
+                "text": "Una altra opció (la 2, en aquest cas)"
             }
         ]
     }
+    xhr.send(JSON.stringify(new_chapter));
 
-    book_tree.loadTree(nodeStructure);
+    // node_html_template = "<div class=node-container> <span>  </span></div>"
+
+
+    // book_tree = new BookTree("body");
+    // nodeStructure = {
+    //     text: { name: "Primer capítol" },
+    //     innerHTML : "<button class=book-node id=1_1>Primer Capítol</button>",
+    //     children: [{
+    //             text: { name: "S'escapa" }
+    //         },
+    //         {
+    //             text: { name: "S'escapa 2" },
+    //             children: [{
+    //                 text: { name: "L'acaba trobant" }
+    //             }]
+    //         }
+    //     ]
+    // }
+
+    // book_tree.loadTree(nodeStructure);
     </script>
 </body>
 
