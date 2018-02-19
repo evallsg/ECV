@@ -12,16 +12,14 @@ var server = http.createServer(function(request, response) {
         var chapter = getChapterInfo(request_parsed[1], request_parsed[2]);
         response.end(JSON.stringify(chapter));
     } else if (request_parsed[0] == "setbookchapter" && request_parsed.length == 2) {
-        var body = "";
-        request.on('data', function() {
-            body += request.read();
-        });
-        request.on('end', function() {
-            console.log(body);
-            response.write("OK");
-            response.end();
-        });
-
+        
+		request.on('data', (chunk) => {
+		  console.log(`Received ${chunk.length} bytes of data.`);
+		});
+		request.on('end', () => {
+		  console.log('There will be no more data.');
+		});
+        
         var url_info = url.parse(request.url, true);
         //console.log(url_info);
         var book_name = url_info.pathname.split("/").slice(2);
