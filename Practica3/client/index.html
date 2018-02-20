@@ -18,7 +18,7 @@
 
     var xhr = new XMLHttpRequest();
     //var url = "http://localhost:13456/setbookchapter/";
-    var url = "http://84.89.136.194:13456/setbookchapter/";
+    var url = "http://84.89.136.194:14546/createbookchapter/my_book";
     xhr.open("POST", url);
     xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
     xhr.onreadystatechange = function() {
@@ -30,6 +30,7 @@
 
     var new_chapter = {
         "parent": "1",
+        "id" : "2",
         "title": "Un altre capítol d'aquests",
         "text": "Més text",
         "chapter_author": "Un altre autor",
