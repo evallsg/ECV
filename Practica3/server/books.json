@@ -1,0 +1,56 @@
+[
+  {
+    "book_name": "my_book",
+    "book_author": "Book Author",
+    "state": "on_progress",
+    "chapters": [
+      {
+        "id": 0,
+        "parent": -1,
+        "title": "Primer capítol",
+        "text": "Text del primer capítol",
+        "chapter_author": "Chapter 0 Author",
+    	"state": "finished",
+    	"is_terminal": "false",
+        "children": [
+          {
+            "id": 1,
+            "text": "Fuig per la porta."
+          },
+          {
+            "id": 2,
+            "text": "Enfronta't-hi."
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "parent": 0,
+        "title": "Un altre capítol",
+        "text": "Què passa quan fuges.",
+        "chapter_author": "Chapter 1 Author",
+    	"state": "finished",
+    	"is_terminal": "false",
+        "children": [
+          {
+            "id": 3,
+            "text": "Opció 1."
+          },
+          {
+            "id": 4,
+            "text": "Opció 2."
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "parent": 0,
+        "title": "Un altre capítol",
+        "text": "Què passa quan t'hi enfrontes.",
+        "chapter_author": "Chapter 2 Author",
+    	"state": "on_progress",
+    	"is_terminal": "true"
+      }
+    ]
+  }
+]
