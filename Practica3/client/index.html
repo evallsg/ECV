@@ -16,39 +16,37 @@
     <script>
 	var formData = new FormData();
 
-    var xhr = new XMLHttpRequest();
-    //var url = "http://localhost:13456/setbookchapter/";
-    var url = "http://84.89.136.194:14546/createbookchapter/my_book";
-    xhr.open("POST", url);
-    xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var json = JSON.parse(xhr.responseText);
-            console.log(json.email + ", " + json.password);
+    var ws = new WebSocket("ws://localhost:14546")
+
+    // var xhr = new XMLHttpRequest();
+    // //var url = "http://localhost:13456/setbookchapter/";
+    // var url = "http://84.89.136.194:14546/createbookchapter/my_book";
+    // xhr.open("POST", url);
+    // xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
+    // xhr.onreadystatechange = function() {
+    //     if (xhr.readyState === 4 && xhr.status === 200) {
+    //         var json = JSON.parse(xhr.responseText);
+    //         console.log(json.email + ", " + json.password);
+    //     }
+    // };
+
+    ws.onopen = function() {
+        var message = {
+            "type": "getbookchapter",
+            "info" : {
+                "book_name": "my_book",
+                "chapter": 0
+            }
         }
+
+        // var blob = new Blob([JSON.stringify(message)], { type: "text/json"});
+        // formData.append("getbookchapter", blob);
+        ws.send(JSON.stringify(message));
     };
 
-    var new_chapter = {
-        "parent": "1",
-        "id" : "2",
-        "title": "Un altre capítol d'aquests",
-        "text": "Més text",
-        "chapter_author": "Un altre autor",
-        "state": "on_progress",
-        "is_terminal": "false",
-        "children": [{
-                "text": "Opció 1 un altre cop"
-            },
-            {
-                "text": "Una altra opció (la 2, en aquest cas)"
-            }
-        ]
-    }
-
-    var blob = new Blob([JSON.stringify(new_chapter)], { type: "text/json"});
-    formData.append("webmasterfile", blob);
-    xhr.send(formData);
-
+    ws.onmessage = function(data) {
+      console.log(data);
+    };
     // node_html_template = "<div class=node-container> <span>  </span></div>"
 
 
