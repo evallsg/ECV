@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>three.js webgl - materials - shaders [Fresnel]</title>
+    <title></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link href="css/style.css" rel="stylesheet">
@@ -13,60 +13,16 @@
     <script src="js/Treant/vendor/raphael.js"></script>
     <script src="js/Treant/Treant.js"></script>
     <script src="js/book_tree.js"></script>
+    <script src="js/client.js"></script>
     <script>
-	var formData = new FormData();
+    	client = new Book_Client( init );
+        function init()
+        {
+            //client.register("mjuvilla@gmail.com", "123456", "Marc");
 
-    var ws = new WebSocket("ws://localhost:14546")
-
-    // var xhr = new XMLHttpRequest();
-    // //var url = "http://localhost:13456/setbookchapter/";
-    // var url = "http://84.89.136.194:14546/createbookchapter/my_book";
-    // xhr.open("POST", url);
-    // xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
-    // xhr.onreadystatechange = function() {
-    //     if (xhr.readyState === 4 && xhr.status === 200) {
-    //         var json = JSON.parse(xhr.responseText);
-    //         console.log(json.email + ", " + json.password);
-    //     }
-    // };
-
-    ws.onopen = function() {
-        var message = {
-            "type": "getbookchapter",
-            "info" : {
-                "book_name": "my_book",
-                "chapter": 0
-            }
+            client.addBook("cool book name");
+            
         }
-
-        // var blob = new Blob([JSON.stringify(message)], { type: "text/json"});
-        // formData.append("getbookchapter", blob);
-        ws.send(JSON.stringify(message));
-    };
-
-    ws.onmessage = function(data) {
-      console.log(data);
-    };
-    // node_html_template = "<div class=node-container> <span>  </span></div>"
-
-
-    // book_tree = new BookTree("body");
-    // nodeStructure = {
-    //     text: { name: "Primer capítol" },
-    //     innerHTML : "<button class=book-node id=1_1>Primer Capítol</button>",
-    //     children: [{
-    //             text: { name: "S'escapa" }
-    //         },
-    //         {
-    //             text: { name: "S'escapa 2" },
-    //             children: [{
-    //                 text: { name: "L'acaba trobant" }
-    //             }]
-    //         }
-    //     ]
-    // }
-
-    // book_tree.loadTree(nodeStructure);
     </script>
 </body>
 
