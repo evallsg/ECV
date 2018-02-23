@@ -1,30 +1,91 @@
-var xhr = new XMLHttpRequest();
-var url = "84.89.136.194:13456";
-xhr.open("POST", url, true);
-xhr.setRequestHeader("Content-type", "application/json");
-xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-        var json = JSON.parse(xhr.responseText);
-        console.log(json.email + ", " + json.password);
-    }
-};
+class Book_Client
+{
+  constructor( on_complete )
+  {
+    this.ws = new WebSocket("ws://localhost:14546")
 
-var new_chapter = {
-  "parent": 1,
-  "title": "Un altre capítol d'aquests",
-  "text": "Més text",
-  "chapter_author": "Un altre autor",
-  "state": "on_progress",
-  "is_terminal": "false",
-  "children": [
-    {
-      "text": "Opció 1 un altre cop"
-    },
-    {
-      "text": "Una altra opció (la 2, en aquest cas)"
-    }
-  ]
+    this.ws.onopen = function() {
+      if(on_complete)
+          on_complete();     
+    };
+    var that = this;
+    this.ws.onmessage = function(message) {
+      var response = JSON.parse(message.data)
+      switch(response.type){
+        case"getbookchapter": 
+            break;
+        case "createbookchapter":
+            break;
+        case "savebookchapter":
+            break;
+        case "addbook":
+            that.requestAddNewChapter(response.book_id, response.chapter_id, "First decision")
+            break;
+        case "register":
+            break;
+        case "addchapter":
+            break;
+      }
+    };
+
+  }
 }
 
-var data = JSON.stringify(new_chapter);
-xhr.send(data);
+Book_Client.prototype.requestChapter = function(book_name, chapter_id) {
+  console.log("Requesting chapter")
+  var message = {
+            "type": "getbookchapter",
+            "info" : {
+                "book_name": book_name,
+                "chapter": chapter_id
+            }
+        }
+
+  this.ws.send(JSON.stringify(message));
+};
+
+Book_Client.prototype.requestAddNewChapter = function(book_id, parent_chapter_id, decision_text) {
+  console.log("Creating chapter")
+  var message = {
+            "type": "addchapter",
+            "info" : {
+                "bookId": book_id,
+                "parentId": parent_chapter_id,
+                "decision": decision_text
+            }
+        }
+
+  this.ws.send(JSON.stringify(message));
+};
+
+Book_Client.prototype.requestUpdateChapter = function(book_id, parent_chapter_id, title_text, body_text) {
+  // body...
+};
+
+Book_Client.prototype.addBook = function(title) {
+  console.log("Requesting chapter")
+  var message = {
+            "type": "addbook",
+            "info" : {
+                "title": title,
+                "userId": "marc",
+                "genre": "noire"
+            }
+        }
+
+  this.ws.send(JSON.stringify(message));
+};
+
+Book_Client.prototype.register = function(email, password, name) {
+  console.log("Requesting chapter")
+  var message = {
+            "type": "register",
+            "info" : {
+                "email": email,
+                "password": password,
+                "name": name
+            }
+        }
+
+  this.ws.send(JSON.stringify(message));
+};
