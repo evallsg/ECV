@@ -1,71 +1,44 @@
 var WebSocket = require('ws');
 var http = require('http');
-var url = require('url');
 var fs = require('fs');
+var Database = require('./database.js');
 
 function Book_Server(){
     this.init();
-}
 
-// prototype for book objects
-function Book(book_name, book_author, state, chapters){
-    this.book_name = book_name;
-    this.book_author = book_author;
-    this.state = state;
-    this.chapters = chapters;
-}
-
-// prototype for book chapters
-// children should be a vector containing {id: next_chapter_idx, decision_text: "text of the decision leading to next_chapter_idx"}
-function Chapter(parent, chapter_author){
-        this.id = -1;
-        this.parent = parent;
-        this.chapter_author = chapter_author;
-        this.title = "";
-        this.text = "";
-        this.state = "on_progress";
-        this.is_terminal = 0;
-        this.children = [];
-}
-
-Book_Server.prototype.updateBookCollection = function()
-{
-    //TODO: save the book collection file
-}
-
-function getJsonDataFromRequest(request, response, callback_func)
-{
-    data = "";
-    request.on('data', (chunk) => {
-        data += chunk;
-      console.log(`Received ${chunk.length} bytes of data.`);
-    });
-    request.on('end', () => {
-      console.log('There will be no more data.');
-      console.log(data);
-      callback_func(data, response);
-    });
+    this.firebase_db = new Database();
+    this.firebase_db.init();
 }
 
 Book_Server.prototype.processRequest = function(object, ws)
 {
-
-    if (object.type == "getbookchapter") {
-
-        this.getChapterInfo(object, ws);
-
-    } else if (object.type == "createbookchapter") {
-        // what we need: decision_text, book_name, parent chapter, chapter_author
-        this.createNewChapter(object);
-        ws.send();
-
-    } else if (object.type == "savebookchapter") {
-
-        this.saveBookChapter(object);
-        ws.send();
-
-    }
-
+	switch(object.type){
+   		case"getbookchapter": 
+        	this.getChapter(object, ws);
+        	break;
+    	case "createbookchapter":
+        	this.createNewChapter(object);
+        	ws.send();
+        	break;
+    	case "savebookchapter":
+        	this.saveBookChapter(object);
+        	ws.send();
+        	break;
+    	case "addbook":
+    		this.firebase_db.addBook(object.info);
+    		var chapterId = this.firebase_db.addChapter(object.info);
+    	    ws.send(JSON.stringify({"type": "addbook", "book_id" : object.info.bookId, "chapter_id" : object.info.id}));
+    	    break;
+    	case "register":
+    		this.firebase_db.register(object.info);
+        	ws.send();
+        	break;
+    	case "addchapter":
+    		object.info.userId = "marc";
+    		this.firebase_db.addChapter(object.info);
+        	ws.send();
+        	break;
+	}
 }
 
 Book_Server.prototype.init = function()
@@ -91,24 +64,27 @@ Book_Server.prototype.init = function()
             console.log('received: %s', message);
             var object_message = JSON.parse(message);
             that.processRequest(object_message, ws);
-            ws.send("Got it");
             //that.
         });
         ws.on("close", function(message){
-            var index = clients.indexOf(ws)
-            clients.splice(index)
-            console.log("User disconnected")
+            var index = clients.indexOf(ws);
+            clients.splice(index);
+            console.log("User disconnected");
+            ws.close();
         });
-        ws.send('something');
+        ws.on('error', function(err) { 
+			console.log(err);
+        });
+        //ws.send('something');
     });
 
 }
 
-Book_Server.prototype.getChapterInfo = function(object, ws) {
+Book_Server.prototype.getChapter = function(object, ws) {
     //console.log("Getting book " + book_name + " chapter " + chapter_id);
 
     var book = this.books_collection.find(o => o.book_name === object.info.book_name);
-    console.log(book);
+    //console.log(book);
 
     if (book == null)
         return "None";
@@ -116,7 +92,11 @@ Book_Server.prototype.getChapterInfo = function(object, ws) {
     var chapter = book["chapters"].find(o => o.id == object.info.chapter);
     if (chapter == null)
         return "None";
-    ws.send(JSON.stringify(chapter));
+
+    var message = {"type": "getbookchapter",
+					"info": chapter}
+
+    ws.send(JSON.stringify(message));
 }
 
 Book_Server.prototype.createNewChapter = function(object) {
@@ -150,5 +130,6 @@ Book_Server.prototype.saveBookChapter = function(object) {
     //     return "None";
     // return chapter;
 }
+
 
 server = new Book_Server();
