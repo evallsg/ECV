@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link href="css/style.css" rel="stylesheet">
-
 </head>
 
 <body class="home-back">
@@ -17,12 +16,32 @@
         <li><a class="menu-options" href="#authors">Authors</a></li>
         <li><a class="menu-options" href="#comments">Comments</a></li>
     </ul>
-
     <script src="js/client.js"></script>
-    
     <script src="js/md5.min.js"></script>
-    
+    <script>
+        document.getElementsByTagName("body")[0].style.display = "none";
 
+        function books_received(object)
+        {
+            var cosa = 0
+        }
+
+        function chapters_from_book_received(object)
+        {
+            var cosa = 0
+        }
+
+        function loadedBooks() {
+            document.getElementsByTagName("body")[0].style.display = "initial";
+
+            book_client.requestAddBook("And yet another astonishing book", "sci-fi");
+
+            var stuff = book_client.requestAllChapters("", chapters_from_book_received.bind(this));
+
+            //book_client.requestLogin("mjuvilla@gmail.com", "123456$")
+        }
+        book_client = new Book_Client(loadedBooks.bind(this))
+    </script>
 </body>
 
 </html>
