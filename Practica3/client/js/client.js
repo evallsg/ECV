@@ -107,20 +107,6 @@ Book_Client.prototype.requestLogin = function(email, password) {
 };
 
 
-Book_Client.prototype.register = function(email, password, name) {
-  console.log("Requesting chapter")
-  var message = {
-            "type": "register",
-            "info" : {
-                "email": email,
-                "password": password,
-                "name": name
-            }
-        }
-
-  this.ws.send(JSON.stringify(message));
-};
-
 Book_Client.prototype.requestAllBooks = function(callback_received_all_books) {
   console.log("Requesting chapter")
   var message = {
