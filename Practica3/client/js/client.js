@@ -119,10 +119,11 @@ Book_Client.prototype.requestAllBooks = function(callback_received_all_books) {
   this.ws.send(JSON.stringify(message));
 };
 
-Book_Client.prototype.requestAllChapters = function(callback_received_all_chapters) {
+Book_Client.prototype.requestAllChapters = function(book_id, callback_received_all_chapters) {
   console.log("Requesting chapters")
   var message = {
-            "type": "getchapters"
+            "type": "getchapters",
+            "bookId": book_id
         }
   this.callback_received_all_chapters = callback_received_all_chapters;
   this.ws.send(JSON.stringify(message));
