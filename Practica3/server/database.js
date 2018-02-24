@@ -135,18 +135,27 @@ Database.prototype.getChapter = function(bookId, chapterId) {
 Database.prototype.getBookChapters = function(bookId) {
 
     var ref = this.db.ref("books/" + bookId+"/chapters");
-    ref.on("value", function(chapters) {
+    /*ref.on("value", function(chapters) {
         console.log(chapters.val());
         return chapters.val();
     }, function(errorObject) {
         console.log("The read failed: " + errorObject.code);
         return null;
-    });
+    });*/
+    return ref.once("value").then(function(chapters){
+        return chapters.val();
+    },function(errorObject) {
+        console.log("The read failed: " + errorObject.code);
+        return null;
+    }
+    )
 }
 Database.prototype.updateChapter = function(chapterId,data){
-  this.db.ref("chapters/" + chapterId).update(data)
+
+    this.db.ref("chapters/" + chapterId).update(data)
 }
 /*var Database = new Database();
 Database.init()
-Database.updateChapter("-L66ZNz7XkMlMpBKDSXo", {text: "sdufsidufisd", finished:true})*/
-//module.exports = Database;
+var data = Database.getBookChapters("-L66TgPRrdkWk5Mze22k")
+console.log(data)*/
+module.exports = Database;
