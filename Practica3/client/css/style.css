@@ -1,24 +1,62 @@
-.node.book-tree { 
-	padding: 0 2px;
-	min-width: 60px;
-	text-align: center;
-	height: 30px;
-	border: 2px solid #E8E8E3; 
-	border-radius: 2px;
-	box-shadow: 1px 1px 1px rgba(0,0,0,.5);
-	background: #fff; 
+body{
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+}
+header {
+    height: 60px;
+    width: 100%;
+    background: #EDEDED;
+    border-color: #dadad9;
+    border-bottom-style: solid;
+    border-width: 1px;
+    display: fixed;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100%;
+    background: #EDEDED;
+    border-color: #dadad9;
+    border-bottom-style: solid;
+    border-width: 1px;
 }
 
+li {
 
-
-.book-node
-{
-	background: #fff; 
-	border: 0px solid #E8E8E3; 
+    float: left;
 }
 
-.book-node:active
-{
-	background: #fff; 
-	border: 0px solid #E8E8E3; 
+li a {
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+
+}
+
+.menu-options:hover {
+    background-color: rgba(252,240,240,0.9);
+}
+
+.home-back{
+	background: #F1F0EE;
+}
+.menu-title{
+
+    text-align: center;
+    border-style: hidden;
+    background: rgba(184,126,158, 0.6);
+    color: whitesmoke;
+    border-radius: 2px;
+    margin-left: 1px;
+    margin-top: 0;
+}
+.menu-options{
+    height: 100%;
+    width: 131px;
+    text-align: center;
+ 	color: black;
 }
