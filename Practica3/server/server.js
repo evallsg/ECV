@@ -27,17 +27,27 @@ Book_Server.prototype.processRequest = function(object, ws)
     	case "addbook":
     		this.firebase_db.addBook(object.info);
     		var chapterId = this.firebase_db.addChapter(object.info);
-    	    ws.send(JSON.stringify({"type": "addbook", "book_id" : object.info.bookId, "chapter_id" : object.info.id}));
+    	    ws.send(JSON.stringify({"type": object.type, "book_id" : object.info.bookId, "chapter_id" : object.info.id}));
     	    break;
     	case "register":
     		this.firebase_db.register(object.info);
         	ws.send();
         	break;
+        case "login":
+            this.firebase_db.login(object.info);
+            ws.send();
+            break;
+
     	case "addchapter":
     		object.info.userId = "marc";
     		this.firebase_db.addChapter(object.info);
         	ws.send();
         	break;
+        case "allbooks":
+            // TODO: function to get all books
+            //var allbooks = this.firebase_db.addChapter(object.info);
+            ws.send(JSON.stringify({"type": object.type, "info":[{"book_name": "book1"}, {"book_name" : "book2"}]}));
+            break;
 	}
 }
 
