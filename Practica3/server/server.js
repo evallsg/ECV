@@ -3,58 +3,58 @@ var http = require('http');
 var fs = require('fs');
 var Database = require('./database.js');
 
-function Book_Server(){
+function Book_Server() {
     this.init();
 
     this.firebase_db = new Database();
     this.firebase_db.init();
 }
 
-Book_Server.prototype.processRequest = function(object, ws)
-{
-	switch(object.type){
-   		case"getbookchapter": 
-        	this.getChapter(object, ws);
-        	break;
-    	case "createbookchapter":
-        	this.createNewChapter(object);
-        	ws.send();
-        	break;
-    	case "savebookchapter":
-        	this.saveBookChapter(object);
-        	ws.send();
-        	break;
-    	case "addbook":
-    		this.firebase_db.addBook(object.info);
-    		var chapterId = this.firebase_db.addChapter(object.info);
-    	    ws.send(JSON.stringify({"type": object.type, "book_id" : object.info.bookId, "chapter_id" : object.info.id}));
-    	    break;
-    	case "register":
-    		this.firebase_db.register(object.info);
-        	ws.send();
-        	break;
+Book_Server.prototype.processRequest = function(object, ws) {
+    switch (object.type) {
+        case "getbookchapter":
+            this.getChapter(object, ws);
+            break;
+        case "createbookchapter":
+            this.addChapter(object);
+            ws.send();
+            break;
+        case "savebookchapter":
+            this.saveBookChapter(object);
+            ws.send();
+            break;
+        case "addbook":
+            this.firebase_db.addBook(object.info);
+            var chapterId = this.firebase_db.addChapter(object.info);
+            ws.send(JSON.stringify({ "type": object.type, "book_id": object.info.bookId, "chapter_id": object.info.id }));
+            break;
+        case "register":
+            this.firebase_db.register(object.info);
+            ws.send();
+            break;
         case "login":
             this.firebase_db.login(object.info);
             ws.send();
             break;
-
-    	case "addchapter":
-    		object.info.userId = "marc";
-    		this.firebase_db.addChapter(object.info);
-        	ws.send();
-        	break;
-        case "allbooks":
-            // TODO: function to get all books
-            //var allbooks = this.firebase_db.addChapter(object.info);
-            ws.send(JSON.stringify({"type": object.type, "info":[{"book_name": "book1"}, {"book_name" : "book2"}]}));
+        case "addchapter":
+            object.info.userId = "marc";
+            this.firebase_db.addChapter(object.info);
+            ws.send();
             break;
-	}
+        case "allbooks":
+            var result = this.firebase_db.geAllBooks();
+            ws.send(JSON.stringify({ "type": object.type, "info": result}));
+            break;
+        case "getchapters":
+            var result = this.firebase_db.getBookChapters(object.info);
+            ws.send(JSON.stringify({ "type": object.type, "info": result}));
+            break;
+    }
 }
 
-Book_Server.prototype.init = function()
-{
+Book_Server.prototype.init = function() {
     this.books_collection = JSON.parse(fs.readFileSync('books.json', 'utf8'));
-    var that =  this;
+    var that = this;
     var clients = []
 
     this.server = http.createServer();
@@ -63,27 +63,27 @@ Book_Server.prototype.init = function()
         console.log("Server ready!");
     });
 
-    var wss = new WebSocket.Server({ server: this.server});
+    var wss = new WebSocket.Server({ server: this.server });
 
     wss.on('connection', function connection(ws) {
         clients.push(ws);
         console.log("User connected")
         ws.on('message', function incoming(message) {
-        
+
             //TODO: check if json
             console.log('received: %s', message);
             var object_message = JSON.parse(message);
             that.processRequest(object_message, ws);
             //that.
         });
-        ws.on("close", function(message){
+        ws.on("close", function(message) {
             var index = clients.indexOf(ws);
             clients.splice(index);
             console.log("User disconnected");
             ws.close();
         });
-        ws.on('error', function(err) { 
-			console.log(err);
+        ws.on('error', function(err) {
+            console.log(err);
         });
         //ws.send('something');
     });
@@ -103,8 +103,10 @@ Book_Server.prototype.getChapter = function(object, ws) {
     if (chapter == null)
         return "None";
 
-    var message = {"type": "getbookchapter",
-					"info": chapter}
+    var message = {
+        "type": "getbookchapter",
+        "info": chapter
+    }
 
     ws.send(JSON.stringify(message));
 }

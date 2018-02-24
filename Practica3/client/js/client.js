@@ -28,6 +28,9 @@ class Book_Client
         case "allbooks":
             that.callback_received_all_books(response.info);
             break;
+        case "getchapters":
+            that.callback_received_all_chapters(response.info);
+            break;
       }
     };
 
@@ -48,7 +51,7 @@ Book_Client.prototype.requestChapter = function(book_name, chapter_id) {
 };
 
 Book_Client.prototype.requestAddNewChapter = function(book_id, parent_chapter_id, decision_text) {
-  console.log("Creating chapter")
+  console.log("Creating add new chapter")
   var message = {
             "type": "addchapter",
             "info" : {
@@ -65,14 +68,14 @@ Book_Client.prototype.requestUpdateChapter = function(book_id, parent_chapter_id
   // body...
 };
 
-Book_Client.prototype.addBook = function(title) {
-  console.log("Requesting chapter")
+Book_Client.prototype.requestAddBook = function(title, genre) {
+  console.log("Requesting add book")
   var message = {
             "type": "addbook",
             "info" : {
                 "title": title,
                 "userId": "marc",
-                "genre": "noire"
+                "genre": genre
             }
         }
 
@@ -80,7 +83,7 @@ Book_Client.prototype.addBook = function(title) {
 };
 
 Book_Client.prototype.requestRegister = function(email, password, name) {
-  console.log("Requesting chapter")
+  console.log("Requesting register")
   var message = {
             "type": "register",
             "info" : {
@@ -94,7 +97,7 @@ Book_Client.prototype.requestRegister = function(email, password, name) {
 };
 
 Book_Client.prototype.requestLogin = function(email, password) {
-  console.log("Requesting chapter")
+  console.log("Requesting login")
   var message = {
             "type": "login",
             "info" : {
@@ -108,10 +111,19 @@ Book_Client.prototype.requestLogin = function(email, password) {
 
 
 Book_Client.prototype.requestAllBooks = function(callback_received_all_books) {
-  console.log("Requesting chapter")
+  console.log("Requesting all books")
   var message = {
             "type": "allbooks"
         }
   this.callback_received_all_books = callback_received_all_books;
+  this.ws.send(JSON.stringify(message));
+};
+
+Book_Client.prototype.requestAllChapters = function(callback_received_all_chapters) {
+  console.log("Requesting chapters")
+  var message = {
+            "type": "getchapters"
+        }
+  this.callback_received_all_chapters = callback_received_all_chapters;
   this.ws.send(JSON.stringify(message));
 };
