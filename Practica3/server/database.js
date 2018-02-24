@@ -55,13 +55,15 @@ Database.prototype.deleteUser = function(uid) {
 Database.prototype.getAllBooks = function() {
 
     var ref = this.db.ref("books");
-    ref.on("value", function(book) {
-        console.log(book.val());
-        return book.val();
-    }, function(errorObject) {
-        console.log("The read failed: " + errorObject.code);
-        return null;
-    });
+    return ref.once("value").then( 
+        function(book) {
+            return book.val();
+        }, 
+        function(errorObject) {
+            console.log("The read failed: " + errorObject.code);
+            return null;
+        }
+    );
 }
 Database.prototype.addBook = function(data) {
     var ref = this.db.ref("books").push();
@@ -82,13 +84,15 @@ Database.prototype.addBook = function(data) {
 Database.prototype.getBook = function(uid) {
 
     var ref = this.db.ref("books/" + uid);
-    ref.on("value", function(book) {
-        console.log(book.val());
-        return book.val();
-    }, function(errorObject) {
-        console.log("The read failed: " + errorObject.code);
-        return null;
-    });
+    return ref.once("value").then(
+        function(book) {
+            return book.val();
+        }, 
+        function(errorObject) {
+            console.log("The read failed: " + errorObject.code);
+            return null;
+        }
+    );
 }
 
 Database.prototype.addChapter = function(data) {
@@ -121,33 +125,31 @@ Database.prototype.addChapter = function(data) {
             console.log("Error adding chapter:", error);
         });
 }
-Database.prototype.getChapter = function(bookId, chapterId) {
+Database.prototype.getChapter = function(chapterId) {
 
     var ref = this.db.ref("chapters/" + chapterId);
-    ref.on("value", function(chapter) {
-        console.log(chapter.val());
-        return chapter.val();
-    }, function(errorObject) {
-        console.log("The read failed: " + errorObject.code);
-        return null;
-    });
+    return ref.once("value").then(
+        function(chapter) {
+            return chapter.val();
+        }, 
+        function(errorObject) {
+            console.log("The read failed: " + errorObject.code);
+            return null;
+        }
+    );
 }
 Database.prototype.getBookChapters = function(bookId) {
 
     var ref = this.db.ref("books/" + bookId+"/chapters");
-    /*ref.on("value", function(chapters) {
-        console.log(chapters.val());
-        return chapters.val();
-    }, function(errorObject) {
-        console.log("The read failed: " + errorObject.code);
-        return null;
-    });*/
-    return ref.once("value").then(function(chapters){
-        return chapters.val();
-    },function(errorObject) {
-        console.log("The read failed: " + errorObject.code);
-        return null;
-    }
+
+    return ref.once("value").then(
+        function(chapters){
+            return chapters.val();
+        },
+        function(errorObject){
+            console.log("Error: " + errorObject.code);
+            return null;
+        }
     )
 }
 Database.prototype.updateChapter = function(chapterId,data){
@@ -156,6 +158,14 @@ Database.prototype.updateChapter = function(chapterId,data){
 }
 /*var Database = new Database();
 Database.init()
-var data = Database.getBookChapters("-L66TgPRrdkWk5Mze22k")
-console.log(data)*/
+/*Database.addChapter({
+            bookId:"-L68B3w1VxEg_uSe8kXm",
+            text: "",
+            userId: 126534,
+            finished: false,
+            is_terminal: false})*/
+/*Database.getChapter("-L68TSLUT9TpT4cHBdJ2").then(function(data){
+    console.log(data)
+})*/
+
 module.exports = Database;
