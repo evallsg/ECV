@@ -52,7 +52,7 @@ Database.prototype.deleteUser = function(uid) {
             console.log("Error deleting user:", error);
         });
 }
-Database.prototype.geAllBooks = function() {
+Database.prototype.getAllBooks = function() {
 
     var ref = this.db.ref("books");
     ref.on("value", function(book) {
@@ -92,7 +92,7 @@ Database.prototype.getBook = function(uid) {
 }
 
 Database.prototype.addChapter = function(data) {
-    var ref = this.db.ref("chapters/" + data.bookId).push();
+    var ref = this.db.ref("chapters").push();
     var that = this;
     data.id = ref.key;
     ref.set({
@@ -105,11 +105,17 @@ Database.prototype.addChapter = function(data) {
             is_terminal: false
         }).then(function() {
             if (data.parentId != null) {
-                var ref = that.admin.database().ref("chapters/" + data.bookId + "/" + data.parentId + "/children/" + data.id)
+                var ref = that.admin.database().ref("chapters/"+ data.parentId + "/children/" + data.id)
                 ref.set({
                     decision: data.decision
                 });
             }
+            var ref2 = that.admin.database().ref("books/"+data.bookId + "/chapters").push();
+            ref2.set({
+                id: data.id,
+                decision: data.decision != undefined ? data.decision : null
+            })
+
         })
         .catch(function(error) {
             console.log("Error adding chapter:", error);
@@ -117,7 +123,7 @@ Database.prototype.addChapter = function(data) {
 }
 Database.prototype.getChapter = function(bookId, chapterId) {
 
-    var ref = this.db.ref("chapterS/" + bookId + "/" + chapterId);
+    var ref = this.db.ref("chapters/" + chapterId);
     ref.on("value", function(chapter) {
         console.log(chapter.val());
         return chapter.val();
@@ -128,7 +134,7 @@ Database.prototype.getChapter = function(bookId, chapterId) {
 }
 Database.prototype.getBookChapters = function(bookId) {
 
-    var ref = this.db.ref("chapterS/" + bookId);
+    var ref = this.db.ref("books/" + bookId+"/chapters");
     ref.on("value", function(chapters) {
         console.log(chapters.val());
         return chapters.val();
@@ -137,12 +143,10 @@ Database.prototype.getBookChapters = function(bookId) {
         return null;
     });
 }
-/*Database.prototype.updateChapters = function(data){
-  var updates = {};
-  updates['/posts/' + newPostKey] = postData;
-  updates['/user-posts/' + uid + '/' + newPostKey] = postData;
-  return firebase.database().ref().update(updates);
-}*/
+Database.prototype.updateChapter = function(chapterId,data){
+  this.db.ref("chapters/" + chapterId).update(data)
+}
 /*var Database = new Database();
-Database.init()*/
-module.exports = Database;
+Database.init()
+Database.updateChapter("-L66ZNz7XkMlMpBKDSXo", {text: "sdufsidufisd", finished:true})*/
+//module.exports = Database;
