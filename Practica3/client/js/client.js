@@ -25,6 +25,9 @@ class Book_Client
             break;
         case "addchapter":
             break;
+        case "allbooks":
+            that.callback_received_all_books(response.info);
+            break;
       }
     };
 
@@ -76,6 +79,34 @@ Book_Client.prototype.addBook = function(title) {
   this.ws.send(JSON.stringify(message));
 };
 
+Book_Client.prototype.requestRegister = function(email, password, name) {
+  console.log("Requesting chapter")
+  var message = {
+            "type": "register",
+            "info" : {
+                "email": email,
+                "password": md5(password),
+                "name": name
+            }
+        }
+
+  this.ws.send(JSON.stringify(message));
+};
+
+Book_Client.prototype.requestLogin = function(email, password) {
+  console.log("Requesting chapter")
+  var message = {
+            "type": "login",
+            "info" : {
+                "email": email,
+                "password": md5(password)
+            }
+        }
+
+  this.ws.send(JSON.stringify(message));
+};
+
+
 Book_Client.prototype.register = function(email, password, name) {
   console.log("Requesting chapter")
   var message = {
@@ -87,5 +118,14 @@ Book_Client.prototype.register = function(email, password, name) {
             }
         }
 
+  this.ws.send(JSON.stringify(message));
+};
+
+Book_Client.prototype.requestAllBooks = function(callback_received_all_books) {
+  console.log("Requesting chapter")
+  var message = {
+            "type": "allbooks"
+        }
+  this.callback_received_all_books = callback_received_all_books;
   this.ws.send(JSON.stringify(message));
 };
