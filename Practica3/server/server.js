@@ -13,7 +13,9 @@ function Book_Server() {
 Book_Server.prototype.processRequest = function(object, ws) {
     switch (object.type) {
         case "getbookchapter":
-            this.getChapter(object, ws);
+            this.firebase_db.getChapter(object.info.chapter_id).then(function(result) {
+                ws.send(JSON.stringify({ "type": object.type, "info": result }));
+            });
             break;
         case "createbookchapter":
             this.addChapter(object);
@@ -42,14 +44,24 @@ Book_Server.prototype.processRequest = function(object, ws) {
             ws.send();
             break;
         case "allbooks":
-            var result = this.firebase_db.geAllBooks();
-            ws.send(JSON.stringify({ "type": object.type, "info": result }));
+            this.firebase_db.getAllBooks().then(function(result) {
+                var message = { "type": object.type, "info": { "books": [] } }
+                for (var key in result) {
+                    for (var anotherKey in result[key].chapters) {
+                        var first_chapter_id = anotherKey
+                        break;
+                    }
+                    var book_info = { "book_id": key, "title": result[key].title, "owner": result[key].owner_id, "finished": result[key].finished, "genre": result[key].genre, "first_chapter_id": first_chapter_id };
+                    message.info.books.push(book_info);
+                }
+                ws.send(JSON.stringify(message));
+            });
             break;
         case "getchapters":
             this.firebase_db.getBookChapters(object.info.bookId).then(function(result) {
                 // it doesn't work for now but maybe we have to change some structure from the DB
-                message = {"type": object.type, "info": {"chapters": []}}
-                for(chapterId of result)
+                var message = { "type": object.type, "info": { "chapters": [] } }
+                for (chapterId of result)
                     message.info.chapters += [chapterId]
                 ws.send(JSON.stringify({ "type": object.type, "info": result }));
             });
