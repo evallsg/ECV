@@ -79,6 +79,7 @@ li a {
     border-radius: 2px;
     margin-left: 1px;
     margin-top: 0;
+    min-width: 100px;
 }
 .menu-options{
     font-family: LatoBold;
@@ -122,11 +123,7 @@ li a {
     background-color: rgba(255, 213, 236, 0.3);
 
 }
-.btn-new-book{
-    float: right;
-    margin-right: 5%;
-    margin-top: 19px;
-    margin-bottom: 11px;
+.btn{
     height: 29px;
     width: 120px;
     border: none;
@@ -134,4 +131,73 @@ li a {
     color: whitesmoke;
     border-radius: 3px;
     cursor: pointer;
+}
+
+.new-book{
+    float: right;
+    margin-right: 5%;
+    margin-top: 19px;
+    margin-bottom: 11px;
+}
+.save{
+    /*display: block;*/
+    margin: 9px;
+}
+.finish{
+    /*display: block;*/
+    margin: 9px;
+    background: rgba(102,82,93,1);
+}
+body.chapter{
+    background: #44373E;
+    height: 100%;
+    position: absolute;
+}
+div.chapter{
+    background: white;
+    height: calc(100% - 28%);
+    width: 60%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-left: 10%;
+    margin-right: 10%;
+    overflow-y: auto;
+}
+
+.chapter-title{
+    min-height: 10%;
+    text-align: center;
+    font-size: xx-large;
+    outline: none;
+}
+.chapter-body{
+    min-height: 50%;
+    margin-top: 5%;
+    text-align: justify;
+    outline: none;
+}
+[contenteditable=true]:empty:before{
+  content: attr(placeholder);
+  display: block; /* For Firefox */
+  color: rgba(128,128,128,0.35);
+}
+.scroll::-webkit-scrollbar-track{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+.scroll::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+.scroll::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #d5c9cf;
 }

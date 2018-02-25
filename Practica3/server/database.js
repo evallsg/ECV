@@ -114,9 +114,8 @@ Database.prototype.addChapter = function(data) {
                     decision: data.decision
                 });
             }
-            var ref2 = that.admin.database().ref("books/"+data.bookId + "/chapters").push();
+            var ref2 = that.admin.database().ref("books/"+data.bookId + "/chapters/"+data.id);
             ref2.set({
-                id: data.id,
                 decision: data.decision != undefined ? data.decision : null
             })
 
@@ -156,16 +155,6 @@ Database.prototype.updateChapter = function(chapterId,data){
 
     this.db.ref("chapters/" + chapterId).update(data)
 }
-/*var Database = new Database();
-Database.init()
-/*Database.addChapter({
-            bookId:"-L68B3w1VxEg_uSe8kXm",
-            text: "",
-            userId: 126534,
-            finished: false,
-            is_terminal: false})*/
-/*Database.getChapter("-L68TSLUT9TpT4cHBdJ2").then(function(data){
-    console.log(data)
-})*/
+
 
 module.exports = Database;
