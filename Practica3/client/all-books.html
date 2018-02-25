@@ -6,20 +6,38 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link href="css/style.css" rel="stylesheet">
+    <link href="fonts" >
 </head>
 
 <body class="home-back">
     <ul>
-        <li><a class="menu-title" href="#menu">LA HISTÒRIA INTERMINABLE</a></li>
+        <li><a class="menu-title" href="#menu">MENU</a></li>
         <li><a class="menu-options" href="#home">Home</a></li>
         <li><a class="menu-options" href="#about">About</a></li>
         <li><a class="menu-options" href="#authors">Authors</a></li>
         <li><a class="menu-options" href="#comments">Comments</a></li>
     </ul>
-    <script src="js/client.js"></script>
+    <div>
+        <button class="btn-new-book">New book</button>
+    </div>
+    <div class="books">
+        <span class="container">  
+            <img src="imgs/book2.png" class="book-img">
+            <p class="centered book-title">La història interminable</p>
+        </span>
+        <span class="container">  
+            <img src="imgs/book2.png" class="book-img">
+            <p class="centered book-title">Fills de l'estiu</p>
+        </span>
+        <span class="container">  
+            <img src="imgs/book2.png" class="book-img">
+            <p class="centered book-title">Llums de setembre</p>
+        </span>
+    </div>
+   <!-- <script src="js/client.js"></script>-->
     <script src="js/md5.min.js"></script>
     <script>
-        document.getElementsByTagName("body")[0].style.display = "none";
+      /*  document.getElementsByTagName("body")[0].style.display = "none";
 
         function books_received(object)
         {
@@ -42,7 +60,7 @@
 
             //book_client.requestLogin("mjuvilla@gmail.com", "123456$")
         }
-        book_client = new Book_Client(loadedBooks.bind(this))
+        book_client = new Book_Client(loadedBooks.bind(this))*/
     </script>
 </body>
 
