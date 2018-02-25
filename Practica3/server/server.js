@@ -43,12 +43,18 @@ Book_Server.prototype.processRequest = function(object, ws) {
             break;
         case "allbooks":
             var result = this.firebase_db.geAllBooks();
-            ws.send(JSON.stringify({ "type": object.type, "info": result}));
+            ws.send(JSON.stringify({ "type": object.type, "info": result }));
             break;
         case "getchapters":
-            var result = this.firebase_db.getBookChapters(object.info);
-            ws.send(JSON.stringify({ "type": object.type, "info": result}));
+            this.firebase_db.getBookChapters(object.info.bookId).then(function(result) {
+                // it doesn't work for now but maybe we have to change some structure from the DB
+                message = {"type": object.type, "info": {"chapters": []}}
+                for(chapterId of result)
+                    message.info.chapters += [chapterId]
+                ws.send(JSON.stringify({ "type": object.type, "info": result }));
+            });
             break;
+
     }
 }
 

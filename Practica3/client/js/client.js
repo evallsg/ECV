@@ -19,7 +19,6 @@ class Book_Client
         case "savebookchapter":
             break;
         case "addbook":
-            that.requestAddNewChapter(response.book_id, response.chapter_id, "First decision")
             break;
         case "register":
             break;
@@ -123,7 +122,9 @@ Book_Client.prototype.requestAllChapters = function(book_id, callback_received_a
   console.log("Requesting chapters")
   var message = {
             "type": "getchapters",
-            "bookId": book_id
+            "info":{
+              "bookId": book_id
+            }
         }
   this.callback_received_all_chapters = callback_received_all_chapters;
   this.ws.send(JSON.stringify(message));
