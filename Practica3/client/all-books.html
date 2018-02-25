@@ -34,9 +34,11 @@
         function loadedBooks() {
             document.getElementsByTagName("body")[0].style.display = "initial";
 
-            book_client.requestAddBook("And yet another astonishing book", "sci-fi");
+            //book_client.requestAddBook("And yet another astonishing book", "sci-fi");
+ 
+            //var stuff = book_client.requestAllChapters("", chapters_from_book_received.bind(this));
 
-            var stuff = book_client.requestAllChapters("", chapters_from_book_received.bind(this));
+            var stuff = book_client.requestAllChapters("-L6B9FR1PYoBsF0Jze_w", chapters_from_book_received.bind(this));
 
             //book_client.requestLogin("mjuvilla@gmail.com", "123456$")
         }
