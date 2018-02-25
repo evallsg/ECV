@@ -1,7 +1,32 @@
+@font-face {
+    font-family: GlacialIndifference;
+    src: url("../fonts/glacial-indifference/GlacialIndifference-Regular.otf");
+}
+@font-face {
+    font-family: GlacialIndifferenceBold;
+    src: url("../fonts/glacial-indifference/GlacialIndifference-Bold.otf");
+}
+@font-face {
+    font-family: GlacialIndifferenceItalic;
+    src: url("../fonts/glacial-indifference/GlacialIndifference-Italic.otf");
+}
+@font-face {
+    font-family: LatoRegular;
+    src: url("../fonts/lato/Lato-Regular.ttf");
+}
+@font-face {
+    font-family: LatoItalic;
+    src: url("../fonts/lato/Lato-Italic.ttf");
+}
+@font-face {
+    font-family: LatoBold;
+    src: url("../fonts/lato/Lato-Bold.ttf");
+}
 body{
 	width: 100%;
 	height: 100%;
 	margin: 0px;
+    font-family: GlacialIndifference;
 }
 header {
     height: 60px;
@@ -11,6 +36,7 @@ header {
     border-bottom-style: solid;
     border-width: 1px;
     display: fixed;
+    font-family: LatoRegular;
 }
 ul {
     list-style-type: none;
@@ -38,14 +64,14 @@ li a {
 }
 
 .menu-options:hover {
-    background-color: rgba(252,240,240,0.9);
+    background-color: rgba(255, 213, 236, 0.3);
 }
 
 .home-back{
 	background: #F1F0EE;
 }
 .menu-title{
-
+    font-family: LatoBold;
     text-align: center;
     border-style: hidden;
     background: rgba(184,126,158, 0.6);
@@ -55,8 +81,57 @@ li a {
     margin-top: 0;
 }
 .menu-options{
+    font-family: LatoBold;
     height: 100%;
     width: 131px;
     text-align: center;
- 	color: black;
+ 	color: #594b53;
+}
+.centered {
+    margin-top: 2px;
+    position: absolute;
+    top: 191%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+}
+.container {
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+    color: #5c4954;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+.book-img:hover{
+    background-color: rgba(255, 213, 236, 0.3);
+
+}
+.books{
+    padding: 5%;
+}
+.book-img{
+    width: 80px;
+    -webkit-filter: hue-rotate(90deg); /* Safari 6.0 - 9.0 */
+    filter: hue-rotate(-428deg);
+    box-shadow: -4px 2px 5px 0px #aaaaaa;
+}
+.book-title{
+    font-style: oblique;  
+}
+.book-title:hover{
+    background-color: rgba(255, 213, 236, 0.3);
+
+}
+.btn-new-book{
+    float: right;
+    margin-right: 5%;
+    margin-top: 19px;
+    margin-bottom: 11px;
+    height: 29px;
+    width: 120px;
+    border: none;
+    background: #B87E9E;
+    color: whitesmoke;
+    border-radius: 3px;
+    cursor: pointer;
 }
