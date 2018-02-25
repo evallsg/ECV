@@ -116,7 +116,7 @@ Database.prototype.addChapter = function(data) {
             }
             var ref2 = that.admin.database().ref("books/"+data.bookId + "/chapters/"+data.id);
             ref2.set({
-                decision: data.decision != undefined ? data.decision : null
+                decision: data.decision != undefined ? data.decision : ""
             })
 
         })
