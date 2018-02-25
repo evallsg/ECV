@@ -5,8 +5,9 @@ function onClickOnBook(evt) {
 
     localStorage.setItem("book_id", target_book_id);
     localStorage.setItem("first_chapter_id", first_chapter_id);
+    localStorage.setItem("book_title", evt.currentTarget.innerText);
 
-    document.location.href = "book-view.html";
+    document.location.href = "edit-chapter.html";
 }
 
 // Test function for now
@@ -42,7 +43,7 @@ function init() {
 
 document.getElementsByTagName("body")[0].style.display = "none";
 
-var new_book_btn = document.getElementsByClassName("btn-new-book")[0]
+var new_book_btn = document.getElementsByClassName("btn new-book")[0]
 
 new_book_btn.addEventListener("click", onClickNewBook.bind(this), false);
 
