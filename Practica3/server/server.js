@@ -27,7 +27,7 @@ Book_Server.prototype.processRequest = function(object, ws) {
             break;
         case "addbook":
             this.firebase_db.addBook(object.info);
-            var chapterId = this.firebase_db.addChapter(object.info);
+            this.firebase_db.addChapter(object.info);
             ws.send(JSON.stringify({ "type": object.type, "book_id": object.info.bookId, "chapter_id": object.info.id }));
             break;
         case "register":
