@@ -3,11 +3,7 @@ function onClickOnBook(evt) {
     var target_book_id = evt.currentTarget.attributes.book_id.nodeValue;
     var first_chapter_id = evt.currentTarget.attributes.first_chapter_id.nodeValue;
 
-    localStorage.setItem("book_id", target_book_id);
-    localStorage.setItem("first_chapter_id", first_chapter_id);
-    localStorage.setItem("book_title", evt.currentTarget.innerText);
-
-    document.location.href = "edit-chapter.html";
+    document.location.href = "edit-chapter.html?book_id=" + target_book_id + "&first_chapter_id=" + first_chapter_id;
 }
 
 // Test function for now

@@ -8,13 +8,23 @@ function received_book_chapter(response)
 	document.getElementsByTagName("body")[0].style.display = "initial";
 }
 
+function GetUrlValue(VarSearch){
+    var SearchString = window.location.search.substring(1);
+    var VariableArray = SearchString.split('&');
+    for(var i = 0; i < VariableArray.length; i++){
+        var KeyValuePair = VariableArray[i].split('=');
+        if(KeyValuePair[0] == VarSearch){
+            return KeyValuePair[1];
+        }
+    }
+}
+
 function init()
 {	
-	var book_id = localStorage.getItem("book_id");
-	var first_chapter_id = localStorage.getItem("first_chapter_id");
-	var book_title = localStorage.getItem("book_title");
+	var book_id = GetUrlValue("book_id");
+	var first_chapter_id = GetUrlValue("first_chapter_id");
 
-	document.getElementsByTagName("title")[0].innerText = book_title;
+	//document.getElementsByTagName("title")[0].innerText = book_title;
 
 	this.client.requestChapter(first_chapter_id, received_book_chapter)
 
