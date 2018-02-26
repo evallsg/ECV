@@ -226,6 +226,14 @@ div.chapter{
 .padding-10{
     padding: 0 10px;
 }
+.hidden{
+    display: none;
+}
+.disable{
+    pointer-events: none;
+    background: rgba(102,82,93,0.3);
+    color:gray;
+}
 /*Standard*/
 
 /*Login*/
