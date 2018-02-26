@@ -15,6 +15,10 @@ function onClickNewBook() {
 function received_all_books(books) {
     var books_view = document.getElementsByClassName("books")[0]
 
+    while(books_view.firstChild){
+        books_view.removeChild(books_view.firstChild);
+    }
+
     books.forEach(function(book) {
         var template = document.getElementById("templates").getElementsByClassName("container")[0]
         var elem = template.cloneNode(true);
