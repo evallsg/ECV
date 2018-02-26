@@ -3,7 +3,7 @@ function onClickOnBook(evt) {
     var target_book_id = evt.currentTarget.attributes.book_id.nodeValue;
     var first_chapter_id = evt.currentTarget.attributes.first_chapter_id.nodeValue;
 
-    document.location.href = "edit-chapter.html?book_id=" + target_book_id + "&first_chapter_id=" + first_chapter_id;
+    document.location.href = "edit-chapter.html?book_id=" + target_book_id + "&chapter_id=" + first_chapter_id;
 }
 
 // Test function for now
@@ -43,8 +43,6 @@ function init() {
 
 document.getElementsByTagName("body")[0].style.display = "none";
 
-var new_book_btn = document.getElementsByClassName("btn new-book")[0]
-
-new_book_btn.addEventListener("click", onClickNewBook.bind(this), false);
+document.getElementsByClassName("btn new-book")[0].addEventListener("click", onClickNewBook.bind(this), false);
 
 this.client = new Book_Client(init.bind(this))
