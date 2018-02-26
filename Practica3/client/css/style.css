@@ -23,12 +23,13 @@
     src: url("../fonts/lato/Lato-Bold.ttf");
 }
 body{
-	width: 100%;
-	height: 100%;
-	margin: 0px;
+    /*width: 100vw;*/
+    height: 100vh;
+    margin: 0;
+    background: #44373E;
     font-family: GlacialIndifference;
 }
-header {
+/*header {
     height: 60px;
     width: 100%;
     background: #EDEDED;
@@ -38,27 +39,33 @@ header {
     display: fixed;
     font-family: LatoRegular;
 }
+*/
 ul {
+    line-height: 60px;
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
     width: 100%;
+    height: calc(100% - 30px);
     background: #EDEDED;
     border-color: #dadad9;
     border-bottom-style: solid;
     border-width: 1px;
 }
 
-li {
-
+.left{
     float: left;
+}
+
+.right{
+    float: right;
 }
 
 li a {
     display: block;
     text-align: center;
-    padding: 14px 16px;
+    /* padding: 14px 16px; */
     text-decoration: none;
 
 }
@@ -80,13 +87,15 @@ li a {
     margin-left: 1px;
     margin-top: 0;
     min-width: 100px;
+    text-transform: uppercase;
+    padding: 0 5px;
 }
 .menu-options{
     font-family: LatoBold;
     height: 100%;
     width: 131px;
     text-align: center;
- 	color: #594b53;
+    color: #594b53;
 }
 .centered {
     margin-top: 2px;
@@ -107,22 +116,27 @@ li a {
     background-color: rgba(255, 213, 236, 0.3);
 
 }
+
 .books{
     padding: 5%;
 }
+
 .book-img{
     width: 80px;
     -webkit-filter: hue-rotate(90deg); /* Safari 6.0 - 9.0 */
     filter: hue-rotate(-428deg);
     box-shadow: -4px 2px 5px 0px #aaaaaa;
 }
+
 .book-title{
     font-style: oblique;  
 }
+
 .book-title:hover{
     background-color: rgba(255, 213, 236, 0.3);
 
 }
+
 .btn{
     height: 29px;
     width: 120px;
@@ -139,23 +153,27 @@ li a {
     margin-top: 19px;
     margin-bottom: 11px;
 }
+
 .save{
-    /*display: block;*/
-    margin: 9px;
+    /* display: block; */
+    margin-right: 9px
 }
+
 .finish{
-    /*display: block;*/
-    margin: 9px;
+    /* display: block; */
+    
+    /* min-width: 94px; */
     background: rgba(102,82,93,1);
 }
-body.chapter{
+/*body.chapter{
     background: #44373E;
     height: 100%;
     position: absolute;
-}
+}*/
+
 div.chapter{
     background: white;
-    height: calc(100% - 28%);
+    height: calc(100% - 10%);
     width: 60%;
     padding-top: 5%;
     padding-bottom: 5%;
@@ -183,6 +201,7 @@ div.chapter{
   display: block; /* For Firefox */
   color: rgba(128,128,128,0.35);
 }
+
 .scroll::-webkit-scrollbar-track{
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     border-radius: 10px;
@@ -201,3 +220,13 @@ div.chapter{
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     background-color: #d5c9cf;
 }
+.nav-bar{
+    width: calc(100% - 18px);
+}
+.padding-10{
+    padding: 0 10px;
+}
+/*Standard*/
+
+/*Login*/
+/*edit-chapter*/
