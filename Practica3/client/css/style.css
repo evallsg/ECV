@@ -282,7 +282,6 @@ div.chapter{
     width: 100%;
     height: calc(60% - 14vh - 20px);
     text-align: center;
-    color: white;
 }
 
 .login-btn{
@@ -300,6 +299,7 @@ div.chapter{
     border: 1px solid #9C8592;
     border-radius: 3px;
     cursor: pointer;
+    color: white;
 }
 
 .login-btn-lgn:hover{
