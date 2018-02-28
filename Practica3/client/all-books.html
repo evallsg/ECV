@@ -10,19 +10,32 @@
 </head>
 
 <body class="home-back">
+
+    <nav>
+        <ul>
+            <li class="left"><a class="menu-title" href="#menu">MENU</a></li>
+            <li class="left"><a class="menu-options" href="#home">Home</a></li>
+            <li class="left"><a class="menu-options" href="#about">About</a></li>
+            <li class="left"><a class="menu-options" href="#authors">Authors</a></li>
+            <li class="left"><a class="menu-options" href="#comments">Comments</a></li>
+        </ul>
+    </nav>
+
     <div id="templates" style="display:none">
         <span class="container">
             <img src="imgs/book2.png" class="book-img">
             <p class="centered book-title"></p>
         </span>
     </div>
-    <ul>
+
+    <!--<ul>
         <li><a class="menu-title" href="#menu">MENU</a></li>
         <li><a class="menu-options" href="#home">Home</a></li>
         <li><a class="menu-options" href="#about">About</a></li>
         <li><a class="menu-options" href="#authors">Authors</a></li>
         <li><a class="menu-options" href="#comments">Comments</a></li>
-    </ul>
+    </ul>-->
+    
     <div>
         <button class="btn new-book">New book</button>
     </div>
@@ -40,10 +53,18 @@
             <p class="centered book-title">Llums de setembre</p>
         </span>
     </div>
+    <div id="modal new-book" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Some text in the Modal..</p>
+      </div>
+
+    </div>
     <!-- <script src="js/client.js"></script>-->
-    <script src="js/md5.min.js"></script>
+    <!--<script src="js/md5.min.js"></script>
     <script src="js/client.js"></script>
-    <script src="js/all-books.js"></script>
+    <script src="js/all-books.js"></script>-->
 </body>
 
 </html>
