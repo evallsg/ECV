@@ -29,6 +29,9 @@ class Book_Client {
                 case "getchapters":
                     that.callback_received_all_chapters(response.info);
                     break;
+                case "login":
+                    that.callback_received_user_token(response.info);
+                    break;
             }
         };
 
@@ -108,7 +111,7 @@ Book_Client.prototype.requestRegister = function(email, password, name) {
     this.ws.send(JSON.stringify(message));
 };
 
-Book_Client.prototype.requestLogin = function(email, password) {
+Book_Client.prototype.requestLogin = function(email, password, callback_received_user_token) {
     console.log("Requesting login")
     var message = {
         "type": "login",
@@ -117,7 +120,7 @@ Book_Client.prototype.requestLogin = function(email, password) {
             "password": md5(password)
         }
     }
-
+    this.callback_received_user_token = callback_received_user_token;
     this.ws.send(JSON.stringify(message));
 };
 
