@@ -35,6 +35,7 @@ function GetUrlValue(VarSearch){
 
 function init()
 {	
+	
 	var book_id = GetUrlValue("book_id");
 	this.chapter_id = GetUrlValue("chapter_id");
 

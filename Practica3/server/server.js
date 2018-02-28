@@ -35,7 +35,11 @@ Book_Server.prototype.processRequest = function(object, ws) {
             ws.send();
             break;
         case "login":
-            this.firebase_db.login(object.info);
+            this.firebase_db.login(object.info).then(function(usertoken){ 
+                ws.send(JSON.stringify({ "type": object.type, "info": {"usertoken": usertoken} });
+            }, function(errormsg){
+                ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": errormsg}});
+            });
             ws.send();
             break;
         case "addchapter":
@@ -71,9 +75,8 @@ Book_Server.prototype.processRequest = function(object, ws) {
 }
 
 Book_Server.prototype.init = function() {
-    this.books_collection = JSON.parse(fs.readFileSync('books.json', 'utf8'));
     var that = this;
-    var clients = []
+    this.clients = []
 
     this.server = http.createServer();
 
@@ -84,7 +87,6 @@ Book_Server.prototype.init = function() {
     var wss = new WebSocket.Server({ server: this.server });
 
     wss.on('connection', function connection(ws) {
-        clients.push(ws);
         console.log("User connected")
         ws.on('message', function incoming(message) {
 
@@ -96,7 +98,6 @@ Book_Server.prototype.init = function() {
         });
         ws.on("close", function(message) {
             var index = clients.indexOf(ws);
-            clients.splice(index);
             console.log("User disconnected");
             ws.close();
         });
@@ -107,59 +108,5 @@ Book_Server.prototype.init = function() {
     });
 
 }
-
-Book_Server.prototype.getChapter = function(object, ws) {
-    //console.log("Getting book " + book_name + " chapter " + chapter_id);
-
-    var book = this.books_collection.find(o => o.book_name === object.info.book_name);
-    //console.log(book);
-
-    if (book == null)
-        return "None";
-    //console.log(chapters)
-    var chapter = book["chapters"].find(o => o.id == object.info.chapter);
-    if (chapter == null)
-        return "None";
-
-    var message = {
-        "type": "getbookchapter",
-        "info": chapter
-    }
-
-    ws.send(JSON.stringify(message));
-}
-
-Book_Server.prototype.createNewChapter = function(object) {
-
-    var book = this.books_collection.find(o => o.book_name === book_name);
-
-    chapter.id = book.chapters.length;
-
-    console.log("Creating new chapter in " + book_name + " with id " + chapter.id);
-
-    book.chapters += chapter;
-
-    console.log(book.chapters);
-
-    this.updateBookCollection();
-}
-
-Book_Server.prototype.saveBookChapter = function(object) {
-
-    //TODO: get chapter info
-    // update relevant chapter info (state, text, title, decisions...)
-
-    console.log("Getting book " + book_name + " chapter " + chapter_id);
-    var book = this.books_collection.find(o => o.book_name === book_name);
-
-    // if (book == null)
-    //     return "None";
-    // //console.log(chapters)
-    // var chapter = book["chapters"].find(o => o.id == chapter_id);
-    // if (chapter == null)
-    //     return "None";
-    // return chapter;
-}
-
 
 server = new Book_Server();
