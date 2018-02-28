@@ -285,6 +285,7 @@ div.chapter{
     border-radius: 3px;
     cursor: pointer;
     color: white;
+    position: relative;
 }
 
 .login-btn-lgn:hover{
@@ -324,7 +325,12 @@ div.chapter{
 .usr-input::placeholder{
     color:rgba(154,154,154,0.66);
 }
-
+.register{
+    height: 30% !important;
+}
+.login-btn.hidden{
+    height: 0 !important;
+}
 /*all-books*/
 
 /*edit-chapter*/
