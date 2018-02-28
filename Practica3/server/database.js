@@ -12,6 +12,18 @@ Database.prototype.init = function() {
     });
 
     this.db = this.admin.database();
+    var firebase = require("firebase/app");
+    require("firebase/auth");
+    require("firebase/database");
+    var config = {
+        apiKey: "AIzaSyATwv-8E7JI1nPRp23133iUEE3yMYujXCM",
+        authDomain: "ecv-p3.firebaseapp.com",
+        databaseURL: "https://ecv-p3.firebaseio.com",
+        projectId: "ecv-p3",
+        storageBucket: "ecv-p3.appspot.com",
+        messagingSenderId: "627657737412"
+    };
+    firebase.initializeApp(config);
 }
 
 
@@ -31,6 +43,29 @@ Database.prototype.register = function(data) {
         .catch(function(error) {
             console.log("Error creating new user:", error);
         });
+    /*
+    firebase.auth().createUserWithEmailAndPassword(data.email, data.password).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ...
+    });
+    */
+}
+Database.prototype.login = function(user){
+    firebase.auth().signInWithEmailAndPassword(user.email, user.password).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ...
+    });
+}
+Database.prototype.logout = function(user){
+    firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+    }).catch(function(error) {
+      // An error happened.
+    });
 }
 Database.prototype.editUser = function(uid, data) {
     this.admin.auth().updateUser(uid, data)
@@ -52,6 +87,7 @@ Database.prototype.deleteUser = function(uid) {
             console.log("Error deleting user:", error);
         });
 }
+
 Database.prototype.getAllBooks = function() {
 
     var ref = this.db.ref("books");

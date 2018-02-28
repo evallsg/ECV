@@ -23,22 +23,15 @@
     src: url("../fonts/lato/Lato-Bold.ttf");
 }
 body{
-	width: 100%;
-	height: 100%;
-	margin: 0px;
+    /*width: 100vw;*/
+    height: 100vh;
+    margin: 0;
+    background: #44373E;
     font-family: GlacialIndifference;
 }
-header {
-    height: 60px;
-    width: 100%;
-    background: #EDEDED;
-    border-color: #dadad9;
-    border-bottom-style: solid;
-    border-width: 1px;
-    display: fixed;
-    font-family: LatoRegular;
-}
+
 ul {
+    line-height: 60px;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -50,15 +43,18 @@ ul {
     border-width: 1px;
 }
 
-li {
-
+.left{
     float: left;
+}
+
+.right{
+    float: right;
 }
 
 li a {
     display: block;
     text-align: center;
-    padding: 14px 16px;
+    /* padding: 14px 16px; */
     text-decoration: none;
 
 }
@@ -80,13 +76,15 @@ li a {
     margin-left: 1px;
     margin-top: 0;
     min-width: 100px;
+    text-transform: uppercase;
+    padding: 0 5px;
 }
 .menu-options{
     font-family: LatoBold;
     height: 100%;
     width: 131px;
     text-align: center;
- 	color: #594b53;
+    color: #594b53;
 }
 .centered {
     margin-top: 2px;
@@ -107,22 +105,27 @@ li a {
     background-color: rgba(255, 213, 236, 0.3);
 
 }
+
 .books{
     padding: 5%;
 }
+
 .book-img{
     width: 80px;
     -webkit-filter: hue-rotate(90deg); /* Safari 6.0 - 9.0 */
     filter: hue-rotate(-428deg);
     box-shadow: -4px 2px 5px 0px #aaaaaa;
 }
+
 .book-title{
     font-style: oblique;  
 }
+
 .book-title:hover{
     background-color: rgba(255, 213, 236, 0.3);
 
 }
+
 .btn{
     height: 29px;
     width: 120px;
@@ -139,23 +142,20 @@ li a {
     margin-top: 19px;
     margin-bottom: 11px;
 }
+
 .save{
-    /*display: block;*/
-    margin: 9px;
+    /* display: block; */
+    margin-right: 9px
 }
+
 .finish{
-    /*display: block;*/
-    margin: 9px;
     background: rgba(102,82,93,1);
 }
-body.chapter{
-    background: #44373E;
-    height: 100%;
-    position: absolute;
-}
+
+
 div.chapter{
     background: white;
-    height: calc(100% - 28%);
+    height: calc(70% - 61px);
     width: 60%;
     padding-top: 5%;
     padding-bottom: 5%;
@@ -183,6 +183,7 @@ div.chapter{
   display: block; /* For Firefox */
   color: rgba(128,128,128,0.35);
 }
+
 .scroll::-webkit-scrollbar-track{
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     border-radius: 10px;
@@ -201,3 +202,129 @@ div.chapter{
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     background-color: #d5c9cf;
 }
+
+/*Standard*/
+.nav-bar{
+    width: calc(100% - 18px);
+}
+.padding-10{
+    padding: 0 10px;
+}
+.hidden{
+    display: none;
+}
+.disable{
+    pointer-events: none;
+    background: rgba(102,82,93,0.3);
+    color:gray;
+}
+.modal{
+    background: pink;
+}
+/*Login*/
+.main-cont{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: url("../imgs/login-back.jpeg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.login-container{
+    background-color: rgba(249,252,255,0.7);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 40%;
+    height: 50%;
+    margin: auto;
+    border: 0px solid rgba(102,82,93,100);
+    border-radius: 20px;
+    min-height: 196px;
+}
+
+.login-title{
+    width: 100%;
+    line-height: 14vh;
+    font-size: xx-large;
+    text-align: center;
+    color: #66525d;
+    padding: 10px 0 ;
+}
+
+.login-content{
+    width: 100%;
+    height: 40%;
+}
+
+
+.login-buttons{
+    width: 100%;
+    height: calc(60% - 14vh - 20px);
+    text-align: center;
+}
+
+.login-btn{
+    width: 100%;
+    height: 50%;
+    text-align: center;
+}
+
+.login-btn-lgn{
+    line-height: 35px;
+    background-color: #66525D;
+    width: 30%;
+    opacity: 100;
+    margin: 0 auto;
+    border: 1px solid #9C8592;
+    border-radius: 3px;
+    cursor: pointer;
+    color: white;
+}
+
+.login-btn-lgn:hover{
+    box-shadow: 0 -2px 16px 8px rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    font-weight: bold;
+}
+
+.login-btn-reg{
+    line-height: 35px;
+    color: #66525D;
+    width: 30%;
+    opacity: 100;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.login-btn-reg:hover{
+    font-weight: bold; 
+}
+
+.login-lbl{
+    width: 100%;
+    height: 50%;
+    text-align: center;
+}
+
+.usr-input{
+    width: 40%;
+    height: 30px;
+    border-radius: 4px;
+    border: 1px solid rgba(158,158,158,0.77);
+    padding: 2px 10px;
+    cursor: text;
+    font-family: GlacialIndifference;
+    font-size: initial;
+}
+.usr-input::placeholder{
+    color:rgba(154,154,154,0.66);
+}
+
+/*all-books*/
+
+/*edit-chapter*/
