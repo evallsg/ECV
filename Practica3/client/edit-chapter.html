@@ -11,7 +11,7 @@
 
 <body>
     <nav >
-        <ul>
+        <ul class="nav-bar">
             <li class="left"><a class="menu-title" href="#menu">La història interminable</a></li>
             <li class="left"><a class="menu-options" href="all-books.html">Home</a></li>
             <li class="left"><a class="menu-options" href="#about">About</a></li>
@@ -26,18 +26,29 @@
     <div class="chapter scroll">
         <div class="chapter-title" placeholder="Title..." contenteditable="true"></div>
         <div class="chapter-body" placeholder="Type text here..." contenteditable="true"></div>
-    </div>
-    <div id="modal new-book" class="modal">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
-      </div>
-
+        <div class="options hidden">
+            <ul class="list-options">
+                <li class="decision"><a href="">Si vols que la Maria aconsegueixi escapar-se clica aquí.</a></li>
+                <li class="decision"><a href="">Si vols que la Maria hagi de trobar en Pere per poder trobar la sortida clica aquí.</a></li>
+            <ul>
+        </div>
     </div>
 
-    <script src="js/client.js"></script>
-    <script src="js/edit-chapter.js"></script>
+    <!--<script src="js/client.js"></script>-->
+    <!--<script src="js/edit-chapter.js"></script>-->
+    <script type="text/javascript">
+    var element= document.getElementsByClassName("chapter scroll")[0];
+    element.addEventListener('scroll', function(event)
+    {
+        var element = event.target;
+        if (element.scrollHeight - element.scrollTop === element.clientHeight)
+        {
+            
+            document.getElementsByClassName("options")[0].classList.remove("hidden")
+        }
+    });
+
+    </script>
 </body>
 
 </html>
