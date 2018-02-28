@@ -219,9 +219,42 @@ div.chapter{
     color:gray;
 }
 .modal{
-    background: pink;
+    background: rgba(68,55,62,0.98);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    color: whitesmoke;
+}
+.modal-content{
+    margin: auto auto;
+    width: 45%;
+    height: 56%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+}
+.modal-title{
+    height: 30%;
+    text-align: center;
+    font-size: 35px;
+}
+.modal-body{
+    height: 50%;
 }
 /*Login*/
+.center{
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    margin: auto;
+}
 .main-cont{
     width: 100%;
     height: 100%;
@@ -285,6 +318,7 @@ div.chapter{
     border-radius: 3px;
     cursor: pointer;
     color: white;
+    position: relative;
 }
 
 .login-btn-lgn:hover{
@@ -311,8 +345,7 @@ div.chapter{
     text-align: center;
 }
 
-.usr-input{
-    width: 40%;
+input{
     height: 30px;
     border-radius: 4px;
     border: 1px solid rgba(158,158,158,0.77);
@@ -321,10 +354,21 @@ div.chapter{
     font-family: GlacialIndifference;
     font-size: initial;
 }
+.usr-input{
+    width: 40%;
+}
 .usr-input::placeholder{
     color:rgba(154,154,154,0.66);
 }
+.register{
+    height: 30% !important;
+}
+.login-btn.hidden{
+    height: 0 !important;
+}
 
 /*all-books*/
-
+.book-input{
+    width: 60%;
+}
 /*edit-chapter*/
