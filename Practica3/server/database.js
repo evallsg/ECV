@@ -1,8 +1,4 @@
 var Database = function() {
-
-}
-
-Database.prototype.init = function() {
     this.admin = require("firebase-admin");
     var serviceAccount = require("./firebase.json");
 
@@ -11,8 +7,8 @@ Database.prototype.init = function() {
         databaseURL: "https://ecv-p3.firebaseio.com"
     });
 
-    this.db = this.admin.database();
-    var firebase = require("firebase/app");
+    this.db = this.admin.database()
+    this.firebase = require("firebase");
     require("firebase/auth");
     require("firebase/database");
     var config = {
@@ -23,7 +19,53 @@ Database.prototype.init = function() {
         storageBucket: "ecv-p3.appspot.com",
         messagingSenderId: "627657737412"
     };
-    firebase.initializeApp(config);
+    this.firebase.initializeApp(config);
+    this.init()
+}
+
+Database.prototype.init = function() {
+  /*  this.admin = require("firebase-admin");
+    var serviceAccount = require("./firebase.json");
+
+    this.admin.initializeApp({
+        credential: this.admin.credential.cert(serviceAccount),
+        databaseURL: "https://ecv-p3.firebaseio.com"
+    });
+
+    this.db = this.admin.database()
+    this.firebase = require("firebase");
+    require("firebase/auth");
+    require("firebase/database");
+    var config = {
+        apiKey: "AIzaSyATwv-8E7JI1nPRp23133iUEE3yMYujXCM",
+        authDomain: "ecv-p3.firebaseapp.com",
+        databaseURL: "https://ecv-p3.firebaseio.com",
+        projectId: "ecv-p3",
+        storageBucket: "ecv-p3.appspot.com",
+        messagingSenderId: "627657737412"
+    };
+    this.firebase.initializeApp(config);*/
+    // console.log(this.firebase.auth())
+    this.firebase.auth().onAuthStateChanged(function(user) {
+       
+      if (user) {
+        // User is signed in.
+        var displayName = user.displayName;
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        var providerData = user.providerData;
+           
+        // ...
+      } else {
+        // User is signed out.
+        // ...
+      }
+    });
+
+    
 }
 
 
@@ -42,40 +84,69 @@ Database.prototype.register = function(data) {
         })
         .catch(function(error) {
             console.log("Error creating new user:", error);
-        });
-    /*
-    firebase.auth().createUserWithEmailAndPassword(data.email, data.password).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // ...
-    });
-    */
+        });    
+    
 }
 Database.prototype.login = function(user){
-    firebase.auth().signInWithEmailAndPassword(user.email, user.password).catch(function(error) {
+    return this.firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(function(data){
+        user = {
+            token: data.refreshToken,
+            username : data.displayName,
+            avatar : data.photoURL
+        }
+        return user
+       }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
-      // ...
+      return errorMessage
+      console.log("error login")
     });
+    
 }
 Database.prototype.logout = function(user){
-    firebase.auth().signOut().then(function() {
+    this.firebase.auth().signOut().then(function() {
       // Sign-out successful.
     }).catch(function(error) {
       // An error happened.
     });
+var user = this.firebase.auth().currentUser;
+
+    user.updateProfile({
+      displayName: "Jane Q. User",
+      photoURL: "https://example.com/jane-q-user/profile.jpg"
+    }).then(function() {
+      // Update successful.
+    }).catch(function(error) {
+      // An error happened.
+    });
+
 }
-Database.prototype.editUser = function(uid, data) {
-    this.admin.auth().updateUser(uid, data)
+Database.prototype.editUser = function(data) {
+
+    /*this.admin.auth().updateUser(uid, data)
         .then(function(userRecord) {
             // See the UserRecord reference doc for the contents of userRecord.
             console.log("Successfully updated user", userRecord.toJSON());
         })
         .catch(function(error) {
             console.log("Error updating user:", error);
-        });
+        });*/
+        
+    var user={
+        refreshToken: data.token,
+        email : data.email
+    }
+    user.updateProfile({
+      displayName: "Pepito",
+      photoURL: "https://example.com/jane-q-user/profile.jpg"
+    }).then(function() {
+      console.log("user updated")
+    }).catch(function(error) {
+      // An error happened.
+    });
+
+
 }
 
 Database.prototype.deleteUser = function(uid) {
@@ -191,6 +262,8 @@ Database.prototype.updateChapter = function(chapterId,data){
 
     this.db.ref("chapters/" + chapterId).update(data)
 }
+
+
 
 
 module.exports = Database;
