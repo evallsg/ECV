@@ -36,9 +36,9 @@ Book_Server.prototype.processRequest = function(object, ws) {
             break;
         case "login":
             this.firebase_db.login(object.info).then(function(usertoken){ 
-                ws.send(JSON.stringify({ "type": object.type, "info": {"usertoken": usertoken} });
+                ws.send(JSON.stringify({ "type": object.type, "info": {"usertoken": usertoken} }));
             }, function(errormsg){
-                ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": errormsg}});
+                ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": errormsg}}));
             });
             ws.send();
             break;
