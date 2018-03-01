@@ -217,7 +217,7 @@ Database.prototype.addChapter = function(data) {
     var ref = this.db.ref("chapters").push();
     var that = this;
     data.id = ref.key;
-    ref.set({
+    return ref.set({
             parent_id: data.parentId != undefined ? data.parentId : null,
             title: "",
             decision: data.decision != undefined ? data.decision : null,
@@ -236,7 +236,7 @@ Database.prototype.addChapter = function(data) {
             ref2.set({
                 decision: data.decision != undefined ? data.decision : ""
             })
-
+            return data
         })
         .catch(function(error) {
             console.log("Error adding chapter:", error);

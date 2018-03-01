@@ -51,13 +51,15 @@ ul{
 .right{
     float: right;
 }
+a{
+    color: inherit;
+    text-decoration: none;
 
+}
 li a {
     display: block;
     text-align: center;
     /* padding: 14px 16px; */
-    text-decoration: none;
-    color: inherit;
 
 }
 

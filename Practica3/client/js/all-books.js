@@ -8,21 +8,26 @@ function onClickOnBook(evt) {
 
 // Test function for now
 function onClickNewBook() {
+    var that = this
     var modal = document.getElementById("modal new-book");
     modal.classList.remove("hidden");
-    modal.getElementById("btn-cancel").addEventListener("click", function(event){
-       // modal.classList.add("hidden");
-    })
-    modal.getElementById("btn-start").addEventListener("click", function(event){
-        /*var title = modal.getElementById("input-title").val();
-        var genre = modal.getElementById("input-genre").val();*/
-        this.client.requestAddBook(title, genre);
-        client.requestAllBooks(received_all_books);
-    })
-    console.log("new book")
-    
-}
+    document.getElementById("btn-cancel").addEventListener("click", function(event){
 
+       modal.classList.add("hidden");
+    })
+    document.getElementById("btn-start").addEventListener("click", function(event){
+        var title = document.getElementById("input-title").value;
+        var genre = document.getElementById("input-genre").value;
+        that.client.requestAddBook(title, genre, redirectToChapter)
+            
+        that.client.requestAllBooks(received_all_books);
+    })
+    console.log("new book")  
+}
+function  redirectToChapter(data){
+    console.log(data)
+    console.log(window.location.href)
+};
 function received_all_books(books) {
     var books_view = document.getElementsByClassName("books")[0]
 

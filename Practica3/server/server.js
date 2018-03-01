@@ -27,8 +27,12 @@ Book_Server.prototype.processRequest = function(object, ws) {
             break;
         case "addbook":
             this.firebase_db.addBook(object.info);
-            this.firebase_db.addChapter(object.info);
-            ws.send(JSON.stringify({ "type": object.type, "book_id": object.info.bookId, "chapter_id": object.info.id }));
+            this.firebase_db.addChapter(object.info).then(
+                function(data){
+                    console.log(data)
+                    ws.send(JSON.stringify({ "type": object.type, "book_id": object.info.bookId, "chapter_id": object.info.id }));
+
+                });
             break;
         case "register":
             this.firebase_db.register(object.info);
@@ -36,9 +40,9 @@ Book_Server.prototype.processRequest = function(object, ws) {
             break;
         case "login":
             this.firebase_db.login(object.info).then(function(usertoken){ 
-                ws.send(JSON.stringify({ "type": object.type, "info": {"usertoken": usertoken} });
+                ws.send(JSON.stringify({ "type": object.type, "info": {"usertoken": usertoken} }));
             }, function(errormsg){
-                ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": errormsg}});
+                ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": errormsg}}));
             });
             ws.send();
             break;
@@ -97,7 +101,7 @@ Book_Server.prototype.init = function() {
             //that.
         });
         ws.on("close", function(message) {
-            var index = clients.indexOf(ws);
+            var index = that.clients.indexOf(ws);
             console.log("User disconnected");
             ws.close();
         });
