@@ -8,8 +8,19 @@ function onClickOnBook(evt) {
 
 // Test function for now
 function onClickNewBook() {
-    this.client.requestAddBook("Títol d'un llibre qualsevol", "Cyberpunk");
-    client.requestAllBooks(received_all_books);
+    var modal = document.getElementById("modal new-book");
+    modal.classList.remove("hidden");
+    modal.getElementById("btn-cancel").addEventListener("click", function(event){
+       // modal.classList.add("hidden");
+    })
+    modal.getElementById("btn-start").addEventListener("click", function(event){
+        /*var title = modal.getElementById("input-title").val();
+        var genre = modal.getElementById("input-genre").val();*/
+        this.client.requestAddBook(title, genre);
+        client.requestAllBooks(received_all_books);
+    })
+    console.log("new book")
+    
 }
 
 function received_all_books(books) {
@@ -41,7 +52,7 @@ function init() {
     client.requestAllBooks(received_all_books);
 }
 
-document.getElementsByTagName("body")[0].style.display = "none";
+//document.getElementsByTagName("body")[0].style.display = "none";
 
 document.getElementsByClassName("btn new-book")[0].addEventListener("click", onClickNewBook.bind(this), false);
 

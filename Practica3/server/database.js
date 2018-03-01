@@ -71,14 +71,25 @@ Database.prototype.init = function() {
 
 Database.prototype.register = function(data) {
 
-    this.admin.auth().createUser({
+    return this.admin.auth().createUser({
             email: data.email,
             password: data.password,
-            displayName: data.name,
+            displayName: data.username,
             disabled: false,
             photoUrl: data.avatar
         })
         .then(function(userRecord) {
+            var ref = this.db.ref("users/"+userRecord.uid);
+        
+            ref.set({
+                    username: userRecord.displayName,
+                    avatar: userRecord.photoURL
+                }).then(function() {
+                    console.log("Successfully added user ");
+                })
+                .catch(function(error) {
+                    console.log("Error adding user: ", error);
+                });
             // See the UserRecord reference doc for the contents of userRecord.
             console.log("Successfully created new user:", userRecord.uid);
         })
