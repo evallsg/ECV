@@ -12,7 +12,7 @@
 <body class="home-back">
 
     <nav>
-        <ul>
+        <ul class="nav-bar">
             <li class="left"><a class="menu-title" href="#menu">MENU</a></li>
             <li class="left"><a class="menu-options" href="#home">Home</a></li>
             <li class="left"><a class="menu-options" href="#about">About</a></li>
@@ -27,33 +27,13 @@
             <p class="centered book-title"></p>
         </span>
     </div>
-
-    <!--<ul>
-        <li><a class="menu-title" href="#menu">MENU</a></li>
-        <li><a class="menu-options" href="all-books.html">Home</a></li>
-        <li><a class="menu-options" href="#about">About</a></li>
-        <li><a class="menu-options" href="#authors">Authors</a></li>
-        <li><a class="menu-options" href="#comments">Comments</a></li>
-    </ul>-->
     
     <div>
         <button class="btn new-book">New book</button>
     </div>
     <div class="books">
-        <span class="container">  
-            <img src="imgs/book2.png" class="book-img">
-            <p class="centered book-title">La història interminable</p>
-        </span>
-        <span class="container">  
-            <img src="imgs/book2.png" class="book-img">
-            <p class="centered book-title">Fills de l'estiu</p>
-        </span>
-        <span class="container">  
-            <img src="imgs/book2.png" class="book-img">
-            <p class="centered book-title">Llums de setembre</p>
-        </span>
     </div>
-    <div id="modal new-book" class="modal">
+    <div id="modal new-book" class="modal hidden">
       <!-- Modal content -->
       <span class="close hidden">&times;</span>
       <div class="modal-content">
@@ -62,15 +42,15 @@
         </div>
         <div class="modal-body">
             <div class="login-lbl">
-                <input class="book-input" type="text" name="title" placeholder="Title">
+                <input id="input-title" class="book-input" type="text" name="title" placeholder="Title" required="true">
             </div>
             <div class="login-lbl">
-                <input class="book-input" type="text" name="genre" placeholder="Genre">
+                <input id="input-genre" class="book-input" type="text" name="genre" placeholder="Genre" required="true">
             </div>
         </div>
-        <div class="center">
-            <button class="btn">Cancel</button>
-            <button class="btn">Start</button>
+        <div class="modal-btn-cont">
+            <button id="btn-cancel" class="btn modal-btn btn-cancel">Cancel</button>
+            <button id="btn-start" class="btn modal-btn"><a href="">Start</a></button>
         </div>
 
       </div>

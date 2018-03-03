@@ -8,10 +8,26 @@ function onClickOnBook(evt) {
 
 // Test function for now
 function onClickNewBook() {
-    this.client.requestAddBook("Títol d'un llibre qualsevol", "Cyberpunk");
-    client.requestAllBooks(received_all_books);
-}
+    var that = this
+    var modal = document.getElementById("modal new-book");
+    modal.classList.remove("hidden");
+    document.getElementById("btn-cancel").addEventListener("click", function(event){
 
+       modal.classList.add("hidden");
+    })
+    document.getElementById("btn-start").addEventListener("click", function(event){
+        var title = document.getElementById("input-title").value;
+        var genre = document.getElementById("input-genre").value;
+        that.client.requestAddBook(title, genre, redirectToChapter)
+            
+       // that.client.requestAllBooks(received_all_books);
+    })
+    console.log("new book")  
+}
+function redirectToChapter(data){
+    console.log(data)
+    document.location.href = "edit-chapter.html?book_id=" + data.bookId + "&chapter_id=" + data.id;
+};
 function received_all_books(books) {
     var books_view = document.getElementsByClassName("books")[0]
 
@@ -41,7 +57,7 @@ function init() {
     client.requestAllBooks(received_all_books);
 }
 
-document.getElementsByTagName("body")[0].style.display = "none";
+//document.getElementsByTagName("body")[0].style.display = "none";
 
 document.getElementsByClassName("btn new-book")[0].addEventListener("click", onClickNewBook.bind(this), false);
 

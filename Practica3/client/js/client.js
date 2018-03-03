@@ -18,6 +18,7 @@ class Book_Client {
                 case "savebookchapter":
                     break;
                 case "addbook":
+                    that.callback_add_book(response.info);
                     break;
                 case "register":
                     break;
@@ -38,12 +39,13 @@ class Book_Client {
     }
 }
 
-Book_Client.prototype.requestChapter = function(chapter_id, callback_received_chapter) {
+Book_Client.prototype.requestChapter = function(chapter_id,book_id, callback_received_chapter) {
     console.log("Requesting chapter")
     var message = {
         "type": "getbookchapter",
         "info": {
-            "chapter_id": chapter_id
+            "chapter_id": chapter_id,
+            "book_id": book_id
         }
     }
     this.callback_received_chapter = callback_received_chapter;
@@ -83,7 +85,7 @@ Book_Client.prototype.requestFinishChapter = function(chapter_id, title_text, bo
     // body...
 };
 
-Book_Client.prototype.requestAddBook = function(title, genre) {
+Book_Client.prototype.requestAddBook = function(title, genre, callback_add_book) {
     console.log("Requesting add book")
     var message = {
         "type": "addbook",
@@ -93,8 +95,8 @@ Book_Client.prototype.requestAddBook = function(title, genre) {
             "genre": genre
         }
     }
-
-    this.ws.send(JSON.stringify(message));
+    this.callback_add_book = callback_add_book;
+    this.ws.send(JSON.stringify(message))
 };
 
 Book_Client.prototype.requestRegister = function(email, password, name) {
