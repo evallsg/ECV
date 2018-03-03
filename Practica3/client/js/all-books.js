@@ -20,13 +20,13 @@ function onClickNewBook() {
         var genre = document.getElementById("input-genre").value;
         that.client.requestAddBook(title, genre, redirectToChapter)
             
-        that.client.requestAllBooks(received_all_books);
+       // that.client.requestAllBooks(received_all_books);
     })
     console.log("new book")  
 }
-function  redirectToChapter(data){
+function redirectToChapter(data){
     console.log(data)
-    console.log(window.location.href)
+    document.location.href = "edit-chapter.html?book_id=" + data.book_id + "&chapter_id=" + data.id;
 };
 function received_all_books(books) {
     var books_view = document.getElementsByClassName("books")[0]

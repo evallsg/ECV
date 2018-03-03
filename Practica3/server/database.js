@@ -186,13 +186,15 @@ Database.prototype.getAllBooks = function() {
 Database.prototype.addBook = function(data) {
     var ref = this.db.ref("books").push();
     data.bookId = ref.key
-    ref.set({
+    return ref.set({
             title: data.title,
             owner_id: data.userId,
             genre: data.genre,
             finished: false,
         }).then(function() {
             console.log("Successfully added book: ", data.bookId);
+            return data.bookId
+
         })
         .catch(function(error) {
             console.log("Error adding book: ", error);
@@ -226,24 +228,30 @@ Database.prototype.addChapter = function(data) {
             finished: false,
             is_terminal: false
         }).then(function() {
-            if (data.parentId != null) {
-                var ref = that.admin.database().ref("chapters/"+ data.parentId + "/children/" + data.id)
-                ref.set({
-                    decision: data.decision
-                });
-            }
+            
             var ref2 = that.admin.database().ref("books/"+data.bookId + "/chapters/"+data.id);
-            ref2.set({
+            return ref2.set({
                 decision: data.decision != undefined ? data.decision : ""
-            })
-            return data
+                }).then(function(){
+                    if (data.parentId != null) {
+                        var ref = that.admin.database().ref("chapters/"+ data.parentId + "/children/" + data.id)
+                        ref.set({
+                            decision: data.decision
+                        });
+                    }
+                    console.log("chapter: "+ data.id)
+                    return data.id
+                }).catch(function(error) {
+                  console.log("error add chapter")
+                });
+            
         })
         .catch(function(error) {
             console.log("Error adding chapter:", error);
         });
 }
 Database.prototype.getChapter = function(chapterId) {
-
+            
     var ref = this.db.ref("chapters/" + chapterId);
     return ref.once("value").then(
         function(chapter) {

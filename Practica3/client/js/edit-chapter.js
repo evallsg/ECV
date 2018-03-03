@@ -15,7 +15,8 @@ function onFinishChapter()
 function received_book_chapter(response)
 {
 	var cosa = 0;
-
+	console.log(response)
+	document.getElementsByClassName("menu-title")[0].innerText = response.title;
     document.getElementsByClassName("chapter-title")[0].innerText = response.title;
     document.getElementsByClassName("chapter-body")[0].innerText = response.text;
 
