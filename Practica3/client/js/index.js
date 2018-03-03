@@ -8,8 +8,8 @@ function userTokenReceived(user_token)
 
 function onLoginClicked()
 {
-	var user = document.querySelector("input[name='username']");
-	var password = document.querySelector("input[name='password']");
+	var user = document.querySelector("input[name='email']").value;
+	var password = document.querySelector("input[name='password']").value;
 
 	if(!user || !password)
 		alert("idiot");
@@ -20,10 +20,10 @@ function onLoginClicked()
 
 function init() {
 
-	document.getElementsByTagName("body")[0].style.display = "initial";
+	//document.getElementsByTagName("body")[0].style.display = "initial";
 	document.getElementsByClassName("login-btn-lgn")[0].addEventListener("click", onLoginClicked.bind(this), false);
    
 }
 
-document.getElementsByTagName("body")[0].style.display = "none";
+//document.getElementsByTagName("body")[0].style.display = "none";
 this.client = new Book_Client(init.bind(this))

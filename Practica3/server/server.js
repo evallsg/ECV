@@ -120,7 +120,7 @@ Book_Server.prototype.init = function() {
             //that.
         });
         ws.on("close", function(message) {
-            var index = that.clients.indexOf(ws);
+            //var index = this.clients.indexOf(ws);
             console.log("User disconnected");
             ws.close();
         });
