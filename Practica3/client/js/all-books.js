@@ -26,7 +26,7 @@ function onClickNewBook() {
 }
 function redirectToChapter(data){
     console.log(data)
-    document.location.href = "edit-chapter.html?book_id=" + data.book_id + "&chapter_id=" + data.id;
+    document.location.href = "edit-chapter.html?book_id=" + data.bookId + "&chapter_id=" + data.id;
 };
 function received_all_books(books) {
     var books_view = document.getElementsByClassName("books")[0]

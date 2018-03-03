@@ -11,10 +11,20 @@ function Book_Server() {
 }
 
 Book_Server.prototype.processRequest = function(object, ws) {
+    var that = this
     switch (object.type) {
         case "getbookchapter":
+            console.log("getbookchapter")
             this.firebase_db.getChapter(object.info.chapter_id).then(function(result) {
-                ws.send(JSON.stringify({ "type": object.type, "info": result }));
+
+                object.info.chapter= result
+                that.firebase_db.getBook(object.info.book_id).then(function(result){
+                    object.info.book = result
+                    ws.send(JSON.stringify({ "type": object.type, "info": object.info }));
+                }).catch(function(error){
+                    console.log("error get chapter ", error)
+                });
+                
             });
             break;
         case "createbookchapter":
@@ -23,18 +33,14 @@ Book_Server.prototype.processRequest = function(object, ws) {
             break;
         case "savebookchapter":
             this.firebase_db.updateChapter(object.info.chapter_id, {"title": object.info.title, "text": object.info.text});
-            ws.send();
+            
             break;
         case "addbook":
-            var that = this
+
             this.firebase_db.addBook(object.info).then(function(id){
                 object.info.bookId = id;
-                                    console.log("object ",object)
-
                 that.firebase_db.addChapter(object.info).then(
                 function(data){
-                    console.log("object ",object)
-
                     console.log("add book server chapter: ", data)
                     setTimeout(call(ws,object), 50);
                     

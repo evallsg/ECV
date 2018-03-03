@@ -39,12 +39,13 @@ class Book_Client {
     }
 }
 
-Book_Client.prototype.requestChapter = function(chapter_id, callback_received_chapter) {
+Book_Client.prototype.requestChapter = function(chapter_id,book_id, callback_received_chapter) {
     console.log("Requesting chapter")
     var message = {
         "type": "getbookchapter",
         "info": {
-            "chapter_id": chapter_id
+            "chapter_id": chapter_id,
+            "book_id": book_id
         }
     }
     this.callback_received_chapter = callback_received_chapter;

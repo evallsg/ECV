@@ -206,6 +206,7 @@ Database.prototype.getBook = function(uid) {
     var ref = this.db.ref("books/" + uid);
     return ref.once("value").then(
         function(book) {
+            console.log(book.val())
             return book.val();
         }, 
         function(errorObject) {
