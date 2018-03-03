@@ -29,11 +29,31 @@
         <div class="options hidden">
             <ul class="list-options">
                 <li class="decision"><a href="">Si vols que la Maria aconsegueixi escapar-se clica aquí.</a></li>
-                <li class="decision"><a href="">Si vols que la Maria hagi de trobar en Pere per poder trobar la sortida clica aquí.</a></li>
+                <li id="add-decision" class="decision"><a href="">Si vols crear la teva pròpia continuació clica aquí.</a></li>
             <ul>
         </div>
     </div>
+    <div id="modal new-decision" class="modal ">
+      <!-- Modal content -->
+      <span class="close hidden">&times;</span>
+      <div class="modal-content">
+        <div class="modal-title">
+            Add decision
+        </div>
+        <div class="modal-body">
+            <div class="login-lbl">
+                <textarea id="input-decision" class="chapter-input" type="text" name="title" placeholder="Decision" required="true"></textarea>
+            </div>
+            
+        </div>
+        <div class="modal-btn-cont">
+            <button id="btn-cancel" class="btn modal-btn btn-cancel">Cancel</button>
+            <button id="btn-start" class="btn modal-btn"><a href="">Start</a></button>
+        </div>
 
+      </div>
+
+    </div>
    <script src="js/client.js"></script>
     <script src="js/edit-chapter.js"></script>
     <script type="text/javascript">
