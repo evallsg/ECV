@@ -67,14 +67,13 @@ Book_Client.prototype.requestAddNewChapter = function(book_id, parent_chapter_id
     this.ws.send(JSON.stringify(message));
 };
 
-Book_Client.prototype.requestUpdateChapter = function(chapter_id, title_text, body_text) {
+Book_Client.prototype.requestUpdateChapter = function(chapter_id, data) {
     console.log("Saving new chapter")
     var message = {
         "type": "savebookchapter",
         "info": {
             "chapter_id": chapter_id,
-            "title": title_text,
-            "text": body_text
+            "data": data
         }
     }
 

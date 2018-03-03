@@ -57,7 +57,7 @@ function init() {
     client.requestAllBooks(received_all_books);
 }
 
-//document.getElementsByTagName("body")[0].style.display = "none";
+document.getElementsByTagName("body")[0].style.display = "none";
 
 document.getElementsByClassName("btn new-book")[0].addEventListener("click", onClickNewBook.bind(this), false);
 

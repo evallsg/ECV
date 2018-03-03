@@ -2,14 +2,25 @@ function onSaveChapter()
 {
 	var title = document.getElementsByClassName("chapter-title")[0].innerText
 	var text = document.getElementsByClassName("chapter-body")[0].innerText
-	this.client.requestUpdateChapter(this.chapter_id, title, text)
+	var data = {
+		"title": title,
+		"text": text
+	}
+	this.client.requestUpdateChapter(this.chapter_id, data)
 }
 
-function onFinishChapter()
+function onFinishChapter(event)
 {
-	// var title = document.getElementsByClassName("chapter-title")[0].innerText
+	event.srcElement.classList.add("disable")
+	var title = document.getElementsByClassName("chapter-title")[0].innerText
+	var text = document.getElementsByClassName("chapter-body")[0].innerText
+	var data = {
+		"title": title,
+		"text": text,
+		"is_terminal": true
+	}
 	// var text = document.getElementsByClassName("chapter-body")[0].innerText
-	// this.client.requestUpdateChapter(this.chapter_id, title, text, true)
+	this.client.requestUpdateChapter(this.chapter_id, data)
 }
 
 function received_book_chapter(response)
@@ -20,7 +31,6 @@ function received_book_chapter(response)
     document.getElementsByClassName("chapter-title")[0].innerText = response.chapter.title;
     document.getElementsByClassName("chapter-body")[0].innerText = response.chapter.text;
 
-	document.getElementsByTagName("body")[0].style.display = "initial";
 }
 
 function GetUrlValue(VarSearch){
@@ -46,7 +56,6 @@ function init()
 
 }
 
-document.getElementsByTagName("body")[0].style.display = "none";
 
 document.getElementsByClassName("btn save")[0].addEventListener("click", onSaveChapter.bind(this), false);
 document.getElementsByClassName("btn finish")[0].addEventListener("click", onFinishChapter.bind(this), false);

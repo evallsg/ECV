@@ -32,7 +32,7 @@ Book_Server.prototype.processRequest = function(object, ws) {
             
             break;
         case "savebookchapter":
-            this.firebase_db.updateChapter(object.info.chapter_id, {"title": object.info.title, "text": object.info.text});
+            this.firebase_db.updateChapter(object.info.chapter_id,object.info.data);
             
             break;
         case "addbook":
