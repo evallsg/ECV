@@ -11,24 +11,47 @@ function Book_Server() {
 }
 
 Book_Server.prototype.processRequest = function(object, ws) {
+    var that = this
     switch (object.type) {
         case "getbookchapter":
+            console.log("getbookchapter")
             this.firebase_db.getChapter(object.info.chapter_id).then(function(result) {
-                ws.send(JSON.stringify({ "type": object.type, "info": result }));
+
+                object.info.chapter= result
+                that.firebase_db.getBook(object.info.book_id).then(function(result){
+                    object.info.book = result
+                    ws.send(JSON.stringify({ "type": object.type, "info": object.info }));
+                }).catch(function(error){
+                    console.log("error get chapter ", error)
+                });
+                
             });
             break;
         case "createbookchapter":
-            this.addChapter(object);
-            ws.send();
+            this.addChapter(object).then(function(){ws.send();});
+            
             break;
         case "savebookchapter":
             this.firebase_db.updateChapter(object.info.chapter_id, {"title": object.info.title, "text": object.info.text});
-            ws.send();
+            
             break;
         case "addbook":
-            this.firebase_db.addBook(object.info);
-            this.firebase_db.addChapter(object.info);
-            ws.send(JSON.stringify({ "type": object.type, "book_id": object.info.bookId, "chapter_id": object.info.id }));
+
+            this.firebase_db.addBook(object.info).then(function(id){
+                object.info.bookId = id;
+                that.firebase_db.addChapter(object.info).then(
+                function(data){
+                    console.log("add book server chapter: ", data)
+                    setTimeout(call(ws,object), 50);
+                    
+
+                }).catch(function(error){
+                    console.log("error server ", error)
+                });
+            }).catch(function(){
+                console.log("error server addBook")
+            });
+            
             break;
         case "register":
             this.firebase_db.register(object.info);
@@ -107,6 +130,17 @@ Book_Server.prototype.init = function() {
         //ws.send('something');
     });
 
+}
+function call(ws,object){
+    if(ws.readyState === 1) {
+        //do nothing
+        console.log("call enter")
+        ws.send(JSON.stringify(object));
+    } else if (ws.readyState !=1) {
+        //fallback
+        console.log("interval")
+       setInterval(call(ws, object), 30)
+    }
 }
 
 server = new Book_Server();

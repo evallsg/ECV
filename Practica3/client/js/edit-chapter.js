@@ -13,11 +13,12 @@ function onFinishChapter()
 }
 
 function received_book_chapter(response)
-{
+{	
 	var cosa = 0;
-
-    document.getElementsByClassName("chapter-title")[0].innerText = response.title;
-    document.getElementsByClassName("chapter-body")[0].innerText = response.text;
+	console.log(response)
+	document.getElementsByClassName("menu-title")[0].innerText = response.book.title;
+    document.getElementsByClassName("chapter-title")[0].innerText = response.chapter.title;
+    document.getElementsByClassName("chapter-body")[0].innerText = response.chapter.text;
 
 	document.getElementsByTagName("body")[0].style.display = "initial";
 }
@@ -41,7 +42,7 @@ function init()
 
 	//document.getElementsByTagName("title")[0].innerText = book_title;
 
-	this.client.requestChapter(this.chapter_id, received_book_chapter)
+	this.client.requestChapter(this.chapter_id, book_id, received_book_chapter)
 
 }
 

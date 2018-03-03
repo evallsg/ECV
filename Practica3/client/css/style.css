@@ -29,10 +29,11 @@ body{
     background: #44373E;
     font-family: GlacialIndifference;
 }
-
-ul {
-    line-height: 60px;
+ul{
     list-style-type: none;
+}
+.nav-bar {
+    line-height: 60px;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -50,12 +51,15 @@ ul {
 .right{
     float: right;
 }
+a{
+    color: inherit;
+    text-decoration: none;
 
+}
 li a {
     display: block;
     text-align: center;
     /* padding: 14px 16px; */
-    text-decoration: none;
 
 }
 
@@ -204,9 +208,7 @@ div.chapter{
 }
 
 /*Standard*/
-.nav-bar{
-    width: calc(100% - 18px);
-}
+
 .padding-10{
     padding: 0 10px;
 }
@@ -219,7 +221,7 @@ div.chapter{
     color:gray;
 }
 .modal{
-    background: rgba(68,55,62,0.98);
+    background: rgba(68,55,62,0.94);
     position: absolute;
     top: 0;
     right: 0;
@@ -245,6 +247,13 @@ div.chapter{
 }
 .modal-body{
     height: 50%;
+}
+.modal-btn-cont{
+    height: 20%;
+    text-align: center;
+}
+.modal-btn{
+    margin: 2px 14px;
 }
 /*Login*/
 .center{
@@ -321,8 +330,8 @@ div.chapter{
     position: relative;
 }
 
-.login-btn-lgn:hover{
-    box-shadow: 0 -2px 16px 8px rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+button:hover{
+    box-shadow: 0 -2px 16px 2px rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
     font-weight: bold;
 }
 
@@ -371,4 +380,18 @@ input{
 .book-input{
     width: 60%;
 }
+.btn-cancel{
+    background: none;
+    border: 1px solid #b87e9e;
+    color: #b87e9e;
+}
 /*edit-chapter*/
+.list-options{
+    columns: 2;
+    text-align: justify;
+    padding: 20px;
+}
+.decision{
+    padding: 0 14px;
+  
+}

@@ -71,14 +71,25 @@ Database.prototype.init = function() {
 
 Database.prototype.register = function(data) {
 
-    this.admin.auth().createUser({
+    return this.admin.auth().createUser({
             email: data.email,
             password: data.password,
-            displayName: data.name,
+            displayName: data.username,
             disabled: false,
             photoUrl: data.avatar
         })
         .then(function(userRecord) {
+            var ref = this.db.ref("users/"+userRecord.uid);
+        
+            ref.set({
+                    username: userRecord.displayName,
+                    avatar: userRecord.photoURL
+                }).then(function() {
+                    console.log("Successfully added user ");
+                })
+                .catch(function(error) {
+                    console.log("Error adding user: ", error);
+                });
             // See the UserRecord reference doc for the contents of userRecord.
             console.log("Successfully created new user:", userRecord.uid);
         })
@@ -175,13 +186,15 @@ Database.prototype.getAllBooks = function() {
 Database.prototype.addBook = function(data) {
     var ref = this.db.ref("books").push();
     data.bookId = ref.key
-    ref.set({
+    return ref.set({
             title: data.title,
             owner_id: data.userId,
             genre: data.genre,
             finished: false,
         }).then(function() {
             console.log("Successfully added book: ", data.bookId);
+            return data.bookId
+
         })
         .catch(function(error) {
             console.log("Error adding book: ", error);
@@ -193,6 +206,7 @@ Database.prototype.getBook = function(uid) {
     var ref = this.db.ref("books/" + uid);
     return ref.once("value").then(
         function(book) {
+            console.log(book.val())
             return book.val();
         }, 
         function(errorObject) {
@@ -206,7 +220,7 @@ Database.prototype.addChapter = function(data) {
     var ref = this.db.ref("chapters").push();
     var that = this;
     data.id = ref.key;
-    ref.set({
+    return ref.set({
             parent_id: data.parentId != undefined ? data.parentId : null,
             title: "",
             decision: data.decision != undefined ? data.decision : null,
@@ -215,24 +229,30 @@ Database.prototype.addChapter = function(data) {
             finished: false,
             is_terminal: false
         }).then(function() {
-            if (data.parentId != null) {
-                var ref = that.admin.database().ref("chapters/"+ data.parentId + "/children/" + data.id)
-                ref.set({
-                    decision: data.decision
-                });
-            }
+            
             var ref2 = that.admin.database().ref("books/"+data.bookId + "/chapters/"+data.id);
-            ref2.set({
+            return ref2.set({
                 decision: data.decision != undefined ? data.decision : ""
-            })
-
+                }).then(function(){
+                    if (data.parentId != null) {
+                        var ref = that.admin.database().ref("chapters/"+ data.parentId + "/children/" + data.id)
+                        ref.set({
+                            decision: data.decision
+                        });
+                    }
+                    console.log("chapter: "+ data.id)
+                    return data.id
+                }).catch(function(error) {
+                  console.log("error add chapter")
+                });
+            
         })
         .catch(function(error) {
             console.log("Error adding chapter:", error);
         });
 }
 Database.prototype.getChapter = function(chapterId) {
-
+            
     var ref = this.db.ref("chapters/" + chapterId);
     return ref.once("value").then(
         function(chapter) {
