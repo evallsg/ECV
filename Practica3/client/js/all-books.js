@@ -57,7 +57,7 @@ function init() {
     client.requestAllBooks(received_all_books);
 }
 
-//document.getElementsByTagName("body")[0].style.display = "none";
+document.getElementsByTagName("body")[0].style.display = "none";
 var user_token = localStorage.getItem("user-token")
 
 if(!user_token)
