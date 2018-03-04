@@ -13,10 +13,11 @@ function Book_Server() {
 Book_Server.prototype.processRequest = function(object, ws) {
     var that = this
     switch (object.type) {
-            case "auth":
+        case "auth":
             var usermail = that.active_clients[object.info.user_token]; 
             if(usermail)
             {
+                console.log("here")
                 ws.current_user = usermail;
                 ws.send(ws.send(JSON.stringify({ "type": object.type, "info": {"auth": true}} )));   
             }
@@ -45,7 +46,7 @@ Book_Server.prototype.processRequest = function(object, ws) {
             });
             break;
         case "createbookchapter":
-            this.addChapter(object).then(function(){ws.send();});
+            //this.addChapter(object).then(function(){ws.send();});
             
             break;
         case "savebookchapter":
@@ -73,17 +74,17 @@ Book_Server.prototype.processRequest = function(object, ws) {
             break;
         case "register":
             this.firebase_db.register(object.info);
-            ws.send();
+            //ws.send();
             break;
         case "login":
             this.firebase_db.login(object.info).then(function(user_info){ 
                 that.active_clients[user_info.token] = object.info.email;
                 ws.current_user = object.info.email;
                 ws.send(JSON.stringify({ "type": object.type, "info": {"user-info": user_info} }));
-            }, function(errormsg){
+            }).catch(function(errormsg){
                 ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": errormsg}}));
             });
-            ws.send();
+           // ws.send();
             break;
         case "addchapter":
             object.info.userId = "marc";
@@ -103,7 +104,11 @@ Book_Server.prototype.processRequest = function(object, ws) {
                     var book_info = { "book_id": key, "title": result[key].title, "owner": result[key].owner_id, "finished": result[key].finished, "genre": result[key].genre, "first_chapter_id": first_chapter_id };
                     message.info.books.push(book_info);
                 }
-                ws.send(JSON.stringify(message));
+                //setTimeout(call(ws,object), 50);
+                if(ws.readyState === 1) ws.send(JSON.stringify(message));
+            }).catch(function(error){
+                ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": error}}));
+                console.log("error recive books")
             });
             break;
         case "getchapters":

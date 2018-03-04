@@ -176,7 +176,7 @@ Database.prototype.getAllBooks = function() {
     return ref.once("value").then( 
         function(book) {
             return book.val();
-        }, 
+        }).catch( 
         function(errorObject) {
             console.log("The read failed: " + errorObject.code);
             return null;
