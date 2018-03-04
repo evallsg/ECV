@@ -13,6 +13,10 @@ class Book_Client {
         };
         this.ws.onmessage = function(message) {
             console.log(message)
+
+            if(message.data.type == "")
+              return;
+
             var response = JSON.parse(message.data)
             switch (response.type) {
                 case "getbookchapter":

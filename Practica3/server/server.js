@@ -33,7 +33,7 @@ Book_Server.prototype.processRequest = function(object, ws) {
                 that.firebase_db.getBook(object.info.book_id).then(function(result){
                     object.info.book = result
 
-                    if(ws.current_user == object.info.book.owner_id)
+                    if(ws.current_user == object.info.chapter.owner_id)
                         object.info.editable = true;
                     else
                         object.info.editable = false;

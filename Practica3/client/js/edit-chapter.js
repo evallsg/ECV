@@ -117,4 +117,4 @@ document.getElementsByClassName("btn save")[0].addEventListener("click", onSaveC
 document.getElementsByClassName("btn finish")[0].addEventListener("click", onFinishChapter.bind(this), false);
 document.getElementById("add-decision").addEventListener("click", addDecision.bind(this), false);
 document.getElementsByClassName("chapter scroll")[0].addEventListener('scroll', onScrollBottom.bind(this));
-this.client = new Book_Client(init.bind(this))
+this.client = new Book_Client(init.bind(this), user_token)
