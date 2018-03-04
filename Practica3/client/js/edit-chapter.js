@@ -14,11 +14,15 @@ function onFinishChapter()
 
 function received_book_chapter(response)
 {	
-	var cosa = 0;
-	console.log(response)
 	document.getElementsByClassName("menu-title")[0].innerText = response.book.title;
     document.getElementsByClassName("chapter-title")[0].innerText = response.chapter.title;
     document.getElementsByClassName("chapter-body")[0].innerText = response.chapter.text;
+
+    if(!response.editable)
+    {	
+    	document.getElementsByClassName("chapter-title")[0].contentEditable = false;
+    	document.getElementsByClassName("chapter-body")[0].contentEditable = false;
+    }
 
 	document.getElementsByTagName("body")[0].style.display = "initial";
 }
@@ -46,9 +50,14 @@ function init()
 
 }
 
+var user_token = localStorage.getItem("user-token")
+
+if(!user_token)
+    document.location.href = "index.html"
+
 document.getElementsByTagName("body")[0].style.display = "none";
 
 document.getElementsByClassName("btn save")[0].addEventListener("click", onSaveChapter.bind(this), false);
 document.getElementsByClassName("btn finish")[0].addEventListener("click", onFinishChapter.bind(this), false);
 
-this.client = new Book_Client(init.bind(this))
+this.client = new Book_Client(init.bind(this), user_token)
