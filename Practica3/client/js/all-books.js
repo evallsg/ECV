@@ -58,7 +58,11 @@ function init() {
 }
 
 document.getElementsByTagName("body")[0].style.display = "none";
+var user_token = localStorage.getItem("user-token")
+
+if(!user_token)
+    document.location.href = "index.html"
 
 document.getElementsByClassName("btn new-book")[0].addEventListener("click", onClickNewBook.bind(this), false);
 
-this.client = new Book_Client(init.bind(this))
+this.client = new Book_Client(init.bind(this), user_token)

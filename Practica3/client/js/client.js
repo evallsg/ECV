@@ -1,12 +1,16 @@
 class Book_Client {
-    constructor(on_complete) {
-        this.ws = new WebSocket("ws://84.89.136.194:14546")
+    constructor(on_complete, user_token) {
+        this.ws = new WebSocket("ws://localhost:14546")
 
-        this.ws.onopen = function() {
-            if (on_complete)
-                on_complete();
-        };
         var that = this;
+        this.ws.onopen = function() {
+            if (on_complete) {
+                if (user_token)
+                    that.requestAuth(user_token);
+                on_complete();
+            }
+
+        };
         this.ws.onmessage = function(message) {
             var response = JSON.parse(message.data)
             switch (response.type) {
@@ -32,7 +36,13 @@ class Book_Client {
                     that.callback_received_all_chapters(response.info);
                     break;
                 case "login":
-                    that.callback_received_user_token(response.info);
+                    that.callback_received_user_token(response.info["user-info"].token);
+                    break;
+                case "auth":
+                    if (!response.info.auth) {
+                        localStorage.removeItem("user-token")
+                        document.location.href = "index.html"
+                    }
                     break;
             }
         };
@@ -40,7 +50,20 @@ class Book_Client {
     }
 }
 
-Book_Client.prototype.requestChapter = function(chapter_id,book_id, callback_received_chapter) {
+Book_Client.prototype.requestAuth = function(user_token) {
+    console.log("Requesting auth")
+    var message = {
+        "type": "auth",
+        "info": {
+            "user_token": user_token
+        }
+    }
+
+    this.ws.send(JSON.stringify(message));
+};
+
+
+Book_Client.prototype.requestChapter = function(chapter_id, book_id, callback_received_chapter) {
     console.log("Requesting chapter")
     var message = {
         "type": "getbookchapter",

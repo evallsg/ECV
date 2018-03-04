@@ -13,6 +13,17 @@ function Book_Server() {
 Book_Server.prototype.processRequest = function(object, ws) {
     var that = this
     switch (object.type) {
+            case "auth":
+            var usermail = that.active_clients[object.info.user_token]; 
+            if(usermail)
+            {
+                ws.current_user = usermail;
+                ws.send(ws.send(JSON.stringify({ "type": object.type, "info": {"auth": true}} )));   
+            }
+            else
+                ws.send(ws.send(JSON.stringify({ "type": object.type, "info": {"auth": false}} )));   
+            break;
+
         case "getbookchapter":
             console.log("getbookchapter")
             this.firebase_db.getChapter(object.info.chapter_id).then(function(result) {
@@ -20,6 +31,12 @@ Book_Server.prototype.processRequest = function(object, ws) {
                 object.info.chapter= result
                 that.firebase_db.getBook(object.info.book_id).then(function(result){
                     object.info.book = result
+
+                    if(ws.current_user == object.info.book.owner_id)
+                        object.info.editable = true;
+                    else
+                        object.info.editable = false;
+
                     ws.send(JSON.stringify({ "type": object.type, "info": object.info }));
                 }).catch(function(error){
                     console.log("error get chapter ", error)
@@ -36,6 +53,7 @@ Book_Server.prototype.processRequest = function(object, ws) {
             
             break;
         case "addbook":
+            object.info.userId = ws.current_user;
 
             this.firebase_db.addBook(object.info).then(function(id){
                 object.info.bookId = id;
@@ -58,8 +76,10 @@ Book_Server.prototype.processRequest = function(object, ws) {
             ws.send();
             break;
         case "login":
-            this.firebase_db.login(object.info).then(function(usertoken){ 
-                ws.send(JSON.stringify({ "type": object.type, "info": {"usertoken": usertoken} }));
+            this.firebase_db.login(object.info).then(function(user_info){ 
+                that.active_clients[user_info.token] = object.info.email;
+                ws.current_user = object.info.email;
+                ws.send(JSON.stringify({ "type": object.type, "info": {"user-info": user_info} }));
             }, function(errormsg){
                 ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": errormsg}}));
             });
@@ -101,7 +121,7 @@ Book_Server.prototype.processRequest = function(object, ws) {
 
 Book_Server.prototype.init = function() {
     var that = this;
-    this.clients = []
+    this.active_clients = {};
 
     this.server = http.createServer();
 
@@ -122,7 +142,7 @@ Book_Server.prototype.init = function() {
             //that.
         });
         ws.on("close", function(message) {
-            var index = that.clients.indexOf(ws);
+            //var index = this.clients.indexOf(ws);
             console.log("User disconnected");
             ws.close();
         });
