@@ -61,9 +61,10 @@ function received_book_chapter(response)
     {	
     	document.getElementsByClassName("chapter-title")[0].contentEditable = false;
     	document.getElementsByClassName("chapter-body")[0].contentEditable = false;
+		document.getElementsByClassName("btn save")[0].classList.add("hidden");
+		document.getElementsByClassName("btn finish")[0].classList.add("hidden");
     }
 
-	document.getElementsByTagName("body")[0].style.display = "initial";
 }
 
 function GetUrlValue(VarSearch){
@@ -108,10 +109,9 @@ function init()
 
 var user_token = localStorage.getItem("user-token")
 
-if(!user_token)
+if(!user_token){
     document.location.href = "index.html"
-
-document.getElementsByTagName("body")[0].style.display = "none";
+}
 
 document.getElementsByClassName("btn save")[0].addEventListener("click", onSaveChapter.bind(this), false);
 document.getElementsByClassName("btn finish")[0].addEventListener("click", onFinishChapter.bind(this), false);

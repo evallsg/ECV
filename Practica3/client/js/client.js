@@ -1,6 +1,6 @@
 class Book_Client {
     constructor(on_complete, user_token) {
-        this.ws = new WebSocket("ws://localhost:14546")
+        this.ws = new WebSocket("ws://84.89.136.194:14546")
 
         var that = this;
         this.ws.onopen = function() {
@@ -12,6 +12,7 @@ class Book_Client {
 
         };
         this.ws.onmessage = function(message) {
+            console.log(message)
             var response = JSON.parse(message.data)
             switch (response.type) {
                 case "getbookchapter":
