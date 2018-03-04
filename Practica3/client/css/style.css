@@ -152,8 +152,10 @@ li a {
     /* display: block; */
     margin-right: 9px
 }
-
 .finish{
+    background: #944872;
+}
+.purple{
     background: rgba(102,82,93,1);
 }
 
