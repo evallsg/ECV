@@ -49,7 +49,7 @@ Book_Server.prototype.processRequest = function(object, ws) {
             
             break;
         case "savebookchapter":
-            this.firebase_db.updateChapter(object.info.chapter_id, {"title": object.info.title, "text": object.info.text});
+            this.firebase_db.updateChapter(object.info.chapter_id,object.info.data);
             
             break;
         case "addbook":
@@ -86,9 +86,11 @@ Book_Server.prototype.processRequest = function(object, ws) {
             ws.send();
             break;
         case "addchapter":
-            object.info.userId = ws.current_user;
-            this.firebase_db.addChapter(object.info);
-            ws.send();
+            object.info.userId = "marc";
+            this.firebase_db.addChapter(object.info).then(function(id){
+               ws.send(JSON.stringify({ "type": object.type, "info": {"chapterId": id} })) 
+            });
+            ;
             break;
         case "allbooks":
             this.firebase_db.getAllBooks().then(function(result) {
