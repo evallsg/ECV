@@ -27,15 +27,13 @@
         <div class="chapter-title" placeholder="Title..." contenteditable="true"></div>
         <div class="chapter-body" placeholder="Type text here..." contenteditable="true"></div>
         <div class="options hidden">
-            <ul class="list-options">
-                <li class="decision"><a href="">Si vols que la Maria aconsegueixi escapar-se clica aquí.</a></li>
-                <li class="decision"><a href="">Si vols que la Maria aconsegueixi escapar-se clica aquí.</a></li>
-                <li class="decision"><a href="">Si vols que la Maria aconsegueixi escapar-se clica aquí.</a></li>
-                <li id="add-decision" class="decision"><a href="">Si vols crear la teva pròpia continuació clica aquí.</a></li>
+            <ul id="list-decisions" class="list-options">
+                <li id="template-decision" class="decision hidden"></li>
+                <li id="add-decision" class="decision">Si vols crear la teva pròpia continuació clica aquí.</li>
             <ul>
         </div>
     </div>
-    <div id="modal new-decision" class="modal ">
+    <div id="modal new-decision" class="modal hidden">
       <!-- Modal content -->
       <span class="close hidden">&times;</span>
       <div class="modal-content">
@@ -44,13 +42,13 @@
         </div>
         <div class="modal-body">
             <div class="login-lbl">
-                <textarea id="input-decision" class="chapter-input" type="text" name="title" placeholder="Decision" required="true"></textarea>
+                <textarea class="decision-input" type="text" name="title" placeholder="Decision" required="true"></textarea>
             </div>
             
         </div>
         <div class="modal-btn-cont">
-            <button id="btn-cancel" class="btn modal-btn btn-cancel">Cancel</button>
-            <button id="btn-start" class="btn modal-btn"><a href="">Start</a></button>
+            <button id="btn-cancel-decision" class="btn modal-btn btn-cancel">Cancel</button>
+            <button id="btn-start-decision" class="btn modal-btn"><a href="">Start</a></button>
         </div>
 
       </div>
@@ -58,19 +56,6 @@
     </div>
    <script src="js/client.js"></script>
     <script src="js/edit-chapter.js"></script>
-    <script type="text/javascript">
-    var element= document.getElementsByClassName("chapter scroll")[0];
-    element.addEventListener('scroll', function(event)
-    {
-        var element = event.target;
-        if (element.scrollHeight - element.scrollTop === element.clientHeight)
-        {
-            
-            document.getElementsByClassName("options")[0].classList.remove("hidden")
-        }
-    });
-
-    </script>
 </body>
 
 </html>

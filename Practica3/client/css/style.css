@@ -394,6 +394,7 @@ input{
 }
 .decision{
     padding: 10px 14px;
+    cursor: pointer;
   
 }
 .decision:hover {

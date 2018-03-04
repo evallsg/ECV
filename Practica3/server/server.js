@@ -67,8 +67,10 @@ Book_Server.prototype.processRequest = function(object, ws) {
             break;
         case "addchapter":
             object.info.userId = "marc";
-            this.firebase_db.addChapter(object.info);
-            ws.send();
+            this.firebase_db.addChapter(object.info).then(function(id){
+               ws.send(JSON.stringify({ "type": object.type, "info": {"chapterId": id} })) 
+            });
+            ;
             break;
         case "allbooks":
             this.firebase_db.getAllBooks().then(function(result) {
