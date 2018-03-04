@@ -1,7 +1,7 @@
 function userTokenReceived(user_token)
 {	
 	// TODO: check if there's an error
-	localStorage.setItem("user_token", user_token)
+	localStorage.setItem("user-token", user_token)
 
 	document.location.href = "all-books.html";
 }
@@ -24,6 +24,11 @@ function init() {
 	document.getElementsByClassName("login-btn-lgn")[0].addEventListener("click", onLoginClicked.bind(this), false);
    
 }
+
+var user_token = localStorage.getItem("user-token")
+
+if(user_token)
+	document.location.href = "all-books.html";
 
 //document.getElementsByTagName("body")[0].style.display = "none";
 this.client = new Book_Client(init.bind(this))
