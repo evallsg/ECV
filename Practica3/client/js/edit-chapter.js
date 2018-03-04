@@ -14,16 +14,12 @@ function onFinishChapter()
 
 function received_book_chapter(response)
 {	
-	var cosa = 0;
-	console.log(response)
 	document.getElementsByClassName("menu-title")[0].innerText = response.book.title;
     document.getElementsByClassName("chapter-title")[0].innerText = response.chapter.title;
     document.getElementsByClassName("chapter-body")[0].innerText = response.chapter.text;
 
     if(!response.editable)
     {	
-    	var stuff = document.getElementsByClassName("chapter-title")[0]
-    	var stuff2 = document.getElementsByClassName("chapter-body")[0]
     	document.getElementsByClassName("chapter-title")[0].contentEditable = false;
     	document.getElementsByClassName("chapter-body")[0].contentEditable = false;
     }
