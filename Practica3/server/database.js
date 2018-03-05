@@ -70,31 +70,38 @@ Database.prototype.init = function() {
 
 
 Database.prototype.register = function(data) {
-
-    return this.admin.auth().createUser({
-            email: data.email,
-            password: data.password,
-            displayName: data.username,
-            disabled: false,
-            photoUrl: data.avatar
-        })
+    var user = {
+                   email: data.email,
+                   password: data.password,
+                   displayName: data.username,
+                   disabled: false
+                };
+    if(data.avatar!= undefined){
+        user.photoURL = data.avatar;
+    }
+    return this.admin.auth().createUser(user)
         .then(function(userRecord) {
-            var ref = this.db.ref("users/"+userRecord.uid);
-        
-            ref.set({
+            console.log("Successfully created new user:", userRecord.uid);
+            /*var ref = this.db.ref("users/"+userRecord.uid);
+            
+            return ref.set({
                     username: userRecord.displayName,
                     avatar: userRecord.photoURL
-                }).then(function() {
+                }).then(function(user) {
+                    return user
                     console.log("Successfully added user ");
                 })
                 .catch(function(error) {
+                    return error
                     console.log("Error adding user: ", error);
                 });
             // See the UserRecord reference doc for the contents of userRecord.
-            console.log("Successfully created new user:", userRecord.uid);
+            */return true
         })
         .catch(function(error) {
-            console.log("Error creating new user:", error);
+                        console.log("Error creating new user:", error);
+
+            return false
         });    
     
 }
@@ -107,31 +114,27 @@ Database.prototype.login = function(user){
         }
         return user
        }).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      return errorMessage
-      console.log("error login")
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          if (errorCode === 'auth/wrong-password') {
+            console.log('Wrong password.');
+          } else {
+            console.log(errorMessage);
+          }
+          console.log(error);
+        return error
     });
     
 }
-Database.prototype.logout = function(user){
-    this.firebase.auth().signOut().then(function() {
-      // Sign-out successful.
+Database.prototype.logout = function(){
+    return this.firebase.auth().signOut().then(function() {
+      console.log("User logout")
+      return "success"
     }).catch(function(error) {
       // An error happened.
+      return error
     });
-var user = this.firebase.auth().currentUser;
-
-    user.updateProfile({
-      displayName: "Jane Q. User",
-      photoURL: "https://example.com/jane-q-user/profile.jpg"
-    }).then(function() {
-      // Update successful.
-    }).catch(function(error) {
-      // An error happened.
-    });
-
+    
 }
 Database.prototype.editUser = function(data) {
 

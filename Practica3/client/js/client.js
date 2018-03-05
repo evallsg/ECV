@@ -26,6 +26,7 @@ class Book_Client {
                     that.callback_add_book(response.info);
                     break;
                 case "register":
+                    that.callback_register(response.info)
                     break;
                 case "addchapter":
                     that.callback_add_chapter(response.info);
@@ -38,6 +39,9 @@ class Book_Client {
                     break;
                 case "login":
                     that.callback_received_user_token(response.info["user-info"].token);
+                    break;
+                 case "logout":
+                    that.callback_logout(response.info);
                     break;
                 case "auth":
                     if (!response.info.auth) {
@@ -123,7 +127,7 @@ Book_Client.prototype.requestAddBook = function(title, genre, callback_add_book)
     this.ws.send(JSON.stringify(message))
 };
 
-Book_Client.prototype.requestRegister = function(email, password, name) {
+Book_Client.prototype.requestRegister = function(email, password, name, callback_register) {
     console.log("Requesting register")
     var message = {
         "type": "register",
@@ -133,7 +137,7 @@ Book_Client.prototype.requestRegister = function(email, password, name) {
             "name": name
         }
     }
-
+    this.callback_register = callback_register;
     this.ws.send(JSON.stringify(message));
 };
 
@@ -149,7 +153,14 @@ Book_Client.prototype.requestLogin = function(email, password, callback_received
     this.callback_received_user_token = callback_received_user_token;
     this.ws.send(JSON.stringify(message));
 };
-
+Book_Client.prototype.requestLogout = function(callback_logout) {
+    console.log("Requesting logout")
+    var message = {
+        "type": "logout"
+    }
+    this.callback_logout = callback_logout;
+    this.ws.send(JSON.stringify(message));
+};
 
 Book_Client.prototype.requestAllBooks = function(callback_received_all_books) {
     console.log("Requesting all books")

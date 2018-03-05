@@ -73,7 +73,11 @@ Book_Server.prototype.processRequest = function(object, ws) {
             
             break;
         case "register":
-            this.firebase_db.register(object.info);
+            this.firebase_db.register(object.info).then(function(user){
+                ws.send(JSON.stringify({ "type": object.type, "info": {"user": user} }));
+            }).catch(function(errormsg){
+                ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": errormsg}}));
+            });
             //ws.send();
             break;
         case "login":
@@ -85,6 +89,13 @@ Book_Server.prototype.processRequest = function(object, ws) {
                 ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": errormsg}}));
             });
            // ws.send();
+            break;
+        case "logout":
+             this.firebase_db.logout().then(function(){ 
+                ws.send(JSON.stringify({ "type": object.type, "info": {"success": true} }));
+             }).catch(function(errormsg){
+                ws.send(JSON.stringify({ "type": object.type, "info": {"success": errormsg}}));
+            });
             break;
         case "addchapter":
             object.info.userId = "marc";

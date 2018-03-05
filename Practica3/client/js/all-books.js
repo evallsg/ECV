@@ -51,7 +51,21 @@ function received_all_books(books) {
 
     document.getElementsByTagName("body")[0].style.display = "initial";
 }
+function onLogout(){
+    this.client.requestLogout(signOut)
+}
+function signOut(info){
 
+    if(info.success){
+
+        localStorage.removeItem("user-token")
+        document.location.href = "index.html";
+        console.log(info.success)
+    }
+    else{
+        alert(info.success)
+    }
+}
 function init() {
 
     client.requestAllBooks(received_all_books);
@@ -64,5 +78,5 @@ if(!user_token)
     document.location.href = "index.html"
 
 document.getElementsByClassName("btn new-book")[0].addEventListener("click", onClickNewBook.bind(this), false);
-
+document.getElementById("btn-logout").addEventListener("click", onLogout.bind(this),false);
 this.client = new Book_Client(init.bind(this), user_token)
