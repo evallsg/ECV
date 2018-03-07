@@ -98,9 +98,15 @@ Book_Server.prototype.processRequest = function(object, ws) {
             });
             break;
         case "addchapter":
-            object.info.userId = "marc";
+            object.info.userId = ws.current_user;
             this.firebase_db.addChapter(object.info).then(function(id){
-               ws.send(JSON.stringify({ "type": object.type, "info": {"chapterId": id} })) 
+                console.log("add chapter server id ", id)
+                var data = {
+                    "type": object.type, 
+                    "info": {"chapterId": id} 
+                }
+                setTimeout(call(ws,data), 60);
+               
             });
             ;
             break;
@@ -176,8 +182,7 @@ function call(ws,object){
         ws.send(JSON.stringify(object));
     } else if (ws.readyState !=1) {
         //fallback
-        console.log("interval")
-       setInterval(call(ws, object), 30)
+       setInterval(call(ws, object), 50)
     }
 }
 

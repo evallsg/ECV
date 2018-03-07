@@ -136,8 +136,10 @@ Database.prototype.logout = function(){
     });
     
 }
-Database.prototype.editUser = function(data) {
 
+
+Database.prototype.editUser = function(data) {
+var user = this.firebase.auth().currentUser;
     /*this.admin.auth().updateUser(uid, data)
         .then(function(userRecord) {
             // See the UserRecord reference doc for the contents of userRecord.
