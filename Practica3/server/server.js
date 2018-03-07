@@ -32,7 +32,8 @@ Book_Server.prototype.processRequest = function(object, ws) {
                 object.info.chapter= result
                 that.firebase_db.getBook(object.info.book_id).then(function(result){
                     object.info.book = result
-
+                    console.log("curren user ",ws.current_user)
+                    console.log("owner ",object.info.book.owner_id)
                     if(ws.current_user == object.info.book.owner_id)
                         object.info.editable = true;
                     else
@@ -84,7 +85,7 @@ Book_Server.prototype.processRequest = function(object, ws) {
             this.firebase_db.login(object.info).then(function(user_info){ 
                 that.active_clients[user_info.token] = object.info.email;
                 ws.current_user = object.info.email;
-                ws.send(JSON.stringify({ "type": object.type, "info": {"user-info": user_info} }));
+                ws.send(JSON.stringify({ "type": object.type, "info": {"user": user_info} }));
             }).catch(function(errormsg){
                 ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": errormsg}}));
             });
@@ -101,6 +102,7 @@ Book_Server.prototype.processRequest = function(object, ws) {
             object.info.userId = ws.current_user;
             this.firebase_db.addChapter(object.info).then(function(id){
                 console.log("add chapter server id ", object.info)
+                console.log("id ", id)
                 var data = {
                     "type": object.type, 
                     "info": {"chapterId": id,

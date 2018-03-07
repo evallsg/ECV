@@ -1,9 +1,14 @@
-function userTokenReceived(user_token)
+function userTokenReceived(data)
 {	
 	// TODO: check if there's an error
-	localStorage.setItem("user-token", user_token)
-
-	document.location.href = "all-books.html";
+	if(data.user.token !=undefined){
+		console.log(data.user)
+		localStorage.setItem("user-token", data.user.token)
+		document.location.href = "all-books.html";
+	}else{
+		alert(data.user.message)
+	}
+	
 }
 
 function onLoginClicked()
@@ -35,7 +40,9 @@ function onSubmitRegister(){
 	this.client.requestRegister(email, password, name, registerCallback);
 }
 function registerCallback(success){
-	if(success){
+	if(!success){
+		alert("Error")
+	}else{
 		onLoginClicked()
 	}
 }

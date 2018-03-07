@@ -82,11 +82,11 @@ Database.prototype.register = function(data) {
     return this.admin.auth().createUser(user)
         .then(function(userRecord) {
             console.log("Successfully created new user:", userRecord.uid);
-            /*var ref = this.db.ref("users/"+userRecord.uid);
+            var ref = this.db.ref("users/"+data.email);
             
             return ref.set({
-                    username: userRecord.displayName,
-                    avatar: userRecord.photoURL
+                    username: data.username,
+                    avatar: data.avatar
                 }).then(function(user) {
                     return user
                     console.log("Successfully added user ");
@@ -96,7 +96,7 @@ Database.prototype.register = function(data) {
                     console.log("Error adding user: ", error);
                 });
             // See the UserRecord reference doc for the contents of userRecord.
-            */return true
+            return true
         })
         .catch(function(error) {
                         console.log("Error creating new user:", error);

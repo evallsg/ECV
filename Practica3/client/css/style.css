@@ -163,14 +163,15 @@ li a {
 div.chapter{
     background: white;
     height: calc(70% - 61px);
-    width: 60%;
+    width: 50%;
     padding-top: 5%;
     padding-bottom: 5%;
     padding-left: 10%;
     padding-right: 10%;
-    margin-left: 10%;
+    margin-left: 15%;
     margin-right: 10%;
     overflow-y: auto;
+    min-height: 74vh;
 }
 
 .chapter-title{
@@ -184,6 +185,7 @@ div.chapter{
     margin-top: 5%;
     text-align: justify;
     outline: none;
+    font-size: 18px;
 }
 [contenteditable=true]:empty:before{
   content: attr(placeholder);
@@ -390,7 +392,6 @@ input{
 }
 /*edit-chapter*/
 .list-options{
-    columns: 2;
     text-align: justify;
     padding: 20px;
 }
@@ -399,6 +400,18 @@ input{
     cursor: pointer;
   
 }
+.decision a{
+    display: -webkit-inline-box!important;
+}
 .decision:hover {
-    font-weight: bold; 
+    /*font-weight: bold; */
+  text-shadow: 
+     3px 0px 6px #cade79,
+    -3px 0px 6px #cade79,
+     6px 0px 8px #cade79,
+    -6px 0px 8px #cade79;    
+}
+.arrow{
+    width: 14px;
+    padding-right: 5px;
 }

@@ -40,7 +40,7 @@ class Book_Client {
                     that.callback_received_all_chapters(response.info);
                     break;
                 case "login":
-                    that.callback_received_user_token(response.info["user-info"].token);
+                    that.callback_received_user_token(response.info);
                     break;
                  case "logout":
                     that.callback_logout(response.info);
