@@ -93,9 +93,9 @@ function addDecision(){
     })
 }
 function redirectToEditChapter(data){
-	console.log("redirect to book ", that.book_id)
-    var that = this
-    document.location.href = "edit-chapter.html?book_id=" + that.book_id + "&chapter_id=" + data.chapterId;
+	var that = this
+	console.log("redirect to book ", data)
+    document.location.href = "edit-chapter.html?book_id=" + data.bookId + "&chapter_id=" + data.chapterId;
 };
 function init()
 {	

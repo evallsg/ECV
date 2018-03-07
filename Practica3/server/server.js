@@ -100,10 +100,12 @@ Book_Server.prototype.processRequest = function(object, ws) {
         case "addchapter":
             object.info.userId = ws.current_user;
             this.firebase_db.addChapter(object.info).then(function(id){
-                console.log("add chapter server id ", id)
+                console.log("add chapter server id ", object.info)
                 var data = {
                     "type": object.type, 
-                    "info": {"chapterId": id} 
+                    "info": {"chapterId": id,
+                             "bookId": object.info.bookId
+                         } 
                 }
                 setTimeout(call(ws,data), 60);
                
@@ -147,7 +149,7 @@ Book_Server.prototype.init = function() {
 
     this.server = http.createServer();
 
-    this.server.listen(14546, function() {
+    this.server.listen(14446, function() {
         console.log("Server ready!");
     });
 
