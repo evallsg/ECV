@@ -12,11 +12,8 @@
 			<div class="login-title">
 				LOGIN 
 			</div>
-			<div class="login-title hidden">
-				REGISTER 
-			</div>
 			<div class="login-content">
-				<div class="login-lbl hidden">
+				<div id="input-username" class="login-lbl hidden">
 					<input class="usr-input " type="text" name="username" placeholder="Username">
 				</div>
 				<div class="login-lbl ">
@@ -28,11 +25,11 @@
 			</div>
 			<div class="login-buttons">
 				<div class="login-btn ">
-					<button class="login-btn-lgn "> Login </button>	
-					<button class="login-btn-lgn hidden" action=""> Register </button>
+					<button id="btn-login" class="login-btn-lgn "> Login </button>	
 				</div>
 				<div class="login-btn">
-					<div class="login-btn-reg "> Register </div>	
+					<div ><a class="login-btn-reg"> Register </a></div>	
+					<button id="btn-register" class="login-btn-lgn hidden" > Register </button>
 				</div>
 			</div>
 		</div>
@@ -40,7 +37,7 @@
 	</div>
 	
     <script src="js/md5.min.js"></script>
-    <script src="js/client.js"></script>
+   <script src="js/client.js"></script>
     <script src="js/index.js"></script>
 
 </body>
