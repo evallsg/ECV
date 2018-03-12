@@ -33,7 +33,9 @@ Book_Server.prototype.processRequest = function(object, ws) {
                 that.firebase_db.getBook(object.info.book_id).then(function(result){
                     object.info.book = result
 
-                    if(ws.current_user == object.info.chapter.owner_id)
+                    console.log("curren user ",ws.current_user)
+                    console.log("owner ",object.info.book.owner_id)
+                    if(ws.current_user == object.info.book.owner_id)
                         object.info.editable = true;
                     else
                         object.info.editable = false;
@@ -73,23 +75,43 @@ Book_Server.prototype.processRequest = function(object, ws) {
             
             break;
         case "register":
-            this.firebase_db.register(object.info);
+            this.firebase_db.register(object.info).then(function(user){
+                ws.send(JSON.stringify({ "type": object.type, "info": {"user": user} }));
+            }).catch(function(errormsg){
+                ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": errormsg}}));
+            });
             //ws.send();
             break;
         case "login":
             this.firebase_db.login(object.info).then(function(user_info){ 
                 that.active_clients[user_info.token] = object.info.email;
                 ws.current_user = object.info.email;
-                ws.send(JSON.stringify({ "type": object.type, "info": {"user-info": user_info} }));
+                ws.send(JSON.stringify({ "type": object.type, "info": {"user": user_info} }));
             }).catch(function(errormsg){
                 ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": errormsg}}));
             });
            // ws.send();
             break;
+        case "logout":
+             this.firebase_db.logout().then(function(){ 
+                ws.send(JSON.stringify({ "type": object.type, "info": {"success": true} }));
+             }).catch(function(errormsg){
+                ws.send(JSON.stringify({ "type": object.type, "info": {"success": errormsg}}));
+            });
+            break;
         case "addchapter":
-            object.info.userId = "marc";
+            object.info.userId = ws.current_user;
             this.firebase_db.addChapter(object.info).then(function(id){
-               ws.send(JSON.stringify({ "type": object.type, "info": {"chapterId": id} })) 
+                console.log("add chapter server id ", object.info)
+                console.log("id ", id)
+                var data = {
+                    "type": object.type, 
+                    "info": {"chapterId": id,
+                             "bookId": object.info.bookId
+                         } 
+                }
+                setTimeout(call(ws,data), 60);
+               
             });
             ;
             break;
@@ -130,7 +152,7 @@ Book_Server.prototype.init = function() {
 
     this.server = http.createServer();
 
-    this.server.listen(14546, function() {
+    this.server.listen(14446, function() {
         console.log("Server ready!");
     });
 
@@ -165,8 +187,7 @@ function call(ws,object){
         ws.send(JSON.stringify(object));
     } else if (ws.readyState !=1) {
         //fallback
-        console.log("interval")
-       setInterval(call(ws, object), 30)
+       setInterval(call(ws, object), 50)
     }
 }
 

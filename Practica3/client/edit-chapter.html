@@ -18,8 +18,9 @@
             <li class="left"><a class="menu-options" href="#authors">Authors</a></li>
             <li class="left"><a class="menu-options" href="#comments">Comments</a></li>
             <li class="right padding-10">
-                <span ><button class="btn save">Save</button></span>
                 <span ><button class="btn finish">Allow decisons</button></span>
+                <span ><button class="btn save">Save</button></span>
+                <span ><button id="btn-logout" class="btn purple">Logout</button></span>
             </li>
         </ul>
     </nav>
@@ -28,8 +29,8 @@
         <div class="chapter-body" placeholder="Type text here..." contentEditable="true"></div>
         <div class="options hidden">
             <ul id="list-decisions" class="list-options">
-                <li id="template-decision" class="decision hidden"></li>
-                <li id="add-decision" class="decision">Si vols crear la teva pròpia continuació clica aquí.</li>
+                <li id="template-decision" class="decision hidden">&#9679;</li>
+                <li id="add-decision" class="decision">&#9679;Si vols crear la teva pròpia continuació clica aquí.</li>
             <ul>
         </div>
     </div>
@@ -55,7 +56,7 @@
 
     </div>
    <script src="js/client.js"></script>
-    <script src="js/edit-chapter.js"></script>
+   <script src="js/edit-chapter.js"></script>
 </body>
 
 </html>
