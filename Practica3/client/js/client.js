@@ -1,6 +1,6 @@
 class Book_Client {
     constructor(on_complete, user_token) {
-        this.ws = new WebSocket("ws://84.89.136.194:14446")
+        this.ws = new WebSocket("ws://localhost:14446")
 
         var that = this;
         this.ws.onopen = function() {
