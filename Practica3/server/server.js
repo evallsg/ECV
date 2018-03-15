@@ -32,6 +32,7 @@ Book_Server.prototype.processRequest = function(object, ws) {
                 object.info.chapter= result
                 that.firebase_db.getBook(object.info.book_id).then(function(result){
                     object.info.book = result
+
                     console.log("curren user ",ws.current_user)
                     console.log("owner ",object.info.chapter.owner_id)
                     if(ws.current_user == object.info.chapter.owner_id)
