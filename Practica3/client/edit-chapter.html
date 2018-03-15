@@ -12,16 +12,27 @@
 <body>
     <nav >
         <ul class="nav-bar">
-            <li class="left"><a class="menu-title" href="#menu">La història interminable</a></li>
-            <li class="left"><a class="menu-options" href="all-books.html">Home</a></li>
-            <li class="left"><a class="menu-options" href="#about">About</a></li>
-            <li class="left"><a class="menu-options" href="#authors">Authors</a></li>
-            <li class="left"><a class="menu-options" href="#comments">Comments</a></li>
+            <li class="left"><a class="menu-title" href="#menu">La història interminable</a></li>            
+            <nav class="menu"  >
+                <li class="left"><a class="menu-options" href="all-books.html">Home</a></li>
+                <li class="left"><a class="menu-options" href="#about">About</a></li>
+                <li class="left"><a class="menu-options" href="#authors">Authors</a></li>
+                <li class="left"><a class="menu-options" href="#comments">Comments</a></li>
+            </nav>
+              <select> 
+                <option value="" selected="selected"> <li class="left"><a class="menu-options" href="all-books.html">Home</a></li></option> 
+                
+               
+                <option value=""><li class="left"><a class="menu-options" href="#about">About</a></li></option>
+                <option value=""><li class="left"><a class="menu-options" href="#authors">Authors</a></li></option>
+                <option value=""><li class="left"><a class="menu-options" href="#comments">Comments</a></li></option>
+              </select>
             <li class="right padding-10">
                 <span ><button class="btn finish">Allow decisons</button></span>
                 <span ><button class="btn save">Save</button></span>
                 <span ><button id="btn-logout" class="btn purple">Logout</button></span>
             </li>
+
         </ul>
     </nav>
     <div class="chapter scroll">
