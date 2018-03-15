@@ -230,7 +230,7 @@ Database.prototype.addChapter = function(data) {
             title: "",
             decision: data.decision != undefined ? data.decision : null,
             text: "",
-            owner_id: data.userId,
+            //owner_id: data.userId,
             finished: false,
             is_terminal: false
         }).then(function() {

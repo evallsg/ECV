@@ -33,8 +33,10 @@ Book_Server.prototype.processRequest = function(object, ws) {
                 that.firebase_db.getBook(object.info.book_id).then(function(result){
                     object.info.book = result
                     console.log("curren user ",ws.current_user)
-                    console.log("owner ",object.info.book.owner_id)
-                    if(ws.current_user == object.info.book.owner_id)
+                    console.log("owner ",object.info.chapter.owner_id)
+                    if(ws.current_user == object.info.chapter.owner_id)
+                        object.info.editable = true;
+                    else if(object.info.chapter.owner_id == undefined)
                         object.info.editable = true;
                     else
                         object.info.editable = false;
@@ -51,6 +53,7 @@ Book_Server.prototype.processRequest = function(object, ws) {
             
             break;
         case "savebookchapter":
+            object.info.data.owner_id = ws.current_user;
             this.firebase_db.updateChapter(object.info.chapter_id,object.info.data);
             
             break;
