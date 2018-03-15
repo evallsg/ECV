@@ -43,7 +43,7 @@ function onFinishChapter(event)
 	var data = {
 		"title": title,
 		"text": text,
-		"is_terminal": true
+		"finished": true
 	}
 	// var text = document.getElementsByClassName("chapter-body")[0].innerText
 	this.client.requestUpdateChapter(this.chapter_id, data)
@@ -64,7 +64,12 @@ function received_book_chapter(response)
     	document.getElementsByClassName("chapter-body")[0].contentEditable = false;
 		document.getElementsByClassName("btn save")[0].classList.add("hidden");
 		document.getElementsByClassName("btn finish")[0].classList.add("hidden");
+
+		if(!response.chapter.finished)
+			document.getElementById("add-decision").classList.add("hidden");
     }
+
+    //document.getElementsByTagName("body")[0].style.display = "initial";
 
 }
 
@@ -93,13 +98,14 @@ function addDecision(){
     })
 }
 function redirectToEditChapter(data){
-	var that = this
-	console.log("redirect to book ", data)
-    document.location.href = "edit-chapter.html?book_id=" + data.bookId + "&chapter_id=" + data.chapterId;
-};
+	location.reload();
+	// var that = this
+	// console.log("redirect to book ", data)
+ 	// document.location.href = "edit-chapter.html?book_id=" + data.bookId + "&chapter_id=" + data.chapterId;
+}
 function init()
 {	
-	
+	//document.getElementsByTagName("body")[0].style.display = "initial";
 	this.book_id = GetUrlValue("book_id");
 	this.chapter_id = GetUrlValue("chapter_id");
 
@@ -114,9 +120,14 @@ var user_token = localStorage.getItem("user-token")
 if(!user_token){
     document.location.href = "index.html"
 }
+//
 
 document.getElementsByClassName("btn save")[0].addEventListener("click", onSaveChapter.bind(this), false);
 document.getElementsByClassName("btn finish")[0].addEventListener("click", onFinishChapter.bind(this), false);
 document.getElementById("add-decision").addEventListener("click", addDecision.bind(this), false);
 document.getElementsByClassName("chapter scroll")[0].addEventListener('scroll', onScrollBottom.bind(this));
+
+//document.getElementsByTagName("body")[0].style.display = "none";
+
 this.client = new Book_Client(init.bind(this), user_token)
+

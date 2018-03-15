@@ -16,9 +16,6 @@ function onLoginClicked()
 	var user = document.querySelector("input[name='email']").value;
 	var password = document.querySelector("input[name='password']").value;
 
-	if(!user || !password)
-		alert("idiot");
-
 	this.client.requestLogin(user, password, userTokenReceived)
 
 }
