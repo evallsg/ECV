@@ -149,13 +149,23 @@ function showMenu(event){
     
 }
 function showComments(){
+    var that = this
+    var responsive = document.getElementsByClassName("menu-bars")[0];
     var elem = document.getElementsByClassName("comments")[0].classList;
+    var chapter = document.getElementsByClassName("chapter")[0].classList;
     if(elem.contains("hidden")){
-        elem.remove("hidden")
+        elem.remove("hidden");
+        chapter.add("wrap");
     }
     else{
-        elem.add("hidden")
+        elem.add("hidden");
+        chapter.remove("wrap")
     };
+    
+    style = window.getComputedStyle(responsive)
+    if(style.getPropertyValue("display")!="none"){
+            that.showMenu()
+    }
 }
 var user_token = localStorage.getItem("user-token")
 

@@ -164,35 +164,34 @@ li a {
 
 div.chapter{
     background: white;
-    height: calc(85% - 61px - 22px);
+    height: calc(100vh - 61px);
     width: 40%;
-    padding-top: 5%;
-    padding-bottom: 5%;
+    /* padding-top: 5%; */
+    /* padding-bottom: 5%; */
     padding-left: 10%;
     padding-right: 10%;
     /* margin-left: 15%; */
     /* margin-right: 10%; */
-    top: 0;
+    top: 61px;
     bottom: 0;
     right: 0;
     left: 0;
     margin: auto;
     overflow-y: auto;
-    /* min-height: 74vh; */
 }
 
 .chapter-title{
-    min-height: 10%;
     text-align: center;
     font-size: xx-large;
     outline: none;
+    padding: 10%;
 }
 .chapter-body{
     /* min-height: 50%; */
-    margin-top: 5%;
     text-align: justify;
     outline: none;
     font-size: 18px;
+
 }
 [contenteditable=true]:empty:before{
   content: attr(placeholder);
@@ -450,9 +449,12 @@ ul nav.menu-bars:hover {
   ul nav.menu     { display: none; }
   ul nav.menu-bars { display: inline-block; }
 }
+.wrap{
+    margin-right: 30%!important;
+}
 .comments{
     height: calc(100vh - 61px);
-    width: 225px;
+    width: 30%;
     right: 0;
     top: 61px;
     position: absolute;
@@ -480,4 +482,11 @@ ul nav.menu-bars:hover {
     font-style: oblique;
     color: #5c4954;
     font-size: 14px;
+}
+.container-comments{
+    height: 94%;
+}
+.container-new{
+    position: fixed;
+    margin-left: 10px;
 }
