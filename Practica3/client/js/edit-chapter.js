@@ -137,7 +137,17 @@ function init()
 	this.client.requestChapter(this.chapter_id, this.book_id, received_book_chapter.bind(this))
 
 }
-
+function showMenu(event){
+	
+    var elem = document.getElementsByClassName("menu-responsive")[0].classList;
+    if(elem.contains("hidden")){
+        elem.remove("hidden")
+    }
+    else{
+        elem.add("hidden")
+    };
+    
+}
 var user_token = localStorage.getItem("user-token")
 
 if(!user_token){
@@ -150,6 +160,7 @@ document.getElementById("btn-logout").addEventListener("click", onLogout.bind(th
 document.getElementsByClassName("btn finish")[0].addEventListener("click", onFinishChapter.bind(this), false);
 document.getElementById("add-decision").addEventListener("click", addDecision.bind(this), false);
 document.getElementsByClassName("chapter scroll")[0].addEventListener('scroll', onScrollBottom.bind(this));
+document.getElementsByClassName("menu-bars")[0].addEventListener("click",showMenu.bind(this),false);
 
 //document.getElementsByTagName("body")[0].style.display = "none";
 
