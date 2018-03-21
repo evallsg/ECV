@@ -16,9 +16,6 @@ function onLoginClicked()
 	var user = document.querySelector("input[name='email']").value;
 	var password = document.querySelector("input[name='password']").value;
 
-	if(!user || !password)
-		alert("idiot");
-
 	this.client.requestLogin(user, password, userTokenReceived)
 
 }
@@ -51,6 +48,12 @@ function init() {
 	//document.getElementsByTagName("body")[0].style.display = "initial";
 	document.getElementById("btn-login").addEventListener("click", onLoginClicked.bind(this), false);
     document.getElementsByClassName("login-btn-reg")[0].addEventListener("click", onRegisterClicked.bind(this), false);
+
+    // TESTS
+
+   this.client.requestBookTree("-L6lyMSYuGWMPe4Kts9X", function(){console.log("Book tree received")});
+1
+    // TESTS
 
 }
 
