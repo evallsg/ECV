@@ -26,7 +26,7 @@ body{
     /*width: 100vw;*/
     height: 100vh;
     margin: 0;
-    background: #44373E;
+    background: #44373E;/*gainsboro*/
     font-family: GlacialIndifference;
 }
 ul{
@@ -77,7 +77,7 @@ li a {
     font-family: LatoBold;
     text-align: center;
     border-style: hidden;
-    background: rgba(184,126,158, 0.6);
+    background: rgba(184,126,158, 0.6);/*607D8B*/
     color: whitesmoke;
     border-radius: 2px;
     margin-left: 1px;
@@ -137,8 +137,8 @@ li a {
     height: 29px;
     width: 120px;
     border: none;
-    background: #B87E9E;
-    color: whitesmoke;
+    background: #B87E9E; 
+    color: whitesmoke; /*#32465a*/
     border-radius: 3px;
     cursor: pointer;
 }
@@ -158,7 +158,7 @@ li a {
     background: #944872;
 }
 .purple{
-    background: rgba(102,82,93,1);
+    background: rgba(102,82,93,1);/*whitesmoke*/
 }
 
 
@@ -170,8 +170,7 @@ div.chapter{
     /* padding-bottom: 5%; */
     padding-left: 10%;
     padding-right: 10%;
-    /* margin-left: 15%; */
-    /* margin-right: 10%; */
+    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.24), 0px 0px 7px 0px rgba(0,0,0,0.19);
     top: 61px;
     bottom: 0;
     right: 0;
@@ -306,7 +305,7 @@ div.chapter{
     line-height: 14vh;
     font-size: xx-large;
     text-align: center;
-    color: #66525d;
+    color: #66525d;/*0f3c50*/
     padding: 10px 0 ;
 }
 
@@ -330,7 +329,7 @@ div.chapter{
 
 .login-btn-lgn{
     line-height: 35px;
-    background-color: #66525D;
+    background-color: #66525D;/*#0d3d51*/
     width: 30%;
     opacity: 100;
     margin: 0 auto;
@@ -348,7 +347,7 @@ button:hover{
 
 .login-btn-reg{
     line-height: 35px;
-    color: #66525D;
+    color: #66525D; /*#0d3849*/
     width: 30%;
     opacity: 100;
     margin: 0 auto;
@@ -437,7 +436,7 @@ ul nav.menu-bars {
     font-size: 35px;
     padding-left: 10px;
     padding-right: 10px;
-    color:  #66525d;
+    color:  #66525d; /*whitesmoke*/
     margin-left: 2px;
        /*Removes border*/
 }
@@ -465,7 +464,7 @@ ul nav.menu-bars:hover {
     margin-top: 0;
 }
 .comment{
-    background-color: rgba(255, 213, 236, 0.3);
+    background-color: rgba(255, 213, 236, 0.3);/*#607D8B*/
     padding: 10px;
     margin-bottom: 5px;
     margin-top: 5px;
@@ -474,13 +473,13 @@ ul nav.menu-bars:hover {
     text-align: right;
     font-style: oblique;
     font-weight: bold;
-    color: #44373e;
+    color: #44373e;/*dcdcdcc4*/
     font-size: 14px;
 }
 .comment-date{
     text-align: right;
     font-style: oblique;
-    color: #5c4954;
+    color: #5c4954;/*#dcdcdc80*/
     font-size: 14px;
 }
 .container-comments{
