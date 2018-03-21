@@ -186,3 +186,15 @@ Book_Client.prototype.requestAllChapters = function(book_id, callback_received_a
     this.callback_received_all_chapters = callback_received_all_chapters;
     this.ws.send(JSON.stringify(message));
 };
+
+Book_Client.prototype.requestBookTree = function(book_id, callback_received_book_tree) {
+    console.log("Requesting book tree")
+    var message = {
+        "type": "getbooktree",
+        "info": {
+            "bookId": book_id
+        }
+    }
+    this.callback_received_book_tree = callback_received_book_tree;
+    this.ws.send(JSON.stringify(message));
+};

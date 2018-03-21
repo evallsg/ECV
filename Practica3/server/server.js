@@ -146,7 +146,30 @@ Book_Server.prototype.processRequest = function(object, ws) {
             });
             break;
 
+        case "getbooktree":
+            this.firebase_db.getBookChaptersStructure(object.info.bookId).then(function(result) {
+                tree_structure = {}
+
+                flat_tree_structure = {}
+                for(var chapter_id in result)
+                {   
+                    for(var children_id in result[chapter_id].children)
+                    {
+                        result[chapter_id].children[children_id] = result[children_id];
+                    }
+                }
+
+                ws.send(JSON.stringify({ "type": object.type, "info": result }));
+            });
+            break;
+
     }
+}
+
+Book_Server.prototype.getBookTree = function(book_id)
+{
+    // do stuff
+    return book_structure
 }
 
 Book_Server.prototype.init = function() {

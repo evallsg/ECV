@@ -109,6 +109,23 @@ function redirectToEditChapter(data){
 	// console.log("redirect to book ", data)
  	// document.location.href = "edit-chapter.html?book_id=" + data.bookId + "&chapter_id=" + data.chapterId;
 }
+
+function onLogout(){
+    this.client.requestLogout(signOut)
+}
+function signOut(info){
+
+    if(info.success){
+
+        localStorage.removeItem("user-token")
+        document.location.href = "index.html";
+        console.log(info.success)
+    }
+    else{
+        alert(info.success)
+    }
+}
+
 function init()
 {	
 	//document.getElementsByTagName("body")[0].style.display = "initial";
@@ -129,6 +146,7 @@ if(!user_token){
 //
 
 document.getElementsByClassName("btn save")[0].addEventListener("click", onSaveChapter.bind(this), false);
+document.getElementById("btn-logout").addEventListener("click", onLogout.bind(this),false);
 document.getElementsByClassName("btn finish")[0].addEventListener("click", onFinishChapter.bind(this), false);
 document.getElementById("add-decision").addEventListener("click", addDecision.bind(this), false);
 document.getElementsByClassName("chapter scroll")[0].addEventListener('scroll', onScrollBottom.bind(this));

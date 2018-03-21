@@ -288,7 +288,31 @@ Database.prototype.updateChapter = function(chapterId,data){
     this.db.ref("chapters/" + chapterId).update(data)
 }
 
+Database.prototype.getBookChaptersStructure = function(bookId)
+{
+    that = this;
+    return this.getBookChapters(bookId).then(function(chapter_ids)
+    {
+        var ref = that.db.ref("chapters");
+        return ref.once("value").then(
+            function(chapter) {
+                var total_chapters = chapter.val();
 
+                book_chapters = []
+                for(key of Object.keys(chapter_ids))
+                {
+                    book_chapters[key] = total_chapters[key];
+                }
+
+                return book_chapters;
+            }, 
+            function(errorObject) {
+                console.log("The read failed: " + errorObject.code);
+                return null;
+            }
+        );
+    });
+}
 
 
 module.exports = Database;
