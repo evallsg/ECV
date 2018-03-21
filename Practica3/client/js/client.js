@@ -1,6 +1,6 @@
 class Book_Client {
     constructor(on_complete, user_token) {
-        this.ws = new WebSocket("ws://84.89.136.194:14446")
+        this.ws = new WebSocket("ws://localhost:14446")
 
         var that = this;
         this.ws.onopen = function() {
@@ -12,9 +12,11 @@ class Book_Client {
 
         };
         this.ws.onmessage = function(message) {
+
             if(message.data.type==""){
                 return;
             }
+
             var response = JSON.parse(message.data)
             switch (response.type) {
                 case "getbookchapter":
@@ -182,5 +184,17 @@ Book_Client.prototype.requestAllChapters = function(book_id, callback_received_a
         }
     }
     this.callback_received_all_chapters = callback_received_all_chapters;
+    this.ws.send(JSON.stringify(message));
+};
+
+Book_Client.prototype.requestBookTree = function(book_id, callback_received_book_tree) {
+    console.log("Requesting book tree")
+    var message = {
+        "type": "getbooktree",
+        "info": {
+            "bookId": book_id
+        }
+    }
+    this.callback_received_book_tree = callback_received_book_tree;
     this.ws.send(JSON.stringify(message));
 };
