@@ -164,16 +164,21 @@ li a {
 
 div.chapter{
     background: white;
-    height: calc(70% - 61px);
-    width: 50%;
+    height: calc(85% - 61px - 22px);
+    width: 40%;
     padding-top: 5%;
     padding-bottom: 5%;
     padding-left: 10%;
     padding-right: 10%;
-    margin-left: 15%;
-    margin-right: 10%;
+    /* margin-left: 15%; */
+    /* margin-right: 10%; */
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
     overflow-y: auto;
-    min-height: 74vh;
+    /* min-height: 74vh; */
 }
 
 .chapter-title{
@@ -444,4 +449,35 @@ ul nav.menu-bars:hover {
 @media (max-width: 1150px) {
   ul nav.menu     { display: none; }
   ul nav.menu-bars { display: inline-block; }
+}
+.comments{
+    height: calc(100vh - 61px);
+    width: 225px;
+    right: 0;
+    top: 61px;
+    position: absolute;
+    overflow-y: auto;
+}
+.list-comments{
+    padding: 10px;
+    margin-top: 0;
+}
+.comment{
+    background-color: rgba(255, 213, 236, 0.3);
+    padding: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.comment-user{
+    text-align: right;
+    font-style: oblique;
+    font-weight: bold;
+    color: #44373e;
+    font-size: 14px;
+}
+.comment-date{
+    text-align: right;
+    font-style: oblique;
+    color: #5c4954;
+    font-size: 14px;
 }

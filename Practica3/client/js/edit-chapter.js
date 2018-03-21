@@ -148,6 +148,15 @@ function showMenu(event){
     };
     
 }
+function showComments(){
+    var elem = document.getElementsByClassName("comments")[0].classList;
+    if(elem.contains("hidden")){
+        elem.remove("hidden")
+    }
+    else{
+        elem.add("hidden")
+    };
+}
 var user_token = localStorage.getItem("user-token")
 
 if(!user_token){

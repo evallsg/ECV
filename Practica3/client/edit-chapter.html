@@ -17,14 +17,10 @@
                 <li class="left"><a class="menu-options" href="all-books.html">Home</a></li>
                 <li class="left"><a class="menu-options" href="#about">About</a></li>
                 <li class="left"><a class="menu-options" href="#authors">Authors</a></li>
-                <li class="left"><a class="menu-options" href="#comments">Comments</a></li>
+                <li class="left" onclick="showComments()"><a class="menu-options">Comments</a></li>
             </nav>
-            
-
-
             <nav class="menu-bars">
                 <i class="fas fa-bars"></i>
-
             </nav>
             <li class="right padding-10">
                 <span ><button class="btn finish">Allow decisons</button></span>
@@ -38,7 +34,7 @@
             <li class=""><a class="menu-options" href="all-books.html">Home</a></li>
             <li class=""><a class="menu-options" href="#about">About</a></li>
             <li class=""><a class="menu-options" href="#authors">Authors</a></li>
-            <li class=""><a class="menu-options" href="#comments">Comments</a></li>
+            <li class="" onclick="showComments()"><a class="menu-options" href="#comments">Comments</a></li>
         </ul>
     <div class="chapter scroll">
         <div class="chapter-title" placeholder="Title..." contentEditable="true"></div>
@@ -49,6 +45,19 @@
                 <li id="add-decision" class="decision">&#9679;Si vols crear la teva pròpia continuació clica aquí.</li>
             <ul>
         </div>
+    </div>
+    <div class="comments scroll hidden">
+        <ul class="list-comments"  >
+            <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.
+            <div class="comment-user">Eva</div>
+            <div class="comment-date">19-06-2017</div>
+            </li>
+            <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
+            <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
+            <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
+            <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
+            <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
+        </ul>
     </div>
     <div id="modal new-decision" class="modal hidden">
       <!-- Modal content -->
@@ -71,10 +80,10 @@
       </div>
 
     </div>
-   <script src="js/client.js"></script>
-   <script src="js/edit-chapter.js"></script>
-   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
-<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
+    <script src="js/client.js"></script>
+    <script src="js/edit-chapter.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
 
 </body>
 
