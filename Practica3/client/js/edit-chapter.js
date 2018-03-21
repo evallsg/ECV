@@ -108,7 +108,17 @@ function init()
 	this.client.requestChapter(this.chapter_id, this.book_id, received_book_chapter.bind(this))
 
 }
-
+function showMenu(event){
+	
+    var elem = document.getElementsByClassName("menu-responsive")[0].classList;
+    if(elem.contains("hidden")){
+        elem.remove("hidden")
+    }
+    else{
+        elem.add("hidden")
+    };
+    
+}
 var user_token = localStorage.getItem("user-token")
 
 if(!user_token){
@@ -119,4 +129,5 @@ document.getElementsByClassName("btn save")[0].addEventListener("click", onSaveC
 document.getElementsByClassName("btn finish")[0].addEventListener("click", onFinishChapter.bind(this), false);
 document.getElementById("add-decision").addEventListener("click", addDecision.bind(this), false);
 document.getElementsByClassName("chapter scroll")[0].addEventListener('scroll', onScrollBottom.bind(this));
+document.getElementsByClassName("menu-bars")[0].addEventListener("click",showMenu.bind(this),false);
 this.client = new Book_Client(init.bind(this), user_token)

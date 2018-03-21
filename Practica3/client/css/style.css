@@ -42,6 +42,8 @@ ul{
     border-color: #dadad9;
     border-bottom-style: solid;
     border-width: 1px;
+    min-width: 681px;
+    height: 60px;
 }
 
 .left{
@@ -181,7 +183,7 @@ div.chapter{
     outline: none;
 }
 .chapter-body{
-    min-height: 50%;
+    /* min-height: 50%; */
     margin-top: 5%;
     text-align: justify;
     outline: none;
@@ -336,7 +338,7 @@ div.chapter{
 }
 
 button:hover{
-    box-shadow: 0 -2px 16px 2px rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.24), 0 0px 50px 0 rgba(0,0,0,0.19);
     font-weight: bold;
 }
 
@@ -414,4 +416,32 @@ input{
 .arrow{
     width: 14px;
     padding-right: 5px;
+}
+.menu-responsive{
+    width: 100%;
+    background-color: #ededed;
+    padding-left: 0;
+    margin: 0;
+}
+.menu-responsive a{
+    width: calc(100% - 20px);
+    padding: 10px;
+    text-align: left;
+}
+ul nav.menu-bars {
+    display: none;
+    font-size: 35px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color:  #66525d;
+    margin-left: 2px;
+       /*Removes border*/
+}
+ul nav.menu-bars:hover {
+   /* background: rgba(128, 128, 128, 0.21);*/
+    box-shadow: inset 0px 0px 12px 1px rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+@media (max-width: 1150px) {
+  ul nav.menu     { display: none; }
+  ul nav.menu-bars { display: inline-block; }
 }
