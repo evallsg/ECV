@@ -17,19 +17,27 @@
                 <li class="right padding-10">
                     <span ><button id="btn-logout" class="btn purple">Logout</button></span>
                 </li>
+                <nav class="menu-bars">
+                    <li class="icon left"><i class="fas fa-bars"></i></li>
+                            
+                    <li class="icon poweroff left" onclick="onLogout()"><i class="fas fa-power-off"></i></li>
+                </nav>
             </ul>
         </nav>
-        <div id="templates" style="display:none">
-            <span class="container">
-                <img src="imgs/book2.png" class="book-img">
-                <p class="centered book-title"></p>
-            </span>
-        </div>
+
         
-        <div>
+        <div style="height: 30px; margin: 20px;">
             <button class="btn new-book">New book</button>
         </div>
+        <div id="template" class="floating-box" style="display:none">
+                <img src="imgs/book2.png" class="book-img">
+                <p class="book-title"></p>
+            </div>
         <div class="books">
+
+            <div class="floating-box"></div>
+            <div class="floating-box"></div>
+            <div class="floating-box"></div>
         </div>
     </div>
     <div id="modal new-book" class="modal hidden">

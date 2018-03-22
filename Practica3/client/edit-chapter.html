@@ -6,90 +6,103 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="fonts" >
 </head>
 
 <body>
-    <nav >
-        <ul class="nav-bar">
-            <li class="left"><a class="menu-title" href="#menu">La història interminable</a></li>            
-            <nav class="menu"  >
-                <li class="left"><a class="menu-options" href="all-books.html">Home</a></li>
-                <li class="left"><a class="menu-options" href="#about">About</a></li>
-                <li class="left"><a class="menu-options" href="#authors">Authors</a></li>
-                <li class="left" onclick="showComments()"><a class="menu-options">Comments</a></li>
-            </nav>
-            <nav class="menu-bars">
-                <i class="fas fa-bars"></i>
-            </nav>
-            <li class="right padding-10">
-                <span ><button class="btn finish">Allow decisons</button></span>
-                <span ><button class="btn save">Save</button></span>
-                <span ><button id="btn-logout" class="btn purple">Logout</button></span>
-            </li>
-
-        </ul>
-    </nav>
-        <ul class="menu-responsive hidden"  >
-            <li class=""><a class="menu-options" href="all-books.html">Home</a></li>
-            <li class=""><a class="menu-options" href="#about">About</a></li>
-            <li class=""><a class="menu-options" href="#authors">Authors</a></li>
-            <li class="" onclick="showComments()"><a class="menu-options" href="#comments">Comments</a></li>
-        </ul>
-    <div class="chapter scroll">
-        <div class="chapter-title" placeholder="Title..." contentEditable="true"></div>
-        <div class="chapter-body" placeholder="Type text here..." contentEditable="true"></div>
-        <div class="options hidden">
-            <ul id="list-decisions" class="list-options">
-                <li id="template-decision" class="decision hidden">&#9679;</li>
-                <li id="add-decision" class="decision">&#9679;Si vols crear la teva pròpia continuació clica aquí.</li>
-            <ul>
-        </div>
-    </div>
-    <div class="comments hidden">
-        <div class="container-comments">
-            <ul class="list-comments scroll"  >
-                <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.
-                <div class="comment-user">Eva</div>
-                <div class="comment-date">19-06-2017</div>
+    <div id="main">
+        <nav >
+            <ul class="nav-bar">
+                <li class="left"><a class="menu-title" href="#menu">La història interminable</a></li>            
+                <nav class="menu"  >
+                    <li class="left"><a class="menu-options" href="all-books.html">Home</a></li>
+                    <li class="left"><a class="menu-options" href="#about">About</a></li>
+                    <li class="left"><a class="menu-options" href="#authors">Authors</a></li>
+                    <li class="left" onclick="showComments()"><a class="menu-options">Comments</a></li>
+                </nav>
+                <nav class="menu-bars">
+                    <li class="icon left"><i class="fas fa-bars"></i></li>
+                    
+                    <li class="icon poweroff left" onclick="onLogout()"><i class="fas fa-power-off"></i></li>
+                </nav>
+                <li class="right padding-10">
+                    <span ><button class="btn finish">Allow decisons</button></span>
+                    <span ><button class="btn save">Save</button></span>
+                    <span ><button id="btn-logout" class="btn purple">Logout</button></span>
                 </li>
-                <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
-                <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
-                <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
-                <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
-                <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
+
             </ul>
-        </div>
-        <div class="container-new">
-            <input type="text" placeholder="Type comment...">
-            <button class="btn">Add</button>
-        </div>
-    </div>
-    <div id="modal new-decision" class="modal hidden">
-      <!-- Modal content -->
-      <span class="close hidden">&times;</span>
-      <div class="modal-content">
-        <div class="modal-title">
-            Add decision
-        </div>
-        <div class="modal-body">
-            <div class="login-lbl">
-                <textarea class="decision-input" type="text" name="title" placeholder="Decision" required="true"></textarea>
+        </nav>
+            <ul class="menu-responsive hidden"  >
+                <li class=""><a class="menu-options" href="all-books.html">Home</a></li>
+                <li class=""><a class="menu-options" href="#about">About</a></li>
+                <li class=""><a class="menu-options" href="#authors">Authors</a></li>
+                <li class="" onclick="showComments()"><a class="menu-options" href="#comments">Comments</a></li>
+            </ul>
+        <div class="chapter scroll">
+            <div class="chapter-title" placeholder="Title..." contentEditable="true"></div>
+            <div class="chapter-body" placeholder="Type text here..." contentEditable="true"></div>
+            <div class="options hidden">
+                <ul id="list-decisions" class="list-options">
+                    <li id="template-decision" class="decision hidden">&#9679;</li>
+                    <li id="add-decision" class="decision">&#9679;Si vols crear la teva pròpia continuació clica aquí.</li>
+                <ul>
             </div>
-            
         </div>
-        <div class="modal-btn-cont">
-            <button id="btn-cancel-decision" class="btn modal-btn btn-cancel">Cancel</button>
-            <button id="btn-start-decision" class="btn modal-btn"><a href="">Start</a></button>
+        
+        <ul id="menuli">
+
+            <li  onclick="showComments()"><a href="#comments">Comments  <i class="fa fa-comments pad-left"></i></a>
+
+        </ul>
+        <div class="comments hidden">
+            <div class="container-comments">
+                <ul class="list-comments scroll"  >
+                    <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.
+                    <div class="comment-user">Eva</div>
+                    <div class="comment-date">19-06-2017</div>
+                    </li>
+                    <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
+                    <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
+                    <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
+                    <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
+                    <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
+                </ul>
+            </div>
+            <div class="container-new">
+                <input type="text" placeholder="Type comment...">
+                <button class="btn">Add</button>
+            </div>
         </div>
+        <div id="modal new-decision" class="modal hidden">
+          <!-- Modal content -->
+          <span class="close hidden">&times;</span>
+          <div class="modal-content">
+            <div class="modal-title">
+                Add decision
+            </div>
+            <div class="modal-body">
+                <div class="login-lbl">
+                    <textarea class="decision-input" type="text" name="title" placeholder="Decision" required="true"></textarea>
+                </div>
+                
+            </div>
+            <div class="modal-btn-cont">
+                <button id="btn-cancel-decision" class="btn modal-btn btn-cancel">Cancel</button>
+                <button id="btn-start-decision" class="btn modal-btn"><a href="">Start</a></button>
+            </div>
 
-      </div>
+          </div>
 
+        </div>
     </div>
+
     <script src="js/client.js"></script>
     <script src="js/edit-chapter.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
+
 
 </body>
 
