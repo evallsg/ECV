@@ -70,6 +70,7 @@ a{
 li a {
     display: block;
     text-align: center;
+    cursor: pointer;
     /* padding: 14px 16px; */
 
 }
@@ -471,7 +472,9 @@ ul nav.menu-bars:hover {
 }
 .list-comments{
     padding: 10px;
-    margin-top: 0;
+    margin: 0;
+    height: 100%;
+    overflow-y: auto;
 }
 .comment{
     background-color: rgba(255, 213, 236, 0.3);/*#607D8B*/
@@ -493,13 +496,34 @@ ul nav.menu-bars:hover {
     font-size: 14px;
 }
 .container-comments{
-    height: 94%;
+    height: calc(100% - 80px);
+    overflow: hidden;
 }
 .container-new{
     position: fixed;
     margin-left: 10px;
+    height: 80px;
+    /* top: 0; */
+    width: calc(30% - 10px);
+    bottom: 0;
 }
-
+.container-new input{
+    width: calc(100% - 70px);
+    height: 66px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    position: absolute;
+}
+.container-new button{
+    height: 66px;
+    width: 40px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: 4px;
+    position: absolute;
+}
 /*loader*/
 .lds-roller {
     position: absolute;
