@@ -22,12 +22,21 @@
     font-family: LatoBold;
     src: url("../fonts/lato/Lato-Bold.ttf");
 }
+@font-face {
+    font-family: Irwanwismoyo;
+    src: url("../fonts/irwanwismoyo/irwanwismoyo.ttf");
+}
 body{
     /*width: 100vw;*/
     height: 100vh;
     margin: 0;
     background: #44373E;/*gainsboro*/
     font-family: GlacialIndifference;
+}
+.app-name{
+    font-family: Irwanwismoyo!important;
+    text-transform: lowercase!important ;
+    font-size: 40px;
 }
 ul{
     list-style-type: none;
@@ -72,6 +81,7 @@ li a {
 
 .home-back{
 	background: #F1F0EE;
+    height: 100vh;
 }
 .menu-title{
     font-family: LatoBold;
@@ -488,4 +498,172 @@ ul nav.menu-bars:hover {
 .container-new{
     position: fixed;
     margin-left: 10px;
+}
+
+/*loader*/
+.lds-roller {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    top: 346px;
+}
+.lds-roller div {
+  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  transform-origin: 32px 32px;
+}
+.lds-roller div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  margin: -3px 0 0 -3px;
+}
+.lds-roller div:nth-child(1) {
+  animation-delay: -0.036s;
+}
+.lds-roller div:nth-child(1):after {
+  top: 50px;
+  left: 50px;
+}
+.lds-roller div:nth-child(2) {
+  animation-delay: -0.072s;
+}
+.lds-roller div:nth-child(2):after {
+  top: 54px;
+  left: 45px;
+}
+.lds-roller div:nth-child(3) {
+  animation-delay: -0.108s;
+}
+.lds-roller div:nth-child(3):after {
+  top: 57px;
+  left: 39px;
+}
+.lds-roller div:nth-child(4) {
+  animation-delay: -0.144s;
+}
+.lds-roller div:nth-child(4):after {
+  top: 58px;
+  left: 32px;
+}
+.lds-roller div:nth-child(5) {
+  animation-delay: -0.18s;
+}
+.lds-roller div:nth-child(5):after {
+  top: 57px;
+  left: 25px;
+}
+.lds-roller div:nth-child(6) {
+  animation-delay: -0.216s;
+}
+.lds-roller div:nth-child(6):after {
+  top: 54px;
+  left: 19px;
+}
+.lds-roller div:nth-child(7) {
+  animation-delay: -0.252s;
+}
+.lds-roller div:nth-child(7):after {
+  top: 50px;
+  left: 14px;
+}
+.lds-roller div:nth-child(8) {
+  animation-delay: -0.288s;
+}
+.lds-roller div:nth-child(8):after {
+  top: 45px;
+  left: 10px;
+}
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.text{
+    text-align: center;
+    color: whitesmoke;
+    height: 344px;
+    font-size: 20px
+}
+.load{
+    width: 80%;
+    top: 0;
+}
+.logo{
+    font-family: Irwanwismoyo;
+    font-size: 100px;
+    text-align: center;
+    margin: 29px 0;    font-family: Irwanwismoyo;
+    font-size: 100px;
+    margin-bottom: 29px;
+}
+
+.loader,
+.loader:before,
+.loader:after {
+  background: #ffffff;
+  -webkit-animation: load1 1s infinite ease-in-out;
+  animation: load1 1s infinite ease-in-out;
+  width: 1em;
+  height: 4em;
+}
+.loader {
+    position: absolute; 
+    /* width: 64px; */
+    height: -31px;
+    top: 284px;
+    color: #ffffff;
+    text-indent: -9999em;
+    /* margin: 88px auto; */
+    position: absolute;
+    font-size: 8px;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+.loader:before,
+.loader:after {
+  position: absolute;
+  top: 0;
+  content: '';
+}
+.loader:before {
+  left: -1.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.loader:after {
+  left: 1.5em;
+}
+@-webkit-keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
+}
+@keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
 }

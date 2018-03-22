@@ -3,14 +3,29 @@ class Book_Client {
         this.ws = new WebSocket("ws://84.89.136.194:14446")
 
         var that = this;
+
         this.ws.onopen = function() {
             if (on_complete) {
-                if (user_token)
-                    that.requestAuth(user_token);
+                if (user_token){
+                     that.requestAuth(user_token);
+                }
+                   
+
                 on_complete();
+                document.getElementById("main").classList.remove("hidden");
+                document.getElementById("loader").classList.add("hidden");
             }
 
         };
+        this.ws.onclose = function(){
+            document.getElementById("main").classList.add("hidden");
+            document.getElementById("loader").classList.remove("hidden");
+            if(!window.location.href.includes("index.html")){
+                document.location.href = "index.html";
+
+            }
+            localStorage.removeItem("user-token")
+        }
         this.ws.onmessage = function(message) {
 
             if(message.data.type==""){
