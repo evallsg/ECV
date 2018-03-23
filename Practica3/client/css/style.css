@@ -352,7 +352,7 @@ div.chapter{
     width: 30%;
     opacity: 100;
     margin: 0 auto;
-    border: 1px solid #9C8592;
+    border: 1px solid #4458626e;
     border-radius: 3px;
     cursor: pointer;
     color: white;
@@ -662,3 +662,20 @@ ul nav.menu-bars {
 .icon{
     padding:0 10px;
 }
+/*
+@media(max-width: 650px) {
+    .text{
+        height: 808px!important;
+        font-size: 53px!important;
+    }
+    .logo{
+        font-size: 266px!important;
+        margin-bottom: 29px!important;
+    }
+    .loader{
+
+        top: 401px!important;
+        font-size: 23px!important;
+
+    }
+}*/
