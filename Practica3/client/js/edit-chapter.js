@@ -126,17 +126,6 @@ function signOut(info){
     }
 }
 
-function init()
-{	
-	//document.getElementsByTagName("body")[0].style.display = "initial";
-	this.book_id = GetUrlValue("book_id");
-	this.chapter_id = GetUrlValue("chapter_id");
-
-	//document.getElementsByTagName("title")[0].innerText = book_title;
-	this.editable = false;
-	this.client.requestChapter(this.chapter_id, this.book_id, received_book_chapter.bind(this))
-
-}
 function showMenu(event){
 	
     var elem = document.getElementsByClassName("menu-responsive")[0].classList;
@@ -150,7 +139,6 @@ function showMenu(event){
 }
 function showComments(){
     var that = this
-    var responsive = document.getElementsByClassName("menu-bars")[0];
     var elem = document.getElementsByClassName("comments")[0].classList;
     var chapter = document.getElementsByClassName("chapter")[0].classList;
     if(elem.contains("hidden")){
@@ -162,10 +150,30 @@ function showComments(){
         chapter.remove("wrap")
     };
     
-    style = window.getComputedStyle(responsive)
-    if(style.getPropertyValue("display")!="none"){
-            that.showMenu()
+
+}
+function addComment(){
+    if(event.key=="Enter" ||event.key==undefined){
+        var that = this
+        var comment = document.querySelector("input[name='new-comment']").value;
+        var dateFormat = require('dateformat');//necessari instalar npm dateformat!!!!!!!!!!!!!!!!
+        var date = new Date()
+        formatDate(d, "dddd h:mmtt d MMM yyyy");
+        that.client.requestAddNewComment(comment, that.chapter_id, created, updateComments.bind(this))
     }
+}
+function updateComments(){
+
+}
+function init(){   
+    //document.getElementsByTagName("body")[0].style.display = "initial";
+    this.book_id = GetUrlValue("book_id");
+    this.chapter_id = GetUrlValue("chapter_id");
+
+    //document.getElementsByTagName("title")[0].innerText = book_title;
+    this.editable = false;
+    this.client.requestChapter(this.chapter_id, this.book_id, received_book_chapter.bind(this))
+
 }
 var user_token = localStorage.getItem("user-token")
 
@@ -180,6 +188,7 @@ document.getElementsByClassName("btn finish")[0].addEventListener("click", onFin
 document.getElementById("add-decision").addEventListener("click", addDecision.bind(this), false);
 document.getElementsByClassName("chapter scroll")[0].addEventListener('scroll', onScrollBottom.bind(this));
 document.getElementsByClassName("menu-bars")[0].addEventListener("click",showMenu.bind(this),false);
+document.getElementById("add-comment").addEventListener("click",addComment.bind(this),false);
 
 //document.getElementsByTagName("body")[0].style.display = "none";
 

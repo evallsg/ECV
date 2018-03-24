@@ -56,6 +56,8 @@ class Book_Client {
                 case "getchapters":
                     that.callback_received_all_chapters(response.info);
                     break;
+                case "addcomment":
+                    that.callback_add_comment(response.info)
                 case "login":
                     that.callback_received_user_token(response.info);
                     break;
@@ -138,7 +140,6 @@ Book_Client.prototype.requestAddBook = function(title, genre, callback_add_book)
         "type": "addbook",
         "info": {
             "title": title,
-            "userId": "marc",
             "genre": genre
         }
     }
@@ -213,3 +214,16 @@ Book_Client.prototype.requestBookTree = function(book_id, callback_received_book
     this.callback_received_book_tree = callback_received_book_tree;
     this.ws.send(JSON.stringify(message));
 };
+
+Book_Client.prototype.requestAddNewComment = function(comment, chapter_id, created){
+    var message = {
+        "type": "addcomment",
+        "info": {
+            "chapterId":chapter_id,
+            "comment": comment,
+            "created": created
+        }
+    }
+    this.callback_add_comment = callback_add_comment;
+    this.ws.send(JSON.stringify(message));
+}

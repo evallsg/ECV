@@ -20,7 +20,6 @@
                     <li class="left"><a class="menu-options" href="all-books.html">Home</a></li>
                     <li class="left"><a class="menu-options" href="#about">About</a></li>
                     <li class="left"><a class="menu-options" href="#authors">Authors</a></li>
-                    <li class="left" onclick="showComments()"><a class="menu-options">Comments</a></li>
                 </nav>
                 <nav class="menu-bars">
                     <li class="icon left"><i class="fas fa-bars"></i></li>
@@ -39,7 +38,6 @@
                 <li class=""><a class="menu-options" href="all-books.html">Home</a></li>
                 <li class=""><a class="menu-options" href="#about">About</a></li>
                 <li class=""><a class="menu-options" href="#authors">Authors</a></li>
-                <li class="" onclick="showComments()"><a class="menu-options" href="#comments">Comments</a></li>
             </ul>
         <div class="chapter scroll">
             <div class="chapter-title" placeholder="Title..." contentEditable="true"></div>
@@ -72,8 +70,8 @@
                 </ul>
             </div>
             <div class="container-new">
-                <input type="text" placeholder="Type comment...">
-                <button class="btn">Add</button>
+                <input type="text" placeholder="Type comment..." onkeydown="addComment(this)">
+                <button id="add-comment" class="btn">Add</button>
             </div>
         </div>
         <div id="modal new-decision" class="modal hidden">

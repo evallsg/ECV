@@ -59,7 +59,9 @@ ul{
     min-width: 681px;
     height: 60px;
 }
-
+.gray{
+    background: #ededed;
+}
 .left{
     float: left;
 }

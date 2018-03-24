@@ -13,10 +13,12 @@ function userTokenReceived(data)
 
 function onLoginClicked()
 {
-	var user = document.querySelector("input[name='email']").value;
-	var password = document.querySelector("input[name='password']").value;
+	if(event.key === 'Enter' || event.key ==undefined) {
+		var user = document.querySelector("input[name='email']").value;
+		var password = document.querySelector("input[name='password']").value;
 
-	this.client.requestLogin(user, password, userTokenReceived)
+		this.client.requestLogin(user, password, userTokenReceived)
+	}
 
 }
 function onRegisterClicked(){

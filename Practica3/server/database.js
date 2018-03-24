@@ -314,5 +314,23 @@ Database.prototype.getBookChaptersStructure = function(bookId)
     });
 }
 
+Database.prototype.addComment = function(data){
+    var that = this;
+    var ref = this.db.ref("chapters"+data.chapterId+"/comments").push();
+    data.id = ref;
+    return ref.set({
+        user: data.userId,
+        comment: data.comment,
+        created: data.created
+    }).then(function() {
+            console.log("Successfully added comment: ", data.id);
+            return data.id
+
+        })
+        .catch(function(error) {
+            console.log("Error adding comment: ", error);
+            return null
+        });
+}
 
 module.exports = Database;

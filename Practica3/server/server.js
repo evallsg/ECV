@@ -145,6 +145,12 @@ Book_Server.prototype.processRequest = function(object, ws) {
                 ws.send(JSON.stringify({ "type": object.type, "info": result }));
             });
             break;
+        case "addcomment":
+            object.info.userId = ws.current_user;
+            this.firebase_db.addComment(object.info).then(function(response){
+                ws.send(JSON.stringify({ "type": object.type, "info": response }))
+            })
+            break;
 
         case "getbooktree":
             this.firebase_db.getBookChaptersStructure(object.info.bookId).then(function(result) {
