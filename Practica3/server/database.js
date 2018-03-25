@@ -316,7 +316,7 @@ Database.prototype.getBookChaptersStructure = function(bookId)
 
 Database.prototype.addComment = function(data){
     var that = this;
-    var ref = this.db.ref("chapters"+data.chapterId+"/comments").push();
+    var ref = this.db.ref("comments/"+data.chapterId).push();
     data.id = ref;
     return ref.set({
         user: data.userId,
@@ -332,5 +332,18 @@ Database.prototype.addComment = function(data){
             return null
         });
 }
+Database.prototype.getComments = function(data){
+    
+    var ref = this.db.ref("comments/"+data.chapterId);
 
+    return ref.once("value").then(
+        function(comments){
+            return comments.val();
+        },
+        function(errorObject){
+            console.log("Error: " + errorObject.code);
+            return null;
+        }
+    )
+}
 module.exports = Database;

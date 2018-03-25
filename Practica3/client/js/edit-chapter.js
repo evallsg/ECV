@@ -142,28 +142,52 @@ function showComments(){
     var elem = document.getElementsByClassName("comments")[0].classList;
     var chapter = document.getElementsByClassName("chapter")[0].classList;
     if(elem.contains("hidden")){
+        that.getComments()
         elem.remove("hidden");
         chapter.add("wrap");
     }
     else{
         elem.add("hidden");
         chapter.remove("wrap")
-    };
-    
-
+    };    
 }
+
 function addComment(){
     if(event.key=="Enter" ||event.key==undefined){
         var that = this
         var comment = document.querySelector("input[name='new-comment']").value;
-        var dateFormat = require('dateformat');//necessari instalar npm dateformat!!!!!!!!!!!!!!!!
-        var date = new Date()
-        formatDate(d, "dddd h:mmtt d MMM yyyy");
-        that.client.requestAddNewComment(comment, that.chapter_id, created, updateComments.bind(this))
+       /* var dateFormat = require('dateformat');//necessari instalar npm dateformat!!!!!!!!!!!!!!!!*/
+        var created = new Date()
+        /*formatDate(d, "dddd h:mmtt d MMM yyyy");*/
+        that.client.requestAddNewComment(comment, that.chapter_id, created, getComments)
     }
 }
-function updateComments(){
+function getComments(){
+    var that = this;
+    that.client.requestAllComments(that.chapter_id, renderComments);
+}
 
+function renderComments(comments){
+
+    var list = document.getElementsByClassName("list-comments")[0];
+    var template = document.getElementById("template-comment");
+    for(id in comments){
+        if(document.getElementById(id)== undefined){
+            var elem = template.cloneNode(true);
+            elem.id = id
+            elem.innerText = comments[id].comment;
+            div1 = document.createElement("div"); 
+            div1.className= "comment-user";
+            div1.innerText = comments[id].user;
+            div2 = document.createElement("div"); 
+            div2.className= "comment-date";
+            div2.innerText = comments[id].created;
+            elem.appendChild(div1);
+            elem.appendChild(div2);
+            elem.classList.remove("hidden")
+            list.appendChild(elem)  
+        }
+    }
 }
 function init(){   
     //document.getElementsByTagName("body")[0].style.display = "initial";
@@ -181,6 +205,15 @@ if(!user_token){
     document.location.href = "index.html"
 }
 //
+setInterval(callRender,3000);
+
+function callRender(){
+    var elem = document.getElementsByClassName("comments")[0].classList;
+    if(!elem.contains("hidden")){
+        this.getComments()
+    }
+}
+
 
 document.getElementsByClassName("btn save")[0].addEventListener("click", onSaveChapter.bind(this), false);
 document.getElementById("btn-logout").addEventListener("click", onLogout.bind(this),false);

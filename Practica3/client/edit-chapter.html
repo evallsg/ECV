@@ -58,19 +58,15 @@
         <div class="comments hidden">
             <div class="container-comments">
                 <ul class="list-comments scroll"  >
-                    <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.
-                    <div class="comment-user">Eva</div>
-                    <div class="comment-date">19-06-2017</div>
+                    <li id="template-comment" class="comment hidden">
+                        <div class="comment-user"></div>
+                        <div class="comment-date"></div>
                     </li>
-                    <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
-                    <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
-                    <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
-                    <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
-                    <li class="comment">I didn't like his comment and I didn't find it funny.I wanted to make a comment about something that I think could help improve your daily results.</li>
+
                 </ul>
             </div>
             <div class="container-new">
-                <input type="text" placeholder="Type comment..." onkeydown="addComment(this)">
+                <input type="text" placeholder="Type comment..." onkeydown="addComment(this)" name="new-comment">
                 <button id="add-comment" class="btn">Add</button>
             </div>
         </div>

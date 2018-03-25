@@ -151,7 +151,11 @@ Book_Server.prototype.processRequest = function(object, ws) {
                 ws.send(JSON.stringify({ "type": object.type, "info": response }))
             })
             break;
-
+        case "getcomments":
+            console.log(object.info)
+            this.firebase_db.getComments(object.info).then(function(response){
+                ws.send(JSON.stringify({ "type": object.type, "info": response }))
+            })
         case "getbooktree":
             this.firebase_db.getBookChaptersStructure(object.info.bookId).then(function(result) {
                 tree_structure = {}

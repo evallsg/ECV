@@ -243,7 +243,7 @@ div.chapter{
     padding: 0 10px;
 }
 .hidden{
-    display: none;
+    display: none!important;
 }
 .disable{
     pointer-events: none;
@@ -481,6 +481,7 @@ ul nav.menu-bars {
     top: 61px;
     position: absolute;
     overflow-y: auto;
+    color: whitesmoke;
 }
 .list-comments{
     padding: 10px;
