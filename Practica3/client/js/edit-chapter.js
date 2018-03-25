@@ -159,10 +159,15 @@ function addComment(){
        /* var dateFormat = require('dateformat');//necessari instalar npm dateformat!!!!!!!!!!!!!!!!*/
         var created = new Date()
         /*formatDate(d, "dddd h:mmtt d MMM yyyy");*/
-        that.client.requestAddNewComment(comment, that.chapter_id, created, getComments)
+        that.client.requestAddNewComment(comment, that.chapter_id, created, addCommentSuccess)
     }
 }
+function addCommentSuccess(){
+    document.querySelector("input[name='new-comment']").value=""
+    getComments()
+}
 function getComments(){
+
     var that = this;
     that.client.requestAllComments(that.chapter_id, renderComments);
 }
