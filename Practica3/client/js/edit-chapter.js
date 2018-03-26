@@ -68,8 +68,13 @@ function received_book_chapter(response)
 		if(!response.chapter.finished)
 			document.getElementById("add-decision").classList.add("hidden");
     }
-    else
-    	this.editable = true;
+    else{
+        this.editable = true;
+    }
+    if(!response.finished){
+        document.getElementById("alert-status").classList.remove("hidden");
+    }
+
 
     //document.getElementsByTagName("body")[0].style.display = "initial";
 
@@ -141,17 +146,22 @@ function showComments(){
     var that = this
     var elem = document.getElementsByClassName("comments")[0].classList;
     var chapter = document.getElementsByClassName("chapter")[0].classList;
+
     if(elem.contains("hidden")){
+
         that.getComments()
         elem.remove("hidden");
         chapter.add("wrap");
     }
     else{
+
         elem.add("hidden");
         chapter.remove("wrap")
     };    
 }
-
+function hiddenAlert(){
+    document.getElementById("alert-status").classList.add("hidden");
+}
 function addComment(){
     if(event.key=="Enter" ||event.key==undefined){
         var that = this

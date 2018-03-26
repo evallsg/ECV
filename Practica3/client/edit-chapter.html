@@ -4,7 +4,8 @@
 <head>
     <title>ECV</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
     <!--<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">-->
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -34,11 +35,15 @@
 
             </ul>
         </nav>
-            <ul class="menu-responsive hidden"  >
-                <li class=""><a class="menu-options" href="all-books.html">Home</a></li>
-                <li class=""><a class="menu-options" href="#about">About</a></li>
-                <li class=""><a class="menu-options" href="#authors">Authors</a></li>
-            </ul>
+        <ul class="menu-responsive hidden">
+            <li class=""><a class="menu-options" href="all-books.html">Home</a></li>
+            <li class=""><a class="menu-options" href="#about">About</a></li>
+            <li class=""><a class="menu-options" href="#authors">Authors</a></li>
+        </ul>
+        <div id="alert-status" class="alert hidden">
+            This chapter is not finished
+            <button class="btn-alert" onclick="hiddenAlert()">Ok</button>
+        </div>
         <div class="chapter scroll">
             <div class="chapter-title" placeholder="Title..." contentEditable="true"></div>
             <div class="chapter-body" placeholder="Type text here..." contentEditable="true"></div>
@@ -51,9 +56,7 @@
         </div>
         
         <ul id="menuli">
-
-            <li  onclick="showComments()"><a href="#comments">Comments  <i class="fa fa-comments pad-left"></i></a>
-
+            <li onclick="showComments()"><a href="#comments">Comments  <i class="fa fa-comments pad-left"></i></a>
         </ul>
         <div class="comments hidden">
             <div class="container-comments">

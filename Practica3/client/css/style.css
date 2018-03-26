@@ -633,6 +633,7 @@ ul nav.menu-bars {
     margin: -3em 0 0 0;
     padding: 0.5em 0.5em 0.5em 2.5em;
 }
+
 #menuli:hover { left: 0 }
 #menuli { transition: 0.2s }
 .pad-left{
@@ -643,7 +644,7 @@ ul nav.menu-bars {
     float: left;
     width: 80px;
     height: 155px;
-    margin: 10px;
+    margin: 10px 31px;
 }
 .poweroff{
         display: none;
@@ -657,6 +658,24 @@ ul nav.menu-bars {
     }
     #btn-logout{
         display: none;
+    }
+    .comments{
+        width: 92%;
+    }
+    .floating-box{
+        margin: 10px 15px;
+    }
+    .new-book{
+        height: 35px;
+        right: 0;
+        left: 0;
+        margin: auto;
+        position: fixed;
+        /* width: 120px; */
+        font-size: 15px;
+    }
+    .container-new{
+        width: calc(87% - 10px);
     }
 }
 .icon:hover{
@@ -682,3 +701,27 @@ ul nav.menu-bars {
 
     }
 }*/
+.alert{
+    height: 20px;
+    top: 61px;
+    position: fixed;
+    background: #607d8b7d;
+    /* display: block; */
+    left: 0;
+    width: 100%;
+    right: 0;
+    margin: auto;
+    text-align: center;
+    color: #32465a;
+    padding: 4px;
+}
+.btn-alert{
+    height: 19px;
+    width: 49px;
+    border: none;
+    background: #32465a;
+    color: #b1bfc6;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 8px;
+}
