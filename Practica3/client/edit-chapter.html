@@ -5,9 +5,10 @@
     <title>ECV</title>
     <meta charset="utf-8">
 
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0 , user-scalable=no" />
     <!--<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">-->
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/balloon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="fonts" >
 </head>
@@ -20,16 +21,15 @@
                 <nav class="menu"  >
                     <li class="left"><a class="menu-options" href="all-books.html">Home</a></li>
                     <li class="left"><a class="menu-options" href="#about">About</a></li>
-                    <li class="left"><a class="menu-options" href="#authors">Authors</a></li>
+
                 </nav>
                 <nav class="menu-bars">
                     <li class="icon left"><i class="fas fa-bars"></i></li>
-                    
-                    <li class="icon poweroff left" onclick="onLogout()"><i class="fas fa-power-off"></i></li>
+                    <li class="icon left save"><i class="fas fa-save"></i></li>
                 </nav>
                 <li class="right padding-10">
-                    <span ><button class="btn finish">Allow decisons</button></span>
-                    <span ><button class="btn save">Save</button></span>
+                    <span ><button data-balloon="If chapter is finished, allow other people to add decisions" data-balloon-pos="left" data-balloon-length="fit" class="btn finish">Allow decisons</button></span>
+                    <span ><button class="btn save hidden">Save</button></span>
                     <span ><button id="btn-logout" class="btn purple">Logout</button></span>
                 </li>
 
@@ -38,7 +38,7 @@
         <ul class="menu-responsive hidden">
             <li class=""><a class="menu-options" href="all-books.html">Home</a></li>
             <li class=""><a class="menu-options" href="#about">About</a></li>
-            <li class=""><a class="menu-options" href="#authors">Authors</a></li>
+            <li class="poweroff " onclick="onLogout()"><i class="fas fa-power-off"></i></li>        
         </ul>
         <div id="alert-status" class="alert hidden">
             This chapter is not finished
@@ -92,14 +92,6 @@
             </div>
 
           </div>
-
-        </div>
-    </div>
-    <div id="loader" class="load center" >
-        <div class="text center">
-            <p class="logo">eligere</p>
-            <p>Connecting to server</p>
-            <div class="loader center"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 
         </div>
     </div>

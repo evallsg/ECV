@@ -70,6 +70,8 @@ function received_book_chapter(response)
     }
     else{
         this.editable = true;
+        document.getElementsByClassName("icon left save")[0].classList.remove("hidden");
+
     }
     if(!response.finished){
         document.getElementById("alert-status").classList.remove("hidden");

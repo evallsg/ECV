@@ -56,7 +56,7 @@ ul{
     border-color: #dadad9;
     border-bottom-style: solid;
     border-width: 1px;
-    min-width: 681px;
+    /*min-width: 681px;*/
     height: 60px;
 }
 .gray{
@@ -170,7 +170,7 @@ li a {
 
 }
 
-.save{
+.btn.save{
     /* display: block; */
     margin-right: 9px
 }
@@ -655,9 +655,17 @@ ul nav.menu-bars {
     }
     .poweroff{
         display: inline-block;
+        color: #32465a;
+        padding: 10px;
     }
     #btn-logout{
         display: none;
+    }
+    .btn.save{
+        display: none;
+    }
+    .icon.left.save{
+        display: inline-block;
     }
     .comments{
         width: 92%;
@@ -677,12 +685,25 @@ ul nav.menu-bars {
     .container-new{
         width: calc(87% - 10px);
     }
+
+}
+@media(max-width: 768px){
+    .login-container{
+        width: 90%;
+        height: 57%;
+    }
+    .login-btn-lgn{
+        font-size: 18px;
+    }
+    .login-buttons{
+        font-size: 19px;
+    }
 }
 .icon:hover{
     box-shadow: inset 0px 0px 12px 1px rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 .icon{
-    padding:0 10px;
+    padding:0 6px;
 }
 /*
 @media(max-width: 650px) {
@@ -708,7 +729,7 @@ ul nav.menu-bars {
     background: #607d8b7d;
     /* display: block; */
     left: 0;
-    width: 100%;
+    width: calc(100% - 8px);
     right: 0;
     margin: auto;
     text-align: center;
