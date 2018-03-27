@@ -1,9 +1,9 @@
 function onScrollBottom(event)
 {	
 	var that = this;
-    var element = event.target;
-    if (element.scrollHeight - element.scrollTop === element.clientHeight)
-    {
+   // var element = event.target;
+   /* if (element.scrollHeight - element.scrollTop === element.clientHeight)
+    {*/
 		var list = document.getElementById("list-decisions");
 	 	for(id in that.chapterDecisions){
 	 		if(document.getElementById(id)==null){
@@ -19,9 +19,10 @@ function onScrollBottom(event)
 	 		}
 	        
 	    }
+        document.getElementById("add-decision").classList.remove("hidden")
 	    document.getElementsByClassName("options")[0].classList.remove("hidden")
        
-    }
+   /* }*/
 };
 
 function onSaveChapter()
@@ -46,7 +47,7 @@ function onFinishChapter(event)
 		"finished": true
 	}
 	// var text = document.getElementsByClassName("chapter-body")[0].innerText
-	this.client.requestUpdateChapter(this.chapter_id, data)
+	this.client.requestUpdateChapter(this.chapter_id, data, onScrollBottom)
 }
 
 function received_book_chapter(response)
@@ -65,8 +66,6 @@ function received_book_chapter(response)
 		document.getElementsByClassName("btn save")[0].classList.add("hidden");
 		document.getElementsByClassName("btn finish")[0].classList.add("hidden");
 
-		if(!response.chapter.finished)
-			document.getElementById("add-decision").classList.add("hidden");
     }
     else{
         this.editable = true;
@@ -74,8 +73,13 @@ function received_book_chapter(response)
         document.getElementsByClassName("icon left save")[0].classList.remove("hidden")
 
     }
-    if(!response.finished){
+    if(!response.chapter.finished){
         document.getElementById("alert-status").classList.remove("hidden");
+    }
+    else{
+        /*document.getElementsByClassName("options")[0].classList.remove("hidden")*/
+        
+        this.onScrollBottom()
     }
 
 
@@ -264,7 +268,7 @@ document.getElementsByClassName("btn save")[0].addEventListener("click", onSaveC
 document.getElementById("btn-logout").addEventListener("click", onLogout.bind(this),false);
 document.getElementsByClassName("btn finish")[0].addEventListener("click", onFinishChapter.bind(this), false);
 document.getElementById("add-decision").addEventListener("click", addDecision.bind(this), false);
-document.getElementsByClassName("chapter scroll")[0].addEventListener('scroll', onScrollBottom.bind(this));
+/*document.getElementsByClassName("chapter scroll")[0].addEventListener('scroll', onScrollBottom.bind(this));*/
 document.getElementsByClassName("menu-bars")[0].addEventListener("click",showMenu.bind(this),false);
 document.getElementById("add-comment").addEventListener("click",addComment.bind(this),false);
 //document.getElementsByTagName("body")[0].style.display = "none";

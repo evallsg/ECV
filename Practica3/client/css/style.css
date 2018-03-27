@@ -654,19 +654,15 @@ ul nav.menu-bars {
     height: 155px;
     margin: 10px 31px;
 }
-.poweroff{
-    display: none;
-}
+
 .icon.left.save{
     display: none;
 }
+.icon-fa{
+    padding-right: 8px;
+}
 @media(max-width: 681px){
 
-    .poweroff{
-        display: inline-block;
-        color: #32465a;
-        padding: 10px;
-    }
     #btn-logout{
         display: none;
     }

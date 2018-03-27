@@ -13,7 +13,9 @@ class Book_Client {
 
                 on_complete();
                 document.getElementById("main").classList.remove("hidden");
-                document.getElementById("loader").classList.add("hidden");
+                if(document.getElementById("loader")!=undefined){
+                    document.getElementById("loader").classList.add("hidden");
+                }
             }
 
         };
