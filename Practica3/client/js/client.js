@@ -61,6 +61,10 @@ class Book_Client {
                     break;
                 case "getcomments":
                     that.callback_get_comments(response.info)
+                    break
+                case "deletecomment":
+                    that.callback_delete_comment(response.info)
+                    break
                 case "login":
                     that.callback_received_user_token(response.info);
                     break;
@@ -239,5 +243,16 @@ Book_Client.prototype.requestAllComments = function(chapterId, callback_get_comm
         }
     }
     this.callback_get_comments = callback_get_comments;
+    this.ws.send(JSON.stringify(message));
+}
+Book_Client.prototype.requestDeleteComment = function(chapterId, commentId, callback_delete_comment){
+    var message={
+        "type": "deletecomment",
+        "info":{
+            "chapterId": chapterId,
+            "commentId": commentId
+        }
+    }
+    this.callback_delete_comment = callback_delete_comment;
     this.ws.send(JSON.stringify(message));
 }

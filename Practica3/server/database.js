@@ -346,4 +346,29 @@ Database.prototype.getComments = function(data){
         }
     )
 }
+Database.prototype.getCommentById = function(data){
+    var ref = this.db.ref("comments/"+data.chapterId+"/"+data.commentId);
+    return ref.once("value").then(
+        function(comment){
+            return comment.val()
+        },
+        function(errorObject){
+            console.log("Error: " + errorObject.code);
+            return null;
+        })
+    
+}
+Database.prototype.deleteComment = function(data){
+    console.log("delete "+ data.commentId)
+
+    return this.db.ref("comments/"+data.chapterId+"/"+data.commentId).remove().then(
+        function(response){
+            console.log("delete")
+            
+            return data.commentId
+        },
+        function(errorObject){
+            return errorObject
+        });
+}
 module.exports = Database;

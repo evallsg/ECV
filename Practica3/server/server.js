@@ -164,6 +164,21 @@ Book_Server.prototype.processRequest = function(object, ws) {
                 }
                 ws.send(JSON.stringify({ "type": object.type, "info": response }))
             })
+            break
+        case "deletecomment":
+            var that = this
+            this.firebase_db.getCommentById(object.info).then(function(response){
+                if(ws.current_user== response.user){
+                    console.log(object.info)
+                    that.firebase_db.deleteComment(object.info).then(function(response){
+                        ws.send(JSON.stringify({ "type": object.type, "info": response }));
+                    })
+                }else{
+                    ws.send(JSON.stringify({ "type": object.type, "info": false }));
+                }
+            })
+            
+            break
         case "getbooktree":
             this.firebase_db.getBookChaptersStructure(object.info.bookId).then(function(result) {
                 tree_structure = {}
@@ -180,7 +195,6 @@ Book_Server.prototype.processRequest = function(object, ws) {
                 ws.send(JSON.stringify({ "type": object.type, "info": result }));
             });
             break;
-
     }
 }
 

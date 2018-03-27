@@ -184,7 +184,16 @@ function getComments(){
     var that = this;
     that.client.requestAllComments(that.chapter_id, renderComments.bind(this));
 }
-
+function deleteComment(data){
+    var that = this
+    console.log("delete ",data)
+    that.client.requestDeleteComment(that.chapter_id, data.getAttribute("data-id"), deleteCommentSuccess.bind(this))
+}
+function deleteCommentSuccess(response){
+    var that = this
+    that.commentsRemoved.push(response)
+    document.getElementById(response).remove()
+}
 function renderComments(comments){
     var that = this
     var list = document.getElementsByClassName("list-comments")[0];
@@ -203,6 +212,9 @@ function renderComments(comments){
             if(comments[id].owner || that.editable ){
                 i = document.createElement("i")
                 i.className="fas fa-trash-alt trash";
+                i.setAttribute("onclick", "deleteComment(this)")
+                i.setAttribute("data-id", id)
+                console.log(i)
                 div2.appendChild(i)   
             }
 
@@ -212,12 +224,21 @@ function renderComments(comments){
             list.appendChild(elem)  
         }
     }
+    for(i in that.commentsRemoved){
+        console.log("removed ", that.commentsRemoved[i])
+
+        comment = document.getElementById(that.commentsRemoved[i]);
+        console.log(comment)
+        if(comment!=undefined){
+            comment.remove()
+        }
+    }
 }
 function init(){   
     //document.getElementsByTagName("body")[0].style.display = "initial";
     this.book_id = GetUrlValue("book_id");
     this.chapter_id = GetUrlValue("chapter_id");
-
+    this.commentsRemoved = []
     //document.getElementsByTagName("title")[0].innerText = book_title;
     this.editable = false;
     this.client.requestChapter(this.chapter_id, this.book_id, received_book_chapter.bind(this))
@@ -246,7 +267,6 @@ document.getElementById("add-decision").addEventListener("click", addDecision.bi
 document.getElementsByClassName("chapter scroll")[0].addEventListener('scroll', onScrollBottom.bind(this));
 document.getElementsByClassName("menu-bars")[0].addEventListener("click",showMenu.bind(this),false);
 document.getElementById("add-comment").addEventListener("click",addComment.bind(this),false);
-
 //document.getElementsByTagName("body")[0].style.display = "none";
 
 this.client = new Book_Client(init.bind(this), user_token)
