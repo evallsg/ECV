@@ -70,7 +70,8 @@ function received_book_chapter(response)
     }
     else{
         this.editable = true;
-        document.getElementsByClassName("icon left save")[0].classList.remove("hidden");
+        document.getElementsByClassName("btn save")[0].classList.remove("hidden");
+        document.getElementsByClassName("icon left save")[0].classList.remove("hidden")
 
     }
     if(!response.finished){
@@ -181,11 +182,11 @@ function addCommentSuccess(){
 function getComments(){
 
     var that = this;
-    that.client.requestAllComments(that.chapter_id, renderComments);
+    that.client.requestAllComments(that.chapter_id, renderComments.bind(this));
 }
 
 function renderComments(comments){
-
+    var that = this
     var list = document.getElementsByClassName("list-comments")[0];
     var template = document.getElementById("template-comment");
     for(id in comments){
@@ -198,7 +199,13 @@ function renderComments(comments){
             div1.innerText = comments[id].user;
             div2 = document.createElement("div"); 
             div2.className= "comment-date";
-            div2.innerText = comments[id].created;
+            div2.innerText =comments[id].created;
+            if(comments[id].owner || that.editable ){
+                i = document.createElement("i")
+                i.className="fas fa-trash-alt trash";
+                div2.appendChild(i)   
+            }
+
             elem.appendChild(div1);
             elem.appendChild(div2);
             elem.classList.remove("hidden")

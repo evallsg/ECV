@@ -154,6 +154,14 @@ Book_Server.prototype.processRequest = function(object, ws) {
         case "getcomments":
             console.log(object.info)
             this.firebase_db.getComments(object.info).then(function(response){
+                for( i in response){
+                    if(ws.current_user == response[i].user){
+                        response[i].owner = true
+                    }
+                    else{
+                        response[i].owner = false
+                    }
+                }
                 ws.send(JSON.stringify({ "type": object.type, "info": response }))
             })
         case "getbooktree":

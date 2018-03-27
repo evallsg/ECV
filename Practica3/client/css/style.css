@@ -56,7 +56,7 @@ ul{
     border-color: #dadad9;
     border-bottom-style: solid;
     border-width: 1px;
-    /*min-width: 681px;*/
+    /*min-width: 681px;*/   
     height: 60px;
 }
 .gray{
@@ -110,7 +110,7 @@ li a {
     height: 100%;
     width: 131px;
     text-align: center;
-    color: #594b53;
+    color: #32465a;
 }
 .centered {
     margin-top: 2px;
@@ -460,16 +460,19 @@ input{
 ul nav.menu-bars {
     display: none;
     font-size: 35px;
-    padding-left: 10px;
-    padding-right: 10px;
+   /* padding-left: 10px;
+    padding-right: 10px;*/
     color: #32465a;/* whitesmoke; /*#66525d*/
     margin-left: 2px;
        /*Removes border*/
 }
 
-@media (max-width: 1150px) {
-  ul nav.menu     { display: none; }
-  ul nav.menu-bars { display: inline-block; }
+@media (max-width: 846px) {
+    ul nav.menu     { display: none; }
+    ul nav.menu-bars { display: inline-block; }
+    .chapter{
+        width: 80%!important;
+    }
 }
 .wrap{
     margin-right: 30%!important;
@@ -511,6 +514,11 @@ ul nav.menu-bars {
 .container-comments{
     height: calc(100% - 80px);
     overflow: hidden;
+}
+.trash{
+    color: #F44336;
+    float: left;
+    cursor: pointer;
 }
 .container-new{
     position: fixed;
@@ -647,12 +655,13 @@ ul nav.menu-bars {
     margin: 10px 31px;
 }
 .poweroff{
-        display: none;
-    }
+    display: none;
+}
+.icon.left.save{
+    display: none;
+}
 @media(max-width: 681px){
-    .chapter{
-        width: 80%!important;
-    }
+
     .poweroff{
         display: inline-block;
         color: #32465a;
