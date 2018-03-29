@@ -41,10 +41,13 @@ class Book_Client {
                 case "getchapters":
                     that.callback_received_all_chapters(response.info);
                     break;
+                case "getbooktree":
+                    that.callback_received_book_tree(response.info);
+                    break;
                 case "login":
                     that.callback_received_user_token(response.info);
                     break;
-                 case "logout":
+                case "logout":
                     that.callback_logout(response.info);
                     break;
                 case "auth":
