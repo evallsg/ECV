@@ -1,16 +1,33 @@
 class Book_Client {
     constructor(on_complete, user_token) {
-        this.ws = new WebSocket("ws://localhost:14446")
+        this.ws = new WebSocket("ws://84.89.136.194:14446")
 
         var that = this;
+
         this.ws.onopen = function() {
             if (on_complete) {
-                if (user_token)
-                    that.requestAuth(user_token);
+                if (user_token){
+                     that.requestAuth(user_token);
+                }
+                   
+
                 on_complete();
+                document.getElementById("main").classList.remove("hidden");
+                if(document.getElementById("loader")!=undefined){
+                    document.getElementById("loader").classList.add("hidden");
+                }
             }
 
         };
+        this.ws.onclose = function(){
+            document.getElementById("main").classList.add("hidden");
+            document.getElementById("loader").classList.remove("hidden");
+            if(!window.location.href.includes("index.html")){
+                document.location.href = "index.html";
+
+            }
+            localStorage.removeItem("user-token")
+        }
         this.ws.onmessage = function(message) {
 
             if(message.data.type==""){
@@ -41,6 +58,15 @@ class Book_Client {
                 case "getchapters":
                     that.callback_received_all_chapters(response.info);
                     break;
+                case "addcomment":
+                    that.callback_add_comment(response.info)
+                    break;
+                case "getcomments":
+                    that.callback_get_comments(response.info)
+                    break
+                case "deletecomment":
+                    that.callback_delete_comment(response.info)
+                    break
                 case "getbooktree":
                     that.callback_received_book_tree(response.info);
                     break;
@@ -126,7 +152,6 @@ Book_Client.prototype.requestAddBook = function(title, genre, callback_add_book)
         "type": "addbook",
         "info": {
             "title": title,
-            "userId": "marc",
             "genre": genre
         }
     }
@@ -201,3 +226,38 @@ Book_Client.prototype.requestBookTree = function(book_id, callback_received_book
     this.callback_received_book_tree = callback_received_book_tree;
     this.ws.send(JSON.stringify(message));
 };
+
+Book_Client.prototype.requestAddNewComment = function(comment, chapter_id, created, callback_add_comment){
+    var message = {
+        "type": "addcomment",
+        "info": {
+            "chapterId":chapter_id,
+            "comment": comment,
+            "created": created
+        }
+    }
+    this.callback_add_comment = callback_add_comment;
+    this.ws.send(JSON.stringify(message));
+}
+Book_Client.prototype.requestAllComments = function(chapterId, callback_get_comments){
+    console.log("chapter "+chapterId)
+    var message = {
+        "type": "getcomments",
+        "info": {
+            "chapterId": chapterId
+        }
+    }
+    this.callback_get_comments = callback_get_comments;
+    this.ws.send(JSON.stringify(message));
+}
+Book_Client.prototype.requestDeleteComment = function(chapterId, commentId, callback_delete_comment){
+    var message={
+        "type": "deletecomment",
+        "info":{
+            "chapterId": chapterId,
+            "commentId": commentId
+        }
+    }
+    this.callback_delete_comment = callback_delete_comment;
+    this.ws.send(JSON.stringify(message));
+}

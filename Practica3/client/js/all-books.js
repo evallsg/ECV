@@ -36,8 +36,9 @@ function received_all_books(books) {
     }
 
     books.forEach(function(book) {
-        var template = document.getElementById("templates").getElementsByClassName("container")[0]
+        var template = document.getElementById("template")
         var elem = template.cloneNode(true);
+        elem.removeAttribute("style");
         elem.setAttribute("book_id", book.book_id);
         elem.setAttribute("first_chapter_id", book.first_chapter_id);
         elem.querySelector(".book-title").innerText = book.title;

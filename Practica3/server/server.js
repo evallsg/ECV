@@ -145,7 +145,40 @@ Book_Server.prototype.processRequest = function(object, ws) {
                 ws.send(JSON.stringify({ "type": object.type, "info": result }));
             });
             break;
-
+        case "addcomment":
+            object.info.userId = ws.current_user;
+            this.firebase_db.addComment(object.info).then(function(response){
+                ws.send(JSON.stringify({ "type": object.type, "info": response }))
+            })
+            break;
+        case "getcomments":
+            console.log(object.info)
+            this.firebase_db.getComments(object.info).then(function(response){
+                for( i in response){
+                    if(ws.current_user == response[i].user){
+                        response[i].owner = true
+                    }
+                    else{
+                        response[i].owner = false
+                    }
+                }
+                ws.send(JSON.stringify({ "type": object.type, "info": response }))
+            })
+            break
+        case "deletecomment":
+            var that = this
+            this.firebase_db.getCommentById(object.info).then(function(response){
+                if(ws.current_user== response.user){
+                    console.log(object.info)
+                    that.firebase_db.deleteComment(object.info).then(function(response){
+                        ws.send(JSON.stringify({ "type": object.type, "info": response }));
+                    })
+                }else{
+                    ws.send(JSON.stringify({ "type": object.type, "info": false }));
+                }
+            })
+            
+            break
         case "getbooktree":
             this.firebase_db.getBookChaptersStructure(object.info.bookId).then(function(result) {
 
@@ -158,7 +191,6 @@ Book_Server.prototype.processRequest = function(object, ws) {
                 ws.send(JSON.stringify({ "type": object.type, "info": structured_response }));
             });
             break;
-
     }
 }
 
