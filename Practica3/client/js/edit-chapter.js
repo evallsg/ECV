@@ -25,6 +25,48 @@ function onScrollBottom(event)
    /* }*/
 };
 
+function book_tree_received_callback(result)
+{
+	tree_structure = []
+    tree_dictionary = {}
+	var book_tree = new BookTree("book-tree")
+
+	config = {
+        container: "#tree-simple",
+        node: {
+			collapsable: true
+		},
+		animation: {
+			nodeAnimation: "easeOutBounce",
+			nodeSpeed: 700,
+			connectorsAnimation: "bounce",
+			connectorsSpeed: 700
+		}
+    };
+
+    tree_structure.push(config)
+
+    for(var chapter_id in result)
+    {
+    	node = {
+                text: { name: result[chapter_id]["title"] },
+                chapter_id: chapter_id
+            }
+
+        if(node["text"]["name"] == "")
+        	node["text"]["name"] = "[NO TITLE]"
+
+        if(result[chapter_id]["parent_id"])
+            node["parent"] = tree_dictionary[result[chapter_id]["parent_id"]]
+
+        tree_dictionary[chapter_id] = node
+
+        tree_structure.push(node);
+    }
+
+	book_tree.loadTree(tree_structure)
+}
+
 function onSaveChapter()
 {
 	var title = document.getElementsByClassName("chapter-title")[0].innerText

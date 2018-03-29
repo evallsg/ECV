@@ -45,6 +45,8 @@ function registerCallback(success){
 		onLoginClicked()
 	}
 }
+
+
 function init() {
 
 	//document.getElementsByTagName("body")[0].style.display = "initial";
@@ -53,8 +55,6 @@ function init() {
 
     // TESTS
  	 this.client.requestBookTree("-L6lyMSYuGWMPe4Kts9X", function(){console.log("Book tree received")});
-
-    // TESTS
 
 }
 

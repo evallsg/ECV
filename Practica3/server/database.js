@@ -303,7 +303,7 @@ Database.prototype.getBookChaptersStructure = function(bookId)
                 {
                     book_chapters[key] = total_chapters[key];
                 }
-
+                    
                 return book_chapters;
             }, 
             function(errorObject) {
