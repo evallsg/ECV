@@ -3,10 +3,12 @@
 <head>
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <!--<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">-->
 </head>
 <body>
 
-	<div class="main-cont">
+	<div id="main" class="main-cont hidden">
 		
 		<div class="login-container">
 			<div class="login-title">
@@ -20,7 +22,7 @@
 					<input class="usr-input" type="text" name="email" placeholder="Email">
 				</div>
 				<div class="login-lbl ">
-					<input class="usr-input" type="password" name="password" placeholder="Password">
+					<input class="usr-input" type="password" name="password" placeholder="Password" onkeydown="onLoginClicked(this)">
 				</div>
 			</div>
 			<div class="login-buttons">
@@ -35,7 +37,14 @@
 		</div>
 
 	</div>
-	
+	<div id="loader" class="load center" >
+        <div class="text center">
+            <p class="logo">eligere</p>
+            <p>Connecting to server</p>
+            <div class="loader center"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+
+        </div>
+    </div>
     <script src="js/md5.min.js"></script>
    <script src="js/client.js"></script>
     <script src="js/index.js"></script>

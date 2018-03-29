@@ -4,35 +4,43 @@
 <head>
     <title>ECV</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <!--<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">-->
     <link href="css/style.css" rel="stylesheet">
     <link href="fonts">
 </head>
 
-<body class="home-back">
+<body class="gray">
+    <div id="main">
+    <!--<div id="main" class="home-back">-->
+        <nav>
+            <ul class="nav-bar">
+                <li class="left"><a class="menu-title app-name" href="#menu">eligere</a></li>
+                <li class="right padding-10">
+                    <span ><button id="btn-logout" class="btn purple">Logout</button></span>
+                </li>
+                <nav class="menu-bars">
+                    <li class="icon left"><i class="fas fa-bars"></i></li>
+                            
+                    <li class="icon poweroff left" onclick="onLogout()"><i class="fas fa-power-off"></i></li>
+                </nav>
+            </ul>
+        </nav>
 
-    <nav>
-        <ul class="nav-bar">
-            <li class="left"><a class="menu-title" href="#menu">MENU</a></li>
-            <li class="right padding-10">
-                <span ><button id="btn-logout" class="btn purple">Logout</button></span>
-            </li>
-        </ul>
-    </nav>
-    <nav class="menu-bars">
-        <i class="fas fa-bars"></i>
-    </nav>
-    <div id="templates" style="display:none">
-        <span class="container">
-            <img src="imgs/book2.png" class="book-img">
-            <p class="centered book-title"></p>
-        </span>
-    </div>
-    
-    <div>
-        <button class="btn new-book">New book</button>
-    </div>
-    <div class="books">
+        
+        <div style="height: 30px; margin: 20px;">
+            <button class="btn new-book">New book</button>
+        </div>
+        <div id="template" class="floating-box" style="display:none">
+                <img src="imgs/book2.png" class="book-img">
+                <p class="book-title"></p>
+            </div>
+        <div class="books">
+
+            <div class="floating-box"></div>
+            <div class="floating-box"></div>
+            <div class="floating-box"></div>
+        </div>
     </div>
     <div id="modal new-book" class="modal hidden">
       <!-- Modal content -->
@@ -57,8 +65,18 @@
       </div>
 
     </div>
+    <div id="loader" class="load center" >
+        <div class="text center">
+            <p class="logo">eligere</p>
+            <p>Connecting to server</p>
+            <div class="loader center"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+
+        </div>
+    </div>
     <script src="js/client.js"></script>
     <script src="js/all-books.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
 </body>
 
 </html>

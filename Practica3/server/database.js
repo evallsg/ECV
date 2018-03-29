@@ -314,5 +314,61 @@ Database.prototype.getBookChaptersStructure = function(bookId)
     });
 }
 
+Database.prototype.addComment = function(data){
+    var that = this;
+    var ref = this.db.ref("comments/"+data.chapterId).push();
+    data.id = ref;
+    return ref.set({
+        user: data.userId,
+        comment: data.comment,
+        created: data.created
+    }).then(function() {
+            console.log("Successfully added comment: ", data.id);
+            return data.id
 
+        })
+        .catch(function(error) {
+            console.log("Error adding comment: ", error);
+            return null
+        });
+}
+Database.prototype.getComments = function(data){
+    
+    var ref = this.db.ref("comments/"+data.chapterId);
+
+    return ref.once("value").then(
+        function(comments){
+            return comments.val();
+        },
+        function(errorObject){
+            console.log("Error: " + errorObject.code);
+            return null;
+        }
+    )
+}
+Database.prototype.getCommentById = function(data){
+    var ref = this.db.ref("comments/"+data.chapterId+"/"+data.commentId);
+    return ref.once("value").then(
+        function(comment){
+            return comment.val()
+        },
+        function(errorObject){
+            console.log("Error: " + errorObject.code);
+            return null;
+        })
+    
+}
+Database.prototype.deleteComment = function(data){
+    console.log("delete "+ data.commentId)
+
+    return this.db.ref("comments/"+data.chapterId+"/"+data.commentId).remove().then(
+        function(response){
+            console.log("delete")
+            
+            return data.commentId
+        },
+        function(errorObject){
+            return errorObject
+        });
+}
 module.exports = Database;
