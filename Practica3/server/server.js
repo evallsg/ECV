@@ -148,18 +148,14 @@ Book_Server.prototype.processRequest = function(object, ws) {
 
         case "getbooktree":
             this.firebase_db.getBookChaptersStructure(object.info.bookId).then(function(result) {
-                tree_structure = {}
 
-                flat_tree_structure = {}
+                structured_response = {}
                 for(var chapter_id in result)
-                {   
-                    for(var children_id in result[chapter_id].children)
-                    {
-                        result[chapter_id].children[children_id] = result[children_id];
-                    }
+                {
+                    structured_response[chapter_id] = result[chapter_id];
                 }
 
-                ws.send(JSON.stringify({ "type": object.type, "info": result }));
+                ws.send(JSON.stringify({ "type": object.type, "info": structured_response }));
             });
             break;
 
