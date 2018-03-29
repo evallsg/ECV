@@ -68,12 +68,6 @@
 	}; 
 
 
-	/* FitVids
-	 * ---------------------------------------------------- */
-	var ssFitVids = function() {
-		$(".fluid-video-wrapper").fitVids();
-	}; 
-
 
 
   /* Owl Carousel
@@ -238,11 +232,10 @@
 	* ------------------------------------------------------ */
 	(function ssInit() {
 
-		ssPreloader();
+		/*ssPreloader();*/
 		ssMobileMenu();
-		ssFitVids();
 		ssOwlCarousel();
-		ssWaypoints();
+		/*ssWaypoints();*/
 		ssSmoothScroll();
 		ssPlaceholder();
 		ssAlertBoxes();

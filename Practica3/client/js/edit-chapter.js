@@ -29,7 +29,7 @@ function book_tree_received_callback(result)
 {
 	tree_structure = []
     tree_dictionary = {}
-	var book_tree = new BookTree("book-tree")
+	var book_tree = new BookTree(".book-tree")
 
 	config = {
         container: "#tree-simple",
@@ -288,7 +288,7 @@ function init(){
     //document.getElementsByTagName("title")[0].innerText = book_title;
     this.editable = false;
     this.client.requestChapter(this.chapter_id, this.book_id, received_book_chapter.bind(this))
-
+    this.client.requestBookTree(this.book_id,book_tree_received_callback.bind(this) )
 }
 var user_token = localStorage.getItem("user-token")
 

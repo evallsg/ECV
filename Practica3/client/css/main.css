@@ -1735,7 +1735,7 @@ html[data-useragent*='MSIE 10.0'] .home-scrolldown,
 @media only screen and (max-width: 900px) {
   #home {
     height: auto;
-    min-height: 840px;
+ 
   }
   #home,
   .home-content {
@@ -2772,8 +2772,8 @@ footer ul a:visited {
   width: 60px;
   line-height: 60px;
   text-align: center;
-  background: #607d8b;
-  color: rgba(255, 255, 255, 0.5);
+  background: #607d8bb3;
+  color: rgb(255, 255, 255);
   text-align: center;
   text-transform: uppercase;
   border-radius: 5px;

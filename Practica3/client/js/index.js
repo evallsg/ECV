@@ -21,6 +21,16 @@ function onLoginClicked()
 	}
 
 }
+function onLoginButtonClicked(){
+	document.querySelector("input[name='email']").value="";
+	document.querySelector("input[name='password']").value="";
+	document.getElementsByClassName("login-title")[0].innerText= "Login";
+	document.getElementById("input-username").classList.add("hidden");
+	document.getElementById("btn-login").classList.remove("hidden");
+	document.getElementById("btn-register").classList.add("hidden");
+	document.getElementsByClassName("login-btn-reg")[0].classList.remove("hidden");
+	document.getElementsByClassName("login-content")[0].style.height="40%";
+}
 function onRegisterClicked(){
 	document.querySelector("input[name='email']").value="";
 	document.querySelector("input[name='password']").value="";
