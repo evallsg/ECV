@@ -12,7 +12,7 @@ function onScrollBottom(event)
 		        elem.id = id
 		        newElem = document.createElement("a"); 
 		        newElem.href= "edit-chapter.html?book_id=" + that.book_id + "&chapter_id=" + id;
-		        newElem.innerText = that.chapterDecisions[id].decision;
+		        newElem.innerText =that.chapterDecisions[id].decision;
 		        elem.appendChild(newElem)
 		        elem.classList.remove("hidden")
 		        list.appendChild(elem)	

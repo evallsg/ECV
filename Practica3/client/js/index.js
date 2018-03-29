@@ -24,7 +24,7 @@ function onLoginClicked()
 function onRegisterClicked(){
 	document.querySelector("input[name='email']").value="";
 	document.querySelector("input[name='password']").value="";
-	document.getElementsByClassName("login-title")[0].innerText= "REGISTER";
+	document.getElementsByClassName("login-title")[0].innerText= "Register";
 	document.getElementById("input-username").classList.remove("hidden");
 	document.getElementById("btn-login").classList.add("hidden");
 	document.getElementById("btn-register").classList.remove("hidden");
