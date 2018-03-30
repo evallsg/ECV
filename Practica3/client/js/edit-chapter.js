@@ -49,14 +49,23 @@ function book_tree_received_callback(result) {
     tree_structure.push(config)
 
     for (var chapter_id in result) {
+
+        if(!result[chapter_id].owner_id)
+            html_class = "no-owner"
+        else if(result[chapter_id].finished)
+            html_class = "finished"
+        else
+            html_class = "not-finished"
+
         node = {
             text: {
                 "data-chapter": {
                     val: result[chapter_id]["title"],
                     href: "edit-chapter.html?book_id=" + this.book_id + "&chapter_id=" + chapter_id,
                     target: "_self"
-                }
-            }
+                },
+            },
+            HTMLclass : html_class
         }
 
         if (node["text"]["data-chapter"]["val"] == "")

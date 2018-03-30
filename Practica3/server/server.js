@@ -190,11 +190,6 @@ Book_Server.prototype.processRequest = function(object, ws) {
     }
 }
 
-Book_Server.prototype.getBookTree = function(book_id) {
-    // do stuff
-    return book_structure
-}
-
 Book_Server.prototype.init = function() {
     var that = this;
     this.active_clients = {};
