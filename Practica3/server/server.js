@@ -14,109 +14,107 @@ Book_Server.prototype.processRequest = function(object, ws) {
     var that = this
     switch (object.type) {
         case "auth":
-            var usermail = that.active_clients[object.info.user_token]; 
-            if(usermail)
-            {
+            var usermail = that.active_clients[object.info.user_token];
+            if (usermail) {
                 console.log("here")
                 ws.current_user = usermail;
-                ws.send(ws.send(JSON.stringify({ "type": object.type, "info": {"auth": true}} )));   
-            }
-            else
-                ws.send(ws.send(JSON.stringify({ "type": object.type, "info": {"auth": false}} )));   
+                ws.send(ws.send(JSON.stringify({ "type": object.type, "info": { "auth": true } })));
+            } else
+                ws.send(ws.send(JSON.stringify({ "type": object.type, "info": { "auth": false } })));
             break;
 
         case "getbookchapter":
             console.log("getbookchapter")
             this.firebase_db.getChapter(object.info.chapter_id).then(function(result) {
 
-                object.info.chapter= result
-                that.firebase_db.getBook(object.info.book_id).then(function(result){
+                object.info.chapter = result
+                that.firebase_db.getBook(object.info.book_id).then(function(result) {
                     object.info.book = result
 
-                    console.log("curren user ",ws.current_user)
-                    console.log("owner ",object.info.chapter.owner_id)
-                    if(ws.current_user == object.info.chapter.owner_id)
+                    console.log("curren user ", ws.current_user)
+                    console.log("owner ", object.info.chapter.owner_id)
+                    if (ws.current_user == object.info.chapter.owner_id)
                         object.info.editable = true;
-                    else if(object.info.chapter.owner_id == undefined)
+                    else if (object.info.chapter.owner_id == undefined)
                         object.info.editable = true;
                     else
                         object.info.editable = false;
 
                     ws.send(JSON.stringify({ "type": object.type, "info": object.info }));
-                }).catch(function(error){
+                }).catch(function(error) {
                     console.log("error get chapter ", error)
                 });
-                
+
             });
             break;
         case "createbookchapter":
             //this.addChapter(object).then(function(){ws.send();});
-            
+
             break;
         case "savebookchapter":
             object.info.data.owner_id = ws.current_user;
-            this.firebase_db.updateChapter(object.info.chapter_id,object.info.data);
-            
+            this.firebase_db.updateChapter(object.info.chapter_id, object.info.data);
+
             break;
         case "addbook":
             object.info.userId = ws.current_user;
 
-            this.firebase_db.addBook(object.info).then(function(id){
+            this.firebase_db.addBook(object.info).then(function(id) {
                 object.info.bookId = id;
                 that.firebase_db.addChapter(object.info).then(
-                function(data){
-                    console.log("add book server chapter: ", data)
-                    setTimeout(call(ws,object), 50);
-                    
+                    function(data) {
+                        console.log("add book server chapter: ", data)
+                        setTimeout(call(ws, object), 50);
 
-                }).catch(function(error){
+
+                    }).catch(function(error) {
                     console.log("error server ", error)
                 });
-            }).catch(function(){
+            }).catch(function() {
                 console.log("error server addBook")
             });
-            
+
             break;
         case "register":
-            this.firebase_db.register(object.info).then(function(user){
-                ws.send(JSON.stringify({ "type": object.type, "info": {"user": user} }));
-            }).catch(function(errormsg){
-                ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": errormsg}}));
+            this.firebase_db.register(object.info).then(function(user) {
+                ws.send(JSON.stringify({ "type": object.type, "info": { "user": user } }));
+            }).catch(function(errormsg) {
+                ws.send(JSON.stringify({ "type": object.type, "info": { "errormsg": errormsg } }));
             });
             //ws.send();
             break;
         case "login":
-            this.firebase_db.login(object.info).then(function(user_info){ 
+            this.firebase_db.login(object.info).then(function(user_info) {
                 that.active_clients[user_info.token] = object.info.email;
                 ws.current_user = object.info.email;
-                ws.send(JSON.stringify({ "type": object.type, "info": {"user": user_info} }));
-            }).catch(function(errormsg){
-                ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": errormsg}}));
+                ws.send(JSON.stringify({ "type": object.type, "info": { "user": user_info } }));
+            }).catch(function(errormsg) {
+                ws.send(JSON.stringify({ "type": object.type, "info": { "errormsg": errormsg } }));
             });
-           // ws.send();
+            // ws.send();
             break;
         case "logout":
-             this.firebase_db.logout().then(function(){ 
-                ws.send(JSON.stringify({ "type": object.type, "info": {"success": true} }));
-             }).catch(function(errormsg){
-                ws.send(JSON.stringify({ "type": object.type, "info": {"success": errormsg}}));
+            this.firebase_db.logout().then(function() {
+                ws.send(JSON.stringify({ "type": object.type, "info": { "success": true } }));
+            }).catch(function(errormsg) {
+                ws.send(JSON.stringify({ "type": object.type, "info": { "success": errormsg } }));
             });
             break;
         case "addchapter":
             object.info.userId = ws.current_user;
-            this.firebase_db.addChapter(object.info).then(function(id){
+            this.firebase_db.addChapter(object.info).then(function(id) {
                 console.log("add chapter server id ", object.info)
                 console.log("id ", id)
                 var data = {
-                    "type": object.type, 
-                    "info": {"chapterId": id,
-                             "bookId": object.info.bookId
-                         } 
+                    "type": object.type,
+                    "info": {
+                        "chapterId": id,
+                        "bookId": object.info.bookId
+                    }
                 }
-                setTimeout(call(ws,data), 60);
-               
-            });
-            ;
+                setTimeout(call(ws, data), 60);
+
+            });;
             break;
         case "allbooks":
             this.firebase_db.getAllBooks().then(function(result) {
@@ -130,9 +128,9 @@ Book_Server.prototype.processRequest = function(object, ws) {
                     message.info.books.push(book_info);
                 }
                 //setTimeout(call(ws,object), 50);
-                if(ws.readyState === 1) ws.send(JSON.stringify(message));
-            }).catch(function(error){
-                ws.send(JSON.stringify({ "type": object.type, "info": {"errormsg": error}}));
+                if (ws.readyState === 1) ws.send(JSON.stringify(message));
+            }).catch(function(error) {
+                ws.send(JSON.stringify({ "type": object.type, "info": { "errormsg": error } }));
                 console.log("error recive books")
             });
             break;
@@ -147,18 +145,17 @@ Book_Server.prototype.processRequest = function(object, ws) {
             break;
         case "addcomment":
             object.info.userId = ws.current_user;
-            this.firebase_db.addComment(object.info).then(function(response){
+            this.firebase_db.addComment(object.info).then(function(response) {
                 ws.send(JSON.stringify({ "type": object.type, "info": response }))
             })
             break;
         case "getcomments":
             console.log(object.info)
-            this.firebase_db.getComments(object.info).then(function(response){
-                for( i in response){
-                    if(ws.current_user == response[i].user){
+            this.firebase_db.getComments(object.info).then(function(response) {
+                for (i in response) {
+                    if (ws.current_user == response[i].user) {
                         response[i].owner = true
-                    }
-                    else{
+                    } else {
                         response[i].owner = false
                     }
                 }
@@ -167,24 +164,23 @@ Book_Server.prototype.processRequest = function(object, ws) {
             break
         case "deletecomment":
             var that = this
-            this.firebase_db.getCommentById(object.info).then(function(response){
-                if(ws.current_user== response.user){
+            this.firebase_db.getCommentById(object.info).then(function(response) {
+                if (ws.current_user == response.user) {
                     console.log(object.info)
-                    that.firebase_db.deleteComment(object.info).then(function(response){
+                    that.firebase_db.deleteComment(object.info).then(function(response) {
                         ws.send(JSON.stringify({ "type": object.type, "info": response }));
                     })
-                }else{
+                } else {
                     ws.send(JSON.stringify({ "type": object.type, "info": false }));
                 }
             })
-            
+
             break
         case "getbooktree":
             this.firebase_db.getBookChaptersStructure(object.info.bookId).then(function(result) {
 
                 structured_response = {}
-                for(var chapter_id in result)
-                {
+                for (var chapter_id in result) {
                     structured_response[chapter_id] = result[chapter_id];
                 }
 
@@ -194,8 +190,7 @@ Book_Server.prototype.processRequest = function(object, ws) {
     }
 }
 
-Book_Server.prototype.getBookTree = function(book_id)
-{
+Book_Server.prototype.getBookTree = function(book_id) {
     // do stuff
     return book_structure
 }
@@ -234,14 +229,15 @@ Book_Server.prototype.init = function() {
     });
 
 }
-function call(ws,object){
-    if(ws.readyState === 1) {
+
+function call(ws, object) {
+    if (ws.readyState === 1) {
         //do nothing
         console.log("call enter")
         ws.send(JSON.stringify(object));
-    } else if (ws.readyState !=1) {
+    } else if (ws.readyState != 1) {
         //fallback
-       setInterval(call(ws, object), 50)
+        setInterval(call(ws, object), 50)
     }
 }
 

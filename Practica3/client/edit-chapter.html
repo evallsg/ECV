@@ -8,7 +8,6 @@
     <title>eligere</title>
     <meta name="description" content="">
     <meta name="author" content="">
-
     <!-- mobile specific metas
    ================================================== -->
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0 , user-scalable=no" />
@@ -16,9 +15,9 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/balloon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/Treant.css" type="text/css"/>
-    <link href="fonts" >
-        <!-- favicons
+    <link rel="stylesheet" href="css/Treant.css" type="text/css" />
+    <link href="fonts">
+    <!-- favicons
     ================================================== -->
     <link rel="shortcut icon" href="imgs/favicon.ico" type="image/x-icon">
     <link rel="icon" href="imgs/favicon.ico" type="image/x-icon">
@@ -26,30 +25,29 @@
 
 <body>
     <div id="main">
-        <nav >
+        <nav>
             <ul class="nav-bar">
-                <li class="left"><a class="menu-title" href="#menu"></a></li>            
-                <nav class="menu"  >
+                <li class="left"><a class="menu-title" href="#menu"></a></li>
+                <nav class="menu">
                     <li class="left"><a class="menu-options" href="all-books.html">Home</a></li>
                     <li class="left"><a class="menu-options" href="#about">About</a></li>
-
                 </nav>
                 <nav class="menu-bars">
                     <li class="icon left"><i class="fas fa-bars"></i></li>
                     <li class="icon left save hidden"><i class="fas fa-save"></i></li>
                 </nav>
                 <li class="right padding-10">
-                    <span ><button data-balloon="If chapter is finished, allow other people to add decisions" data-balloon-pos="left" data-balloon-length="fit" class="btn finish">Allow decisions</button></span>
-                    <span ><button class="btn save hidden">Save</button></span>
-                    <span ><button id="btn-logout" class="btn purple">Logout</button></span>
+                    <span><button class="btn show-tree">Show book tree</button></span>
+                    <span><button data-balloon="If chapter is finished, allow other people to add decisions" data-balloon-pos="left" data-balloon-length="fit" class="btn finish">Allow decisions</button></span>
+                    <span><button class="btn save hidden">Save</button></span>
+                    <span><button id="btn-logout" class="btn purple">Logout</button></span>
                 </li>
-
             </ul>
         </nav>
         <ul class="menu-responsive hidden">
             <li class=""><a class="menu-options" href="all-books.html"><i class="fas fa-home icon-fa"></i>Home</a></li>
             <li class=""><a class="menu-options" href="#about"><i class="fas fa-info-circle icon-fa"></i>About</a> </li>
-            <li class="" onclick="onLogout()"><a class="menu-options"><i class="fas fa-power-off icon-fa"></i>Logout</a></li>        
+            <li class="" onclick="onLogout()"><a class="menu-options"><i class="fas fa-power-off icon-fa"></i>Logout</a></li>
         </ul>
         <div id="alert-status" class="alert hidden">
             This chapter is not finished
@@ -62,16 +60,15 @@
                 <ul id="list-decisions" class="list-options">
                     <li id="template-decision" class="decision hidden">&#9679;</li>
                     <li id="add-decision" class="decision hidden">&#9679;Si vols crear la teva pròpia continuació clica aquí.</li>
-                <ul>
+                    <ul>
             </div>
         </div>
-        
         <ul id="menuli">
             <li onclick="showComments()"><a href="#comments">Comments  <i class="fa fa-comments pad-left"></i></a>
         </ul>
         <div class="comments hidden">
             <div class="container-comments">
-                <ul class="list-comments scroll"  >
+                <ul class="list-comments scroll">
                     <li id="template-comment" class="comment hidden">
                         jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library. Whether you're building ... When you hover the element with your mouse, the title attribute is displayed in a little box next to the element, just like a native tooltip.
                         <div class="comment-user">
@@ -79,7 +76,6 @@
                         </div>
                         <div class="comment-date"></div>
                     </li>
-
                 </ul>
             </div>
             <div class="container-new">
@@ -88,39 +84,33 @@
             </div>
         </div>
         <div id="modal new-decision" class="modal hidden">
-          <!-- Modal content -->
-          <span class="close hidden">&times;</span>
-          <div class="modal-content">
-            <div class="modal-title">
-                Add decision
-            </div>
-            <div class="modal-body">
-                <div class="login-lbl">
-                    <textarea class="decision-input" type="text" name="title" placeholder="Decision" required="true"></textarea>
+            <!-- Modal content -->
+            <span class="close hidden">&times;</span>
+            <div class="modal-content">
+                <div class="modal-title">
+                    Add decision
                 </div>
-                
+                <div class="modal-body">
+                    <div class="login-lbl">
+                        <textarea class="decision-input" type="text" name="title" placeholder="Decision" required="true"></textarea>
+                    </div>
+                </div>
+                <div class="modal-btn-cont">
+                    <button id="btn-cancel-decision" class="btn modal-btn btn-cancel">Cancel</button>
+                    <button id="btn-start-decision" class="btn modal-btn"><a href="">Start</a></button>
+                </div>
             </div>
-            <div class="modal-btn-cont">
-                <button id="btn-cancel-decision" class="btn modal-btn btn-cancel">Cancel</button>
-                <button id="btn-start-decision" class="btn modal-btn"><a href="">Start</a></button>
-            </div>
-
-          </div>
-
         </div>
     </div>
-
     <div id="" class="book-tree hidden">
     </div>
-   <script src="js/client.js"></script>
-   <script src="js/edit-chapter.js"></script>
+    <script src="js/client.js"></script>
+    <script src="js/edit-chapter.js"></script>
     <script src="vendor/raphael.js"></script>
     <script src="js/Treant.js"></script>
     <script src="js/book-tree.js"></script>
-   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
-<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
-
-
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
 </body>
 
 </html>
