@@ -94,6 +94,7 @@ function onFinishChapter(event)
 
 function received_book_chapter(response)
 {	
+    //document.getElementsByClassName("chapter scroll")[0].style.display = "initial";
 	var that = this;
 	that.chapterDecisions = response.chapter.children;
 	console.log(response)
@@ -124,8 +125,7 @@ function received_book_chapter(response)
         this.onScrollBottom()
     }
 
-
-    //document.getElementsByTagName("body")[0].style.display = "initial";
+    document.getElementsByClassName("chapter scroll")[0].classList.remove("hidden")
 
 }
 
@@ -281,7 +281,6 @@ function renderComments(comments){
     }
 }
 function init(){   
-    //document.getElementsByTagName("body")[0].style.display = "initial";
     this.book_id = GetUrlValue("book_id");
     this.chapter_id = GetUrlValue("chapter_id");
     this.commentsRemoved = []
@@ -290,6 +289,7 @@ function init(){
     this.client.requestChapter(this.chapter_id, this.book_id, received_book_chapter.bind(this))
     this.client.requestBookTree(this.book_id,book_tree_received_callback.bind(this) )
 }
+document.getElementsByClassName("chapter scroll")[0].classList.add("hidden")
 var user_token = localStorage.getItem("user-token")
 
 if(!user_token){
@@ -313,7 +313,6 @@ document.getElementById("add-decision").addEventListener("click", addDecision.bi
 /*document.getElementsByClassName("chapter scroll")[0].addEventListener('scroll', onScrollBottom.bind(this));*/
 document.getElementsByClassName("menu-bars")[0].addEventListener("click",showMenu.bind(this),false);
 document.getElementById("add-comment").addEventListener("click",addComment.bind(this),false);
-//document.getElementsByTagName("body")[0].style.display = "none";
 
 this.client = new Book_Client(init.bind(this), user_token)
 

@@ -64,7 +64,7 @@ function init() {
     document.getElementsByClassName("login-btn-reg")[0].addEventListener("click", onRegisterClicked.bind(this), false);
 
     // TESTS
- 	 this.client.requestBookTree("-L6lyMSYuGWMPe4Kts9X", function(){console.log("Book tree received")});
+ 	//this.client.requestBookTree("-L6lyMSYuGWMPe4Kts9X", function(){console.log("Book tree received")});
 
 }
 
