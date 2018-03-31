@@ -50,8 +50,13 @@
             <li class="" onclick="onLogout()"><a class="menu-options"><i class="fas fa-power-off icon-fa"></i>Logout</a></li>
         </ul>
         <div id="alert-status" class="alert hidden">
-            This chapter is not finished
+            You cannot add decisions to this chapter since it is not finished
             <button class="btn-alert" onclick="hiddenAlert()">Ok</button>
+        </div>
+        <div id="alert-status-ownership" class="alert hidden">
+            This chapter has no owner. Do you want it to be yours?
+            <button class="btn-alert" onclick="acceptOwnership()">Ok</button>
+            <button class="btn-alert" onclick="declineOwnership()">Cancel</button>
         </div>
         <div class="chapter scroll">
             <div class="chapter-title" placeholder="Title..." contentEditable="true"></div>

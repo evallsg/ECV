@@ -50,9 +50,9 @@ function book_tree_received_callback(result) {
 
     for (var chapter_id in result) {
 
-        if(!result[chapter_id].owner_id)
+        if (!result[chapter_id].owner_id)
             html_class = "no-owner"
-        else if(result[chapter_id].finished)
+        else if (result[chapter_id].finished)
             html_class = "finished"
         else
             html_class = "not-finished"
@@ -65,7 +65,7 @@ function book_tree_received_callback(result) {
                     target: "_self"
                 },
             },
-            HTMLclass : html_class
+            HTMLclass: html_class
         }
 
         if (node["text"]["data-chapter"]["val"] == "")
@@ -102,7 +102,8 @@ function onFinishChapter(event) {
         "finished": true
     }
     // var text = document.getElementsByClassName("chapter-body")[0].innerText
-    this.client.requestUpdateChapter(this.chapter_id, data, onScrollBottom)
+    this.client.requestUpdateChapter(this.chapter_id, data);
+    onScrollBottom();
 }
 
 function received_book_chapter(response) {
@@ -113,6 +114,10 @@ function received_book_chapter(response) {
     document.getElementsByClassName("menu-title")[0].innerText = response.book.title;
     document.getElementsByClassName("chapter-title")[0].innerText = response.chapter.title;
     document.getElementsByClassName("chapter-body")[0].innerText = response.chapter.text;
+
+    if (!response.chapter.owner_id) {
+        document.getElementById("alert-status-ownership").classList.remove("hidden");
+    }
 
     if (!response.editable) {
         document.getElementsByClassName("chapter-title")[0].contentEditable = false;
@@ -130,7 +135,7 @@ function received_book_chapter(response) {
         document.getElementById("alert-status").classList.remove("hidden");
     } else {
         /*document.getElementsByClassName("options")[0].classList.remove("hidden")*/
-
+        document.getElementsByClassName("btn finish")[0].classList.add("disable");
         this.onScrollBottom()
     }
 
@@ -221,6 +226,20 @@ function showComments() {
 
 function hiddenAlert() {
     document.getElementById("alert-status").classList.add("hidden");
+}
+
+function acceptOwnership() {
+    document.getElementById("alert-status-ownership").classList.add("hidden");
+    this.onSaveChapter();
+    document.getElementsByClassName("btn save")[0].classList.remove("hidden");
+    document.getElementsByClassName("icon left save")[0].classList.remove("hidden")
+    document.getElementsByClassName("btn finish")[0].classList.remove("hidden")
+    document.getElementsByClassName("chapter-title")[0].contentEditable = true;
+    document.getElementsByClassName("chapter-body")[0].contentEditable = true;
+}
+
+function declineOwnership() {
+    window.history.back();
 }
 
 function addComment() {

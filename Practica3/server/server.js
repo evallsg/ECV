@@ -36,7 +36,7 @@ Book_Server.prototype.processRequest = function(object, ws) {
                     if (ws.current_user == object.info.chapter.owner_id)
                         object.info.editable = true;
                     else if (object.info.chapter.owner_id == undefined)
-                        object.info.editable = true;
+                        object.info.editable = false;
                     else
                         object.info.editable = false;
 
