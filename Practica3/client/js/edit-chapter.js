@@ -103,6 +103,7 @@ function onFinishChapter(event) {
     }
     // var text = document.getElementsByClassName("chapter-body")[0].innerText
     this.client.requestUpdateChapter(this.chapter_id, data);
+    document.getElementById("alert-status").classList.add("hidden");
     onScrollBottom();
 }
 
@@ -117,7 +118,15 @@ function received_book_chapter(response) {
 
     if (!response.chapter.owner_id) {
         document.getElementById("alert-status-ownership").classList.remove("hidden");
+    } else if (!response.chapter.finished) {
+        document.getElementById("alert-status").classList.remove("hidden");
+    } else {
+        /*document.getElementsByClassName("options")[0].classList.remove("hidden")*/
+        document.getElementsByClassName("btn finish")[0].classList.add("disable");
+        this.onScrollBottom()
     }
+
+    this.finished = response.chapter.finished
 
     if (!response.editable) {
         document.getElementsByClassName("chapter-title")[0].contentEditable = false;
@@ -131,13 +140,7 @@ function received_book_chapter(response) {
         document.getElementsByClassName("icon left save")[0].classList.remove("hidden")
 
     }
-    if (!response.chapter.finished) {
-        document.getElementById("alert-status").classList.remove("hidden");
-    } else {
-        /*document.getElementsByClassName("options")[0].classList.remove("hidden")*/
-        document.getElementsByClassName("btn finish")[0].classList.add("disable");
-        this.onScrollBottom()
-    }
+
 
     document.getElementsByClassName("chapter scroll")[0].classList.remove("hidden")
 
@@ -231,6 +234,10 @@ function hiddenAlert() {
 function acceptOwnership() {
     document.getElementById("alert-status-ownership").classList.add("hidden");
     this.onSaveChapter();
+
+    if (!this.finished)
+        document.getElementById("alert-status").classList.remove("hidden");
+
     document.getElementsByClassName("btn save")[0].classList.remove("hidden");
     document.getElementsByClassName("icon left save")[0].classList.remove("hidden")
     document.getElementsByClassName("btn finish")[0].classList.remove("hidden")
