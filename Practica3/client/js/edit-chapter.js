@@ -56,21 +56,23 @@ function book_tree_received_callback(result) {
             html_class = "finished"
         else
             html_class = "not-finished"
+        if(chapter_id==this.chapter_id){
+            html_class+= " current"
+        }
 
         node = {
             text: {
                 "data-chapter": {
-                    val: result[chapter_id]["title"],
+                    val: result[chapter_id]["title"]!=""? result[chapter_id]["title"]:"[NO TITLE]",
                     href: "edit-chapter.html?book_id=" + this.book_id + "&chapter_id=" + chapter_id,
-                    target: "_self"
-                },
+                    target: "_self"              
+                }
             },
-            HTMLclass: html_class
+            HTMLclass: html_class,
+
         }
 
-        if (node["text"]["data-chapter"]["val"] == "")
-            node["text"]["data-chapter"]["val"] = "[NO TITLE]"
-
+    
         if (result[chapter_id]["parent_id"])
             node["parent"] = tree_dictionary[result[chapter_id]["parent_id"]]
 
@@ -255,6 +257,7 @@ function addComment() {
         var comment = document.querySelector("input[name='new-comment']").value;
         /* var dateFormat = require('dateformat');//necessari instalar npm dateformat!!!!!!!!!!!!!!!!*/
         var created = new Date()
+       
         /*formatDate(d, "dddd h:mmtt d MMM yyyy");*/
         that.client.requestAddNewComment(comment, that.chapter_id, created, addCommentSuccess)
     }
@@ -287,6 +290,8 @@ function renderComments(comments) {
     var that = this
     var list = document.getElementsByClassName("list-comments")[0];
     var template = document.getElementById("template-comment");
+    current = new Date()
+    currentDate = current.toLocaleDateString("es-ES")
     for (id in comments) {
         if (document.getElementById(id) == undefined) {
             var elem = template.cloneNode(true);
@@ -297,7 +302,36 @@ function renderComments(comments) {
             div1.innerText = comments[id].user;
             div2 = document.createElement("div");
             div2.className = "comment-date";
-            div2.innerText = comments[id].created;
+            created = new Date(comments[id].created);
+
+            dd= created.getDate()
+            mm = created.getMonth()+1
+            yyyy = created.getFullYear()
+            HH = created.getHours()
+            MM =created.getMinutes()
+            SS = created.getSeconds()
+            if(dd<10){
+                dd='0'+dd;
+            } 
+            if(mm<10){
+                mm='0'+mm;
+            } 
+            if(MM<10){
+                MM='0'+MM
+            }
+            if(HH<10){
+                HH='0'+HH
+            }
+            if(SS<10){
+                SS='0'+SS
+            }
+            if(currentDate== created.toLocaleDateString("es-ES")){
+                date = HH+":"+MM+":"+SS+" "+"Today"
+            }else{
+                date = dd+"/"+mm+"/"+yyyy
+            }
+        
+            div2.innerText=date
             if (comments[id].owner || that.editable) {
                 i = document.createElement("i")
                 i.className = "fas fa-trash-alt trash";

@@ -1616,10 +1616,21 @@
                 function( e ) {
                     e.preventDefault();
                     if ( self.getTreeConfig().callback.onBeforeClickCollapseSwitch.apply( self, [ nodeSwitch, e ] ) === false ) {
+
                         return false;
                     }
 
                     self.toggleCollapse();
+
+                    item = nodeSwitch.getElementsByClassName("svg-inline--fa fa-minus-circle")[0]
+                    if(item!=undefined){
+                        item.classList.remove('fa-minus-circle')
+                        item.classList.add('fa-plus-circle');
+                    }else{
+                        item = nodeSwitch.getElementsByClassName("svg-inline--fa fa-plus-circle")[0]
+                        item.classList.add('fa-minus-circle')
+                        item.classList.remove('fa-plus-circle');
+                    }
 
                     self.getTreeConfig().callback.onAfterClickCollapseSwitch.apply( self, [ nodeSwitch, e ] );
                 }
@@ -1853,8 +1864,8 @@
                 // adding DATA Attributes to the node
                 if (key.startsWith("data-")) {
                     node.setAttribute(key, this.text[key]);
-                }
 
+                }
                 var textElement = document.createElement(this.text[key].href ? 'a' : 'p');
 
                 // make an <a> element if required
@@ -1979,7 +1990,9 @@
         if ( !nodeSwitchEl ) {
             nodeSwitchEl = document.createElement( 'a' );
             nodeSwitchEl.className = "collapse-switch";
-
+            i = document.createElement('i');
+            i.className = "fa fa-minus-circle";
+            nodeSwitchEl.appendChild(i)
             nodeEl.appendChild( nodeSwitchEl );
             this.addSwitchEvent( nodeSwitchEl );
             if ( this.collapsed ) {
@@ -2016,7 +2029,8 @@
         connectors: {
             type: 'curve', // 'curve' || 'step' || 'straight' || 'bCurve'
             style: {
-                stroke: 'black'
+                stroke: "#607d8b",
+                'stroke-width': "2px"
             },
             stackIndent: 15
         },

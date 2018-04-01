@@ -1,6 +1,6 @@
 class Book_Client {
     constructor(on_complete, user_token) {
-        this.ws = new WebSocket("ws://localhost:14446")
+        this.ws = new WebSocket("ws://84.89.136.194:14445")
 
         var that = this;
 
@@ -27,6 +27,7 @@ class Book_Client {
 
             }
             localStorage.removeItem("user-token")
+            localStorage.removeItem("user-name")
         }
         this.ws.onmessage = function(message) {
 
@@ -79,6 +80,7 @@ class Book_Client {
                 case "auth":
                     if (!response.info.auth) {
                         localStorage.removeItem("user-token")
+                        localStorage.removeItem("user-name")
                         document.location.href = "index.html"
                     }
                     break;
@@ -93,7 +95,8 @@ Book_Client.prototype.requestAuth = function(user_token) {
     var message = {
         "type": "auth",
         "info": {
-            "user_token": user_token
+            "user_token": user_token,
+            "user_name":localStorage.getItem("user-name")
         }
     }
 
