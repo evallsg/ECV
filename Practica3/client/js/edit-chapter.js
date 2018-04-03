@@ -273,6 +273,8 @@ function addComment() {
     if (event.key == "Enter" || event.key == undefined) {
         var that = this
         var comment = document.querySelector("input[name='new-comment']").value;
+        if(comment == "")
+            return
         /* var dateFormat = require('dateformat');//necessari instalar npm dateformat!!!!!!!!!!!!!!!!*/
         var created = new Date()
        
