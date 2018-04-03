@@ -315,7 +315,7 @@ div.chapter{
     right: 0;
    /* width: 40%;*/
    /* height: 50%;*/
-    background: #00000040;
+    background: #00000052 ;
     margin: auto;
     /*border: 2px solid rgba(102,82,93,100);*/
     border: 1px solid rgb(255, 255, 255);
@@ -472,10 +472,10 @@ input{
 .decision:hover {
     /*font-weight: bold; */
   text-shadow: 
-    3px 0px 6px #607D8B, 
-    -3px 0px 6px #607D8B, 
+    3px 0px 6px #607d8b21, 
+    -3px 0px 6px #b8daebd1, 
     6px 0px 8px #607D8B, 
-    -6px 0px 8px #cade79;    
+    -6px 0px 8px #cade79 ;  
 }
 .arrow{
     width: 14px;
@@ -522,9 +522,9 @@ ul nav.menu-bars {
     color: whitesmoke;
 }
 .list-comments{
-    padding: 10px;
+    padding: 10px 10px 0 10px;
     margin: 0;
-    height: 100%;
+    height: calc(100% - 10px);
     overflow-y: auto;
 }
 .comment{
@@ -547,7 +547,7 @@ ul nav.menu-bars {
     font-size: 14px;
 }
 .container-comments{
-    height: calc(100% - 80px);
+    height: calc(100% - 70px);
     overflow: hidden;
 }
 .trash{
@@ -558,21 +558,21 @@ ul nav.menu-bars {
 .container-new{
     position: fixed;
     margin-left: 10px;
-    height: 80px;
+    height: 70px;
     /* top: 0; */
     width: calc(30% - 10px);
     bottom: 0;
 }
 .container-new input{
     width: calc(100% - 70px);
-    height: 66px;
+    height: 50px;
     top: 0;
     bottom: 0;
     margin: auto;
     position: absolute;
 }
 .container-new button{
-    height: 66px;
+    height: 60px;
     width: 40px;
     top: 0;
     bottom: 0;
@@ -666,7 +666,7 @@ ul nav.menu-bars {
 }
 
 /*side out menu*/
-#menuli {
+.menuli {
     position: fixed;
     left: -8.5em;
     top: 50%;
@@ -674,13 +674,16 @@ ul nav.menu-bars {
     background: #607d8b;
     color: white;
     margin: -3em 0 0 0;
-    padding: 0.5em 0.5em 0.5em 2.5em;
+    padding: 0.5em 0.7em 0.5em 2.2em;
 }
 
-#menuli:hover { left: 0 }
-#menuli { transition: 0.2s }
-.pad-left{
-    padding-left: 22px;
+.menuli:hover { left: 0 }
+.menuli { transition: 0.2s }
+.align-right{
+    float: right;
+}
+.bottom{
+    top: 56%;
 }
 
 .floating-box {
@@ -725,7 +728,7 @@ ul nav.menu-bars {
         font-size: 15px;
     }
     .container-new{
-        width: calc(87% - 10px);
+        width: 87% ;
     }
 
 }
@@ -801,13 +804,29 @@ ul nav.menu-bars {
     padding-right: 4px;
     border-radius: 4px;
     border: 2px solid #f9f9f9d1;
+    width: max-content;
+    height: auto;
+    text-align: center;
 }
 .node:hover{
     font-weight: bold;
     color: #b1bfc6 !important;
     border-color: #dce0e3;
-    background: #f9fafb14;
+    background: #f9fafb14 !important;
+    cursor: pointer;
 }
-.fa-paper-plane{
+.node:hover a{
+    color: #b1bfc6 !important;
+}
+.fa-share-square{
     font-size: 24px!important;
+}
+.node-data-chapter{
+    font-weight: bold;
+    font-size: 18px;
+    color: #405057;
+}
+.node-author{
+    margin: 3px;
+    font-size: 15px;
 }

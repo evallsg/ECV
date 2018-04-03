@@ -22,8 +22,19 @@
     /*background: #ffffff;
     border-color: #8BC34A;
     color: #8BC34A;*/
-        font-weight: bold;
-    color: #b1bfc6 !important;
+    font-weight: bold;
+    color: #b1bfc6 ;
     border-color: #dce0e3;
     background: #f9fafb14
+}
+.Treant > .current a{
+    color: #e1f1f8;
+}
+.Treant >.node.not-finished{
+    border-color: #E57373;
+    border-width: 3px;
+}
+.Treant >.node.no-owner{
+    border-color: #a2d06d;
+    border-width: 3px;
 }
