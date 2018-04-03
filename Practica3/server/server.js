@@ -187,6 +187,11 @@ Book_Server.prototype.processRequest = function(object, ws) {
                 ws.send(JSON.stringify({ "type": object.type, "info": structured_response }));
             });
             break;
+        case "getuser":
+            this.firebase_db.getUser(object.info.email).then(function(response){
+                console.log("user", response)
+                ws.send(JSON.stringify({"type":object.type, "info":response}))
+            })
     }
 }
 
