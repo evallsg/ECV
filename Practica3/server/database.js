@@ -79,34 +79,25 @@ Database.prototype.register = function(data) {
     if(data.avatar!= undefined){
         user.photoURL = data.avatar;
     }
+    var that = this
     return this.admin.auth().createUser(user)
         .then(function(userRecord) {
             console.log("Successfully created new user:", userRecord.uid);
-           /* var ref = this.db.ref("users/"+data.email);*/
-            if (firebase.auth().currentUser != null) {
-                return firebase.auth().currentUser.updateProfile({
-                    displayName: data.name
-                }).then(function (result) {
-                    console.log("Updated",result);
-                    return true
-                }, function (error) {
-                    console.log("Error happened");
-                    return false
-                });
+           /* */
+           mail = data.email.replace(".", "")
+            var ref = that.db.ref("users/"+mail);
+            user = {
+                username: data.name,
+                avatar: data.avatar!=undefined? data.avatar:null 
             }
-            /*return ref.set({
-                    username: data.username,
-                    avatar: data.avatar
-                }).then(function(user) {
-                    return user
+            return ref.set(user).then(function(user) {
+                    return true
                     console.log("Successfully added user ");
                 })
                 .catch(function(error) {
-                    return error
+                    return false
                     console.log("Error adding user: ", error);
-                });*/
-            // See the UserRecord reference doc for the contents of userRecord.
-            return true
+                })
         })
         .catch(function(error) {
                         console.log("Error creating new user:", error);
@@ -380,5 +371,16 @@ Database.prototype.deleteComment = function(data){
         function(errorObject){
             return errorObject
         });
+}
+Database.prototype.getUser = function(email){
+    var ref = this.db.ref("users/"+ email.replace(".", ""))
+    return ref.once("value").then(
+        function(user){
+            return user.val()
+        },
+        function(errorObject){
+            console.log("Error: " + errorObject.code);
+            return null;
+        })
 }
 module.exports = Database;
