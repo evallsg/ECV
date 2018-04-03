@@ -26,8 +26,9 @@ function onScrollBottom(event) {
 
 function book_tree_received_callback(result) {
 
-    document.getElementsByClassName("chapter")[0].classList.add("hidden")
-    document.getElementsByClassName("book-tree")[0].classList.remove("hidden")
+    document.getElementsByClassName("chapter")[0].classList.add("hidden");
+    document.getElementsByClassName("book-tree")[0].classList.remove("hidden");
+    document.getElementsByClassName("comments")[0].classList.add("hidden");
 
     tree_structure = []
     tree_dictionary = {}
@@ -66,11 +67,14 @@ function book_tree_received_callback(result) {
                     val: result[chapter_id]["title"]!=""? result[chapter_id]["title"]:"[NO TITLE]",
                     href: "edit-chapter.html?book_id=" + this.book_id + "&chapter_id=" + chapter_id,
                     target: "_self"              
-                }
+                },
             },
             HTMLclass: html_class,
 
         }
+
+        if(result[chapter_id]["owner_id"])
+            node["text"]["author"] = result[chapter_id]["owner_id"];
 
     
         if (result[chapter_id]["parent_id"])
@@ -82,6 +86,17 @@ function book_tree_received_callback(result) {
     }
 
     book_tree.loadTree(tree_structure)
+
+    // Change node colors
+    // yellow #d7e670d4
+
+    var not_finished_nodes = document.getElementsByClassName("node not-finished");
+
+    for(var node of not_finished_nodes)
+    {
+        node.style.background = "#d7e670d4";
+    }
+
 }
 
 function onSaveChapter() {
@@ -134,13 +149,14 @@ function received_book_chapter(response) {
         document.getElementsByClassName("chapter-title")[0].contentEditable = false;
         document.getElementsByClassName("chapter-body")[0].contentEditable = false;
         document.getElementsByClassName("btn save")[0].classList.add("hidden");
-        document.getElementsByClassName("btn finish")[0].classList.add("hidden");
+        //document.getElementsByClassName("btn finish")[0].classList.add("hidden");
 
     } else {
         this.editable = true;
         document.getElementsByClassName("btn save")[0].classList.remove("hidden");
         document.getElementsByClassName("icon left save")[0].classList.remove("hidden")
-
+        document.getElementsByClassName("btn finish")[0].classList.remove("hidden");
+        setInterval(this.onSaveChapter.bind(this), 5000);
     }
 
 
@@ -245,6 +261,8 @@ function acceptOwnership() {
     document.getElementsByClassName("btn finish")[0].classList.remove("hidden")
     document.getElementsByClassName("chapter-title")[0].contentEditable = true;
     document.getElementsByClassName("chapter-body")[0].contentEditable = true;
+
+    setInterval(this.onSaveChapter.bind(this), 5000);
 }
 
 function declineOwnership() {
@@ -255,6 +273,8 @@ function addComment() {
     if (event.key == "Enter" || event.key == undefined) {
         var that = this
         var comment = document.querySelector("input[name='new-comment']").value;
+        if(comment == "")
+            return
         /* var dateFormat = require('dateformat');//necessari instalar npm dateformat!!!!!!!!!!!!!!!!*/
         var created = new Date()
        
