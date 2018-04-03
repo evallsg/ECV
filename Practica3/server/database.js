@@ -73,7 +73,7 @@ Database.prototype.register = function(data) {
     var user = {
                    email: data.email,
                    password: data.password,
-                   displayName: data.username,
+                   displayName: data.name,
                    disabled: false
                 };
     if(data.avatar!= undefined){
@@ -82,9 +82,19 @@ Database.prototype.register = function(data) {
     return this.admin.auth().createUser(user)
         .then(function(userRecord) {
             console.log("Successfully created new user:", userRecord.uid);
-            var ref = this.db.ref("users/"+data.email);
-            
-            return ref.set({
+           /* var ref = this.db.ref("users/"+data.email);*/
+            if (firebase.auth().currentUser != null) {
+                return firebase.auth().currentUser.updateProfile({
+                    displayName: data.name
+                }).then(function (result) {
+                    console.log("Updated",result);
+                    return true
+                }, function (error) {
+                    console.log("Error happened");
+                    return false
+                });
+            }
+            /*return ref.set({
                     username: data.username,
                     avatar: data.avatar
                 }).then(function(user) {
@@ -94,7 +104,7 @@ Database.prototype.register = function(data) {
                 .catch(function(error) {
                     return error
                     console.log("Error adding user: ", error);
-                });
+                });*/
             // See the UserRecord reference doc for the contents of userRecord.
             return true
         })

@@ -3,6 +3,7 @@ function userTokenReceived(data) {
     if (data.user.token != undefined) {
         console.log(data.user)
         localStorage.setItem("user-token", data.user.token)
+        localStorage.setItem("user-name", data.user.username)
         document.location.href = "all-books.html";
     } else {
         alert(data.user.message)
@@ -71,6 +72,7 @@ function init() {
 }
 
 var user_token = localStorage.getItem("user-token")
+var user_name = localStorage.getItem("user-name")
 
 if (user_token) {
     document.location.href = "all-books.html";
