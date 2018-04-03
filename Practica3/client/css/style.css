@@ -688,6 +688,7 @@ ul nav.menu-bars {
     width: 80px;
     height: 155px;
     margin: 10px 31px;
+    cursor: pointer;
 }
 
 .icon.left.save{
@@ -709,6 +710,7 @@ ul nav.menu-bars {
     }
     .comments{
         width: 92%;
+        background: #32465a;
     }
     .floating-box{
         margin: 10px 15px;
@@ -805,4 +807,7 @@ ul nav.menu-bars {
     color: #b1bfc6 !important;
     border-color: #dce0e3;
     background: #f9fafb14;
+}
+.fa-paper-plane{
+    font-size: 24px!important;
 }

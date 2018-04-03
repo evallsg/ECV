@@ -21,7 +21,10 @@ class Book_Client {
         };
         this.ws.onclose = function() {
             document.getElementById("main").classList.add("hidden");
-            document.getElementById("loader").classList.remove("hidden");
+            if(document.getElementById("loader")!=undefined){
+                document.getElementById("loader").classList.remove("hidden");
+
+            }
             if (!window.location.href.includes("index.html")) {
                 document.location.href = "index.html";
 
@@ -77,6 +80,8 @@ class Book_Client {
                 case "logout":
                     that.callback_logout(response.info);
                     break;
+                case "getuser":
+                    that.callback_get_user(response.info)
                 case "auth":
                     if (!response.info.auth) {
                         localStorage.removeItem("user-token")
@@ -262,5 +267,15 @@ Book_Client.prototype.requestDeleteComment = function(chapterId, commentId, call
         }
     }
     this.callback_delete_comment = callback_delete_comment;
+    this.ws.send(JSON.stringify(message));
+}
+Book_Client.prototype.requestGetUser = function(email, callback_get_user){
+    var message = {
+        "type" : "getuser",
+        "info": {
+            "email": email
+        }
+    }
+    this.callback_get_user = callback_get_user;
     this.ws.send(JSON.stringify(message));
 }
