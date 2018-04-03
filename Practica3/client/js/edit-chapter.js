@@ -156,7 +156,7 @@ function received_book_chapter(response) {
         document.getElementsByClassName("btn save")[0].classList.remove("hidden");
         document.getElementsByClassName("icon left save")[0].classList.remove("hidden")
         document.getElementsByClassName("btn finish")[0].classList.remove("hidden");
-
+        setInterval(this.onSaveChapter.bind(this), 5000);
     }
 
 
@@ -261,6 +261,8 @@ function acceptOwnership() {
     document.getElementsByClassName("btn finish")[0].classList.remove("hidden")
     document.getElementsByClassName("chapter-title")[0].contentEditable = true;
     document.getElementsByClassName("chapter-body")[0].contentEditable = true;
+
+    setInterval(this.onSaveChapter.bind(this), 5000);
 }
 
 function declineOwnership() {
