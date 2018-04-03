@@ -87,16 +87,6 @@ function book_tree_received_callback(result) {
 
     book_tree.loadTree(tree_structure)
 
-    // Change node colors
-    // yellow #d7e670d4
-
-    var not_finished_nodes = document.getElementsByClassName("node not-finished");
-
-    for(var node of not_finished_nodes)
-    {
-        node.style.background = "#d7e670d4";
-    }
-
 }
 
 function onSaveChapter() {
@@ -342,11 +332,9 @@ function renderComments(comments) {
             if(HH<10){
                 HH='0'+HH
             }
-            if(SS<10){
-                SS='0'+SS
-            }
+
             if(currentDate== created.toLocaleDateString("es-ES")){
-                date = HH+":"+MM+":"+SS+" "+"Today"
+                date = HH+":"+MM+" "+"Today"
             }else{
                 date = dd+"/"+mm+"/"+yyyy
             }
@@ -408,7 +396,6 @@ function callRender() {
 
 
 document.getElementsByClassName("btn save")[0].addEventListener("click", onSaveChapter.bind(this), false);
-document.getElementsByClassName("btn show-tree")[0].addEventListener("click", onShowBookTree.bind(this), false);
 document.getElementById("btn-logout").addEventListener("click", onLogout.bind(this), false);
 document.getElementsByClassName("btn finish")[0].addEventListener("click", onFinishChapter.bind(this), false);
 document.getElementById("add-decision").addEventListener("click", addDecision.bind(this), false);

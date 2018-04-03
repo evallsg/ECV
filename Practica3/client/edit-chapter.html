@@ -37,7 +37,6 @@
                     <li class="icon left save hidden"><i class="fas fa-save"></i></li>
                 </nav>
                 <li class="right padding-10">
-                    <span><button class="btn show-tree">Show book tree</button></span>
                     <span><button data-balloon="If chapter is finished, allow other people to add decisions" data-balloon-pos="left" data-balloon-length="fit" class="btn finish hidden">Allow decisions</button></span>
                     <span><button class="btn save hidden">Save</button></span>
                     <span><button id="btn-logout" class="btn purple">Logout</button></span>
@@ -68,8 +67,11 @@
                     <ul>
             </div>
         </div>
-        <ul id="menuli">
-            <li onclick="showComments()"><a href="#comments">Comments  <i class="fa fa-comments pad-left"></i></a>
+        <ul class="menuli">
+            <li onclick="showComments()"><a href="#comments">Comments  <i class="fa fa-comments align-right"></i></a>
+        </ul>
+        <ul class="menuli bottom">
+            <li onclick="onShowBookTree()"><a href="#tree">Book Tree  <i class="fas fa-sitemap align-right"></i></a>
         </ul>
         <div class="comments hidden">
             <div class="container-comments">
@@ -85,7 +87,7 @@
             </div>
             <div class="container-new">
                 <input type="text" placeholder="Type comment..." onkeydown="addComment(this)" name="new-comment">
-                <button id="add-comment" class="btn"><i class="fa fa-paper-plane" aria-hidden="true"></i>Add</button>
+                <button id="add-comment" class="btn"><i class="fas fa-share-square" aria-hidden="true"></i></button>
             </div>
         </div>
         <div id="modal new-decision" class="modal hidden">
