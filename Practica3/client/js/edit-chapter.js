@@ -134,12 +134,13 @@ function received_book_chapter(response) {
         document.getElementsByClassName("chapter-title")[0].contentEditable = false;
         document.getElementsByClassName("chapter-body")[0].contentEditable = false;
         document.getElementsByClassName("btn save")[0].classList.add("hidden");
-        document.getElementsByClassName("btn finish")[0].classList.add("hidden");
+        //document.getElementsByClassName("btn finish")[0].classList.add("hidden");
 
     } else {
         this.editable = true;
         document.getElementsByClassName("btn save")[0].classList.remove("hidden");
         document.getElementsByClassName("icon left save")[0].classList.remove("hidden")
+        document.getElementsByClassName("btn finish")[0].classList.remove("hidden");
 
     }
 
