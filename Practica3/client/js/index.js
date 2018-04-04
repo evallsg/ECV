@@ -6,7 +6,10 @@ function userTokenReceived(data) {
         localStorage.setItem("user-name", data.user.username)
         document.location.href = "all-books.html";
     } else {
-        alert(data.user.message)
+        error = document.querySelector(".error-message p")
+        console.log(error)
+        error.innerText = data.user.message
+        document.getElementsByClassName("error-message")[0].classList.remove("hidden")
     }
 
 }
@@ -33,6 +36,11 @@ function onLoginButtonClicked() {
 }
 
 function onRegisterClicked() {
+    error = document.getElementsByClassName("error-message")[0].classList
+    if(!error.contains("hidden")){
+        error.add("hidden")   
+    }
+    
     document.querySelector("input[name='email']").value = "";
     document.querySelector("input[name='password']").value = "";
     document.getElementsByClassName("login-title")[0].innerText = "Register";
