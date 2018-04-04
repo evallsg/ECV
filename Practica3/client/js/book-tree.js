@@ -8,7 +8,7 @@ BookTree.prototype.loadTree = function(structure) {
     // Create node in which we will append the tree display
     container = document.createElement('div');
     container.id = "tree-simple"
-    document.querySelector(this.dom_parent_node).appendChild(container);
+    document.getElementById("main").appendChild(container);
 
     var my_chart = new Treant(structure);
 
