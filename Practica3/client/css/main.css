@@ -1075,7 +1075,7 @@ h1.intro-header {
   line-height: 1.324;
   color: #151515;
   position: relative;
-  padding-bottom: 3.6rem;
+  padding-bottom: 2.6rem;
 }
 
 h1.intro-header::before {
@@ -2499,14 +2499,6 @@ html[data-useragent*='MSIE 10.0'] .home-scrolldown,
   height: 100%;
   opacity: .5;
   background-color: #000000;
-}
-
-#download h1::before {
-  background-color: #32465a;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
 }
 
 #download .lead {
