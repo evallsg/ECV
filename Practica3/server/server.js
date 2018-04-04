@@ -151,13 +151,15 @@ Book_Server.prototype.processRequest = function(object, ws) {
             break;
         case "getcomments":
             console.log(object.info)
-            this.firebase_db.getComments(object.info).then(function(response) {
+            this.firebase_db.getComments(object.info).then(async function(response) {
                 for (i in response) {
                     if (ws.current_user == response[i].user) {
                         response[i].owner = true
                     } else {
                         response[i].owner = false
                     }
+                    result = await that.firebase_db.getUser(response[i].user);
+                    response[i]["user"] = result["username"];
                 }
                 ws.send(JSON.stringify({ "type": object.type, "info": response }))
             })
@@ -188,9 +190,9 @@ Book_Server.prototype.processRequest = function(object, ws) {
             });
             break;
         case "getuser":
-            this.firebase_db.getUser(object.info.email).then(function(response){
+            this.firebase_db.getUser(object.info.email).then(function(response) {
                 console.log("user", response)
-                ws.send(JSON.stringify({"type":object.type, "info":response}))
+                ws.send(JSON.stringify({ "type": object.type, "info": response }))
             })
     }
 }
