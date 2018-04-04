@@ -134,24 +134,32 @@ li a {
 
 
 .book-img{
-    width: 80px;
+    width: 82px;
     -webkit-filter: hue-rotate(90deg); /* Safari 6.0 - 9.0 */
     filter: hue-rotate(-428deg);
     box-shadow: -4px 2px 5px 0px #aaaaaa;
 }
 
 .book-title{
-    font-style: oblique;
     margin: 0;
-    text-align: center;  
+    text-align: center;
+    /* font-weight: bold; */
+    font-size: 20px;
+    font-family: Destain;
+    color: #263748;  
+}
+.book-genre{
+    margin: 0;
+    text-align: center;
+    color: #546E7A;
 }
 
 .book-title:hover{
-    text-shadow: 
+   /* text-shadow: 
     3px 0px 6px #607D8B, 
     -3px 0px 6px #607D8B, 
     6px 0px 8px #607D8B, 
-    -6px 0px 8px #cade79;
+    -6px 0px 8px #cade79;*/
 
 }
 
@@ -688,8 +696,8 @@ ul nav.menu-bars {
 
 .floating-box {
     float: left;
-    width: 80px;
-    height: 155px;
+    width: 82px;
+    height: 192px;
     margin: 10px 31px;
     cursor: pointer;
 }
@@ -729,6 +737,12 @@ ul nav.menu-bars {
     }
     .container-new{
         width: 87% ;
+    }
+    .bottom{
+        top:57%;
+    }
+    .menuli{
+        padding: 0.5em 0.5em 0.5em 2.0em;
     }
 
 }
@@ -771,7 +785,7 @@ ul nav.menu-bars {
     }
 }*/
 .alert{
-    height: 20px;
+    height: auto;
     top: 61px;
     position: fixed;
     background: #607d8b7d;

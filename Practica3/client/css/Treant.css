@@ -14,7 +14,7 @@
     position: absolute;
     /* top: 1px; */
     right: 9px;
-    cursor: pointer;
+    cursor: default;
     left: 0;
     margin: auto; }
 .Treant > .node img {	border: none; float: left; }

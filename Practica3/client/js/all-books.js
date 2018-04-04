@@ -39,9 +39,11 @@ function received_all_books(books) {
         var template = document.getElementById("template")
         var elem = template.cloneNode(true);
         elem.removeAttribute("style");
+        elem.id=""
         elem.setAttribute("book_id", book.book_id);
         elem.setAttribute("first_chapter_id", book.first_chapter_id);
         elem.querySelector(".book-title").innerText = book.title;
+        elem.querySelector(".book-genre").innerText = book.genre
 
         elem.addEventListener("click", onClickOnBook, false);
 

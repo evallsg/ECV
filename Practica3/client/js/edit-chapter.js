@@ -29,7 +29,20 @@ function book_tree_received_callback(result) {
     document.getElementsByClassName("chapter")[0].classList.add("hidden");
     document.getElementsByClassName("book-tree")[0].classList.remove("hidden");
     document.getElementsByClassName("comments")[0].classList.add("hidden");
+    document.getElementsByClassName("menuli")[0].classList.add("hidden");
+    document.getElementsByClassName("menuli")[1].classList.add("hidden");
+    menu = document.getElementsByClassName("menu-responsive")[0].classList;
+    if (!menu.contains("hidden")) {
+        menu.add("hidden")
+    }
+    alerts = document.getElementsByClassName("alert")
 
+    for(i=0; i<alerts["length"]; i++){
+
+        if(!alerts[i].classList.contains("hidden")){
+            alerts[i].classList.add("hidden")
+        }
+    }
     tree_structure = []
     tree_dictionary = {}
     var book_tree = new BookTree(".book-tree")
@@ -208,7 +221,10 @@ function signOut(info) {
 }
 
 function showMenu(event) {
-
+    comments = document.getElementsByClassName("comments")[0].classList
+    if(!comments.contains("hidden")){
+        comments.add("hidden")
+    }
     var elem = document.getElementsByClassName("menu-responsive")[0].classList;
     if (elem.contains("hidden")) {
         elem.remove("hidden")
@@ -228,6 +244,10 @@ function showComments() {
         that.getComments()
         elem.remove("hidden");
         chapter.add("wrap");
+        menu = document.getElementsByClassName("menu-responsive")[0].classList
+        if(!menu.contains("hidden")){
+            menu.add("hidden")
+        }
     } else {
 
         elem.add("hidden");
