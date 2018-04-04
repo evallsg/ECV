@@ -824,39 +824,11 @@ ul nav.menu-bars {
     cursor: pointer;
     margin-left: 8px;
 }
-.node{
-    left: 616.75px;
-    top: 68.5px;
-    background: #ffffffd4;
-    height: 30px;
-    padding-top: 8px;
-    padding-left: 4px;
-    padding-right: 4px;
-    border-radius: 4px;
-    border: 2px solid #f9f9f9d1;
-    width: max-content;
-    height: auto;
-    text-align: center;
-}
-.node:hover{
-    font-weight: bold;
-    color: #b1bfc6 !important;
-    border-color: #dce0e3;
-    background: #f9fafb14 !important;
-    cursor: pointer;
-}
-.node:hover a{
-    color: #b1bfc6 !important;
-}
+
 .fa-share-square{
     font-size: 24px!important;
 }
-.node-data-chapter{
-    font-weight: bold;
-    font-size: 18px;
-    color: #405057;
-}
-.node-author{
-    margin: 3px;
-    font-size: 15px;
+.fa-pencil-alt {
+    width: 14px;
+    padding-right: 3px;
 }

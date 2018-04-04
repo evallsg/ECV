@@ -1877,6 +1877,11 @@
                 }
 
                 textElement.className =  "node-"+key;
+                if(key=="author"){
+                    elem = document.createElement('i')
+                    elem.className = "fas fa-pencil-alt"
+                    textElement.appendChild(elem)
+                }
                 textElement.appendChild(document.createTextNode(
                     this.text[key].val ? this.text[key].val :
                         this.text[key] instanceof Object ? "'val' param missing!" : this.text[key]
