@@ -138,7 +138,7 @@ function received_book_chapter(response) {
 
     if (!response.chapter.owner_id) {
         document.getElementById("alert-status-ownership").classList.remove("hidden");
-    } else if (!response.chapter.finished) {
+    } else if (!response.chapter.finished & !response.editable) {
         document.getElementById("alert-status").classList.remove("hidden");
     } else {
         /*document.getElementsByClassName("options")[0].classList.remove("hidden")*/
