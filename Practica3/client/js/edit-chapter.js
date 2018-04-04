@@ -86,12 +86,16 @@ function book_tree_received_callback(result) {
 
         }
 
-        if(result[chapter_id]["owner_id"])
+        if(result[chapter_id]["owner_id"]){
             node["text"]["author"] = result[chapter_id]["owner_id"];
 
+        }
+
     
-        if (result[chapter_id]["parent_id"])
+        if (result[chapter_id]["parent_id"]){
             node["parent"] = tree_dictionary[result[chapter_id]["parent_id"]]
+
+        }
 
         tree_dictionary[chapter_id] = node
 
@@ -321,7 +325,6 @@ function renderComments(comments) {
     var list = document.getElementsByClassName("list-comments")[0];
     var template = document.getElementById("template-comment");
     current = new Date()
-    currentDate = current.toLocaleDateString("es-ES")
     for (id in comments) {
         if (document.getElementById(id) == undefined) {
             var elem = template.cloneNode(true);
@@ -333,13 +336,13 @@ function renderComments(comments) {
             div2 = document.createElement("div");
             div2.className = "comment-date";
             created = new Date(comments[id].created);
-
             dd= created.getDate()
             mm = created.getMonth()+1
             yyyy = created.getFullYear()
             HH = created.getHours()
             MM =created.getMinutes()
             SS = created.getSeconds()
+
             if(dd<10){
                 dd='0'+dd;
             } 
@@ -352,8 +355,8 @@ function renderComments(comments) {
             if(HH<10){
                 HH='0'+HH
             }
-
-            if(currentDate== created.toLocaleDateString("es-ES")){
+            
+            if(new Intl.DateTimeFormat('es-ES').format(current) == new Intl.DateTimeFormat('es-ES').format(created)){
                 date = HH+":"+MM+" "+"Today"
             }else{
                 date = dd+"/"+mm+"/"+yyyy
