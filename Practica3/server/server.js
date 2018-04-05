@@ -179,19 +179,34 @@ Book_Server.prototype.processRequest = function(object, ws) {
 
             break
         case "getbooktree":
+        that = this
             this.firebase_db.getBookChaptersStructure(object.info.bookId).then(function(result) {
 
                 structured_response = {}
                 for (var chapter_id in result) {
                     structured_response[chapter_id] = result[chapter_id];
                 }
-
-                ws.send(JSON.stringify({ "type": object.type, "info": structured_response }));
+                email = ws.current_user;
+                that.firebase_db.getUser(email).then(function(response) {
+                    data = {
+                        "structure": structured_response,
+                        "bookmarks": response.bookmarks
+                    }
+                    ws.send(JSON.stringify({ "type": object.type, "info": data }));
+                })
+                
             });
             break;
         case "getuser":
             this.firebase_db.getUser(object.info.email).then(function(response) {
                 console.log("user", response)
+                ws.send(JSON.stringify({ "type": object.type, "info": response }))
+            })
+            break;
+        case "addbookmark":
+            object.info.email = ws.current_user;
+            this.firebase_db.addBookmark(object.info).then(function(response) {
+                console.log("Bookmark", response)
                 ws.send(JSON.stringify({ "type": object.type, "info": response }))
             })
     }

@@ -24,13 +24,16 @@ function onScrollBottom(event) {
     /* }*/
 };
 
-function book_tree_received_callback(result) {
-
+function book_tree_received_callback(data) {
+    result = data.structure;
+    bookmarks = data.bookmarks
+    
     document.getElementsByClassName("chapter")[0].classList.add("hidden");
     document.getElementsByClassName("book-tree")[0].classList.remove("hidden");
     document.getElementsByClassName("comments")[0].classList.add("hidden");
     document.getElementsByClassName("menuli")[0].classList.add("hidden");
     document.getElementsByClassName("menuli")[1].classList.add("hidden");
+    document.getElementsByClassName("btn bookmark")[0].classList.add("hidden");
     menu = document.getElementsByClassName("menu-responsive")[0].classList;
     if (!menu.contains("hidden")) {
         menu.add("hidden")
@@ -61,7 +64,13 @@ function book_tree_received_callback(result) {
     };
 
     tree_structure.push(config)
+    bookmarkId=""
+    for(id in bookmarks){
 
+        if(id ==this.book_id){
+            bookmarkId = bookmarks[id].chapter
+        }
+    }
     for (var chapter_id in result) {
 
         if (!result[chapter_id].owner_id)
@@ -72,6 +81,9 @@ function book_tree_received_callback(result) {
             html_class = "not-finished"
         if(chapter_id==this.chapter_id){
             html_class+= " current"
+        }
+        if(bookmarkId==chapter_id ){
+            html_class+= " bookmark"
         }
 
         node = {
@@ -135,7 +147,6 @@ function received_book_chapter(response) {
     //document.getElementsByClassName("chapter scroll")[0].style.display = "initial";
     var that = this;
     that.chapterDecisions = response.chapter.children;
-    console.log(response)
     document.getElementsByClassName("menu-title")[0].innerText = response.book.title;
     document.getElementsByClassName("chapter-title")[0].innerText = response.chapter.title;
     document.getElementsByClassName("chapter-body")[0].innerText = response.chapter.text;
@@ -156,6 +167,7 @@ function received_book_chapter(response) {
         document.getElementsByClassName("chapter-title")[0].contentEditable = false;
         document.getElementsByClassName("chapter-body")[0].contentEditable = false;
         document.getElementsByClassName("btn save")[0].classList.add("hidden");
+        document.getElementsByClassName("btn bookmark")[0].classList.remove("hidden")
         //document.getElementsByClassName("btn finish")[0].classList.add("hidden");
 
     } else {
@@ -218,7 +230,6 @@ function signOut(info) {
 
         localStorage.removeItem("user-token")
         document.location.href = "index.html";
-        console.log(info.success)
     } else {
         alert(info.success)
     }
@@ -310,7 +321,7 @@ function getComments() {
 
 function deleteComment(data) {
     var that = this
-    console.log("delete ", data)
+   
     that.client.requestDeleteComment(that.chapter_id, data.getAttribute("data-id"), deleteCommentSuccess.bind(this))
 }
 
@@ -368,7 +379,7 @@ function renderComments(comments) {
                 i.className = "fas fa-trash-alt trash";
                 i.setAttribute("onclick", "deleteComment(this)")
                 i.setAttribute("data-id", id)
-                console.log(i)
+    
                 div2.appendChild(i)
             }
 
@@ -379,10 +390,8 @@ function renderComments(comments) {
         }
     }
     for (i in that.commentsRemoved) {
-        console.log("removed ", that.commentsRemoved[i])
 
         comment = document.getElementById(that.commentsRemoved[i]);
-        console.log(comment)
         if (comment != undefined) {
             comment.remove()
         }
@@ -391,6 +400,12 @@ function renderComments(comments) {
 
 function onShowBookTree() {
     this.client.requestBookTree(this.book_id, book_tree_received_callback.bind(this))
+}
+function onAddBookmark(){
+    this.client.requestAddBookmark(this.chapter_id, this.book_id, addBookmarkCallback.bind(this))
+}
+function addBookmarkCallback(){
+    document.getElementsByClassName("btn bookmark")[0].classList.add("disable")
 }
 
 function init() {
@@ -416,7 +431,6 @@ function callRender() {
         this.getComments()
     }
 }
-
 
 document.getElementsByClassName("btn save")[0].addEventListener("click", onSaveChapter.bind(this), false);
 document.getElementById("btn-logout").addEventListener("click", onLogout.bind(this), false);
