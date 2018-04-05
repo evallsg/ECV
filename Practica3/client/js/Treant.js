@@ -1860,6 +1860,12 @@
 
         // TEXT
         if (this.text) {
+            if(node.classList.contains("bookmark")){
+                bookmark = document.createElement("i")
+                bookmark.className= "fas fa-bookmark"
+                node.appendChild(bookmark)
+            }
+           
             for (var key in this.text) {
                 // adding DATA Attributes to the node
                 if (key.startsWith("data-")) {
@@ -1940,6 +1946,18 @@
         node.className = ( !this.pseudo )? TreeNode.CONFIG.nodeHTMLclass: 'pseudo';
         if ( this.nodeHTMLclass && !this.pseudo ) {
             node.className += ' ' + this.nodeHTMLclass;
+            if(this.nodeHTMLclass==" not-finished"){
+                node.setAttribute("data-balloon","This chapter is not over yet. Check it out!");
+                node.setAttribute("data-balloon-pos","down")
+                node.setAttribute("data-balloon-length","fit")
+                node.setAttribute("data-balloon-color","black")
+            }
+            if(this.nodeHTMLclass==" no-owner"){
+                node.setAttribute("data-balloon","This chapter still has no owner. Write it!");
+                node.setAttribute("data-balloon-pos","down")
+                node.setAttribute("data-balloon-length","fit")
+                node.setAttribute("data-balloon-color","black")
+            }
         }
 
         if ( this.nodeHTMLid ) {
