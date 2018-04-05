@@ -386,4 +386,22 @@ Database.prototype.getUser = function(email) {
             return null;
         })
 }
+Database.prototype.addBookmark =function(data){
+    mail = data.email.replace(".", "")
+    var ref = this.db.ref("users/" + mail+"/bookmarks/"+ data.bookId);
+    book = data.bookId
+    chapter = data.chapterId
+    bookmark = {
+        chapter: chapter
+        
+    }
+    return ref.set(bookmark).then(function(response) {
+            return true
+            console.log("Successfully bookmark ");
+        })
+        .catch(function(error) {
+            return false
+            console.log("Error adding user: ", error);
+        })
+}
 module.exports = Database;

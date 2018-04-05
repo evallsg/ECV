@@ -82,6 +82,10 @@ class Book_Client {
                     break;
                 case "getuser":
                     that.callback_get_user(response.info)
+                    break;
+                case "addbookmark":
+                    that.callback_add_bookmark(response.info)
+                    break;
                 case "auth":
                     if (!response.info.auth) {
                         localStorage.removeItem("user-token")
@@ -278,4 +282,16 @@ Book_Client.prototype.requestGetUser = function(email, callback_get_user){
     }
     this.callback_get_user = callback_get_user;
     this.ws.send(JSON.stringify(message));
+}
+Book_Client.prototype.requestAddBookmark = function( chapterId,bookId, callback_add_bookmark){
+    var message = {
+        "type": "addbookmark",
+        "info": {
+            "bookId": bookId,
+            "chapterId": chapterId
+        }
+    }
+    this.callback_add_bookmark = callback_add_bookmark;
+    this.ws.send(JSON.stringify(message))
+
 }

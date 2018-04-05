@@ -832,3 +832,7 @@ ul nav.menu-bars {
     width: 14px;
     padding-right: 3px;
 }
+.fa-bookmark {
+    color: #00BCD4;
+    padding-right: 4px;
+}
