@@ -279,11 +279,12 @@ div.chapter{
     position: absolute;
 }
 .modal-title{
-    height: 30%;
+    padding:30px;
     text-align: center;
     font-size: 35px;
 }
 .modal-body{
+    margin-top: 35px;
     height: 50%;
 }
 .modal-btn-cont{
@@ -472,6 +473,7 @@ input{
   
 }
 .decision-input{
+    padding: 10px;
     margin: 0px;
     height: 87px;
     width: 45vw;
@@ -734,7 +736,7 @@ ul nav.menu-bars {
         right: 0;
         left: 0;
         margin: auto;
-        position: fixed;
+        position: absolute;
         /* width: 120px; */
         font-size: 15px;
     }

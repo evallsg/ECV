@@ -179,7 +179,7 @@ Book_Server.prototype.processRequest = function(object, ws) {
 
             break
         case "getbooktree":
-        that = this
+            that = this
             this.firebase_db.getBookChaptersStructure(object.info.bookId).then(function(result) {
 
                 structured_response = {}
