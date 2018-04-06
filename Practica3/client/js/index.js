@@ -56,7 +56,16 @@ function onSubmitRegister() {
     var email = document.querySelector("input[name='email']").value;
     var password = document.querySelector("input[name='password']").value;
     var name = document.querySelector("input[name='username']").value;
-    this.client.requestRegister(email, password, name, registerCallback);
+    if(name==""){
+        error = document.querySelector(".error-message p")
+        error.innerText = "Username can not be empty."
+        document.getElementsByClassName("error-message")[0].classList.remove("hidden")
+    }else{
+        if(!document.getElementsByClassName("error-message")[0].classList.contains("hidden")){
+            document.getElementsByClassName("error-message")[0].classList.add("hidden")
+        }
+        this.client.requestRegister(email, password, name, registerCallback);
+    }
 }
 
 function registerCallback(success) {

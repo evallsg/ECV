@@ -27,7 +27,7 @@ function onScrollBottom(event) {
 function book_tree_received_callback(data) {
     result = data.structure;
     bookmarks = data.bookmarks
-    
+    console.log(data)
     document.getElementsByClassName("chapter")[0].classList.add("hidden");
     document.getElementsByClassName("book-tree")[0].classList.remove("hidden");
     document.getElementsByClassName("comments")[0].classList.add("hidden");

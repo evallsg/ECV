@@ -30,7 +30,6 @@
                 <li class="left"><a class="menu-title" href="#menu"></a></li>
                 <nav class="menu">
                     <li class="left"><a class="menu-options" href="all-books.html">Home</a></li>
-                    <li class="left"><a class="menu-options" href="#about">About</a></li>
                 </nav>
                 <nav class="menu-bars">
                     <li class="icon left"><i class="fas fa-bars"></i></li>
@@ -46,7 +45,6 @@
         </nav>
         <ul class="menu-responsive hidden">
             <li class=""><a class="menu-options" href="all-books.html"><i class="fas fa-home icon-fa"></i>Home</a></li>
-            <li class=""><a class="menu-options" href="#about"><i class="fas fa-info-circle icon-fa"></i>About</a> </li>
             <li class="" onclick="onLogout()"><a class="menu-options"><i class="fas fa-power-off icon-fa"></i>Logout</a></li>
         </ul>
         <div id="alert-status" class="alert hidden">
@@ -72,7 +70,7 @@
             <li onclick="showComments()"><a href="#comments">Comments  <i class="fa fa-comments align-right"></i></a>
         </ul>
         <ul class="menuli bottom">
-            <li onclick="onShowBookTree()"><a href="#tree">Book Tree  <i class="fas fa-sitemap align-right"></i></a>
+            <li onclick="onShowBookTree(this)"><a href="#tree">Book Tree  <i class="fas fa-sitemap align-right"></i></a>
         </ul>
         <div class="comments hidden">
             <div class="container-comments">
@@ -100,7 +98,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="login-lbl">
-                        <textarea class="decision-input" type="text" name="title" placeholder="Decision" required="true"></textarea>
+                        <textarea class="decision-input" type="text" name="title" placeholder="Charles is lost." required="true"></textarea>
                     </div>
                 </div>
                 <div class="modal-btn-cont">

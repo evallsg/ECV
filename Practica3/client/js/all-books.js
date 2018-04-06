@@ -18,7 +18,16 @@ function onClickNewBook() {
     document.getElementById("btn-start").addEventListener("click", function(event){
         var title = document.getElementById("input-title").value;
         var genre = document.getElementById("input-genre").value;
-        that.client.requestAddBook(title, genre, redirectToChapter)
+        error =  document.getElementsByClassName("error-message")[0].classList
+        if(title==""|| genre==""){
+           error.remove("hidden")
+        }else{
+            if(!error.contains("hidden")){
+                error.add("hidden")
+            }
+            that.client.requestAddBook(title, genre, redirectToChapter)
+        }
+       
             
        // that.client.requestAllBooks(received_all_books);
     })
