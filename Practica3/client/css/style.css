@@ -480,6 +480,7 @@ input{
     border-radius: 3px;
 }
 .decision a{
+    text-align: left;
     display: -webkit-inline-box!important;
 }
 .decision:hover {

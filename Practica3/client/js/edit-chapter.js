@@ -153,7 +153,7 @@ function received_book_chapter(response) {
 
     if (!response.chapter.owner_id) {
         document.getElementById("alert-status-ownership").classList.remove("hidden");
-    } else if (!response.chapter.finished & !response.editable) {
+    } else if (!response.chapter.finished ) {
         document.getElementById("alert-status").classList.remove("hidden");
     } else {
         /*document.getElementsByClassName("options")[0].classList.remove("hidden")*/
@@ -207,7 +207,15 @@ function addDecision() {
     })
     document.getElementById("btn-start-decision").addEventListener("click", function(event) {
         var decision = document.getElementsByClassName("decision-input")[0].value;
-        that.client.requestAddNewChapter(that.book_id, that.chapter_id, decision, redirectToEditChapter.bind(this))
+        error =  document.getElementsByClassName("error-message")[0].classList
+        if(decision==""){
+            error.remove("hidden")
+        }else{
+            if(!error.contains("hidden")){
+                error.add("hidden")
+            }
+            that.client.requestAddNewChapter(that.book_id, that.chapter_id, decision, redirectToEditChapter.bind(this))
+        }
 
         // that.client.requestAllBooks(received_all_books);
     })
